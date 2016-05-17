@@ -1,0 +1,46 @@
+var React = require('react');
+
+var Segment = React.createClass({
+
+    getInitialState: function() {
+        return {
+          error: false
+        };
+    },
+
+
+   
+    render: function() {  
+
+        var href = "http://www.strava.com/segments/" + this.props.data.id;
+        var src = "http://maps.google.com/maps/api/staticmap?maptype=terrain&size=" + "100" + "x" + "100" + "&sensor=false&path=color:0xFF0000BF|weight:2|enc:";
+        if (this.props.data.points.length < 2000) {
+          src += this.props.data.points;
+
+        }
+
+        var name = this.props.data.name;
+
+        if (name.length > 25) {
+          name = name.substr(0, 25)
+        }
+    
+      
+         return (
+            <div className="segment col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+              <a href={href} target="_blank">
+                <img src={src} alt={this.props.data.name} />
+                <p> {name} </p>
+              </a>
+            </div>
+
+
+
+          );
+      
+
+  
+      }
+});
+
+module.exports=Segment

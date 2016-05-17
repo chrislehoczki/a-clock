@@ -1,0 +1,250 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+body {
+	font-family: "Open Sans";
+}
+a {
+	color: rgb(58, 193, 98)!important;
+}
+
+
+
+/* MAIN CONTAINERS */
+
+.sidebar {
+	float: left;
+	width: 20%;
+	margin: 2.5%;
+	border-right: 1px solid gray;
+	padding: 20px;
+}
+
+.main {
+	float: right;
+	width: 70%;
+	margin: 2.5%;
+	padding: 40px;
+}
+
+/* FRONTPAGE CITIES */
+
+.city {
+	min-height: 100%;
+	position: relative;
+	margin: 15px 0px;
+}
+
+.city a {
+	text-decoration: none;
+}
+
+.city-image {
+	width: 100%;
+	height: 100%;
+	transition: all 1s ease;
+	opacity: 0;
+}
+
+.city-data {
+	width: 100.3%;
+	min-height: 200px;
+	height: 200px;
+	display: table;
+	background-color: rgba(0, 0, 0, 0.5);
+	transition: all 0.5s ease;
+	overflow:hidden;
+}
+
+
+.city-data .title {
+	color: white;
+	text-transform: uppercase;
+	text-align: center;
+	margin: 0px auto;
+	width: 85%;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.city-data .title h4 {
+	font-size: 25px;
+}
+
+.city-data .details {
+	color: white;
+	text-align: center;
+	text-transform: uppercase;
+	display: none;
+	opacity: 0;
+	vertical-align: middle;
+	margin: 0px auto;
+	width: 85%;
+}
+
+.city-data .details h4 {
+	font-size: 20px;
+	max-width: 100%;
+}
+
+/* HOVER EFFECTS */
+
+
+.city-data:hover {
+	background-color: rgba(58, 193, 98, 0.9);
+}
+
+
+.city-data:hover .details {
+	opacity: 1;
+	display: table-cell;
+}
+
+.city-data:hover .title {
+	display: none;
+	opacity: 0;
+}
+
+
+
+
+
+
+
+/* SINGLE CITY IMAGE */
+
+.single-photo {
+	min-width: 100%;
+	height: 300px;
+	background-size: cover!important;
+	display: table;
+	position: relative;
+}
+
+.single-photo h3 {
+	color: white;
+	text-transform: uppercase;
+	text-align: center;
+	font-size: 50px!important;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.img-attribution {
+    position: absolute;
+    right: 15px;
+	bottom: 10px;
+}
+
+/* SINGLE ACCORDION */
+
+.single-details {
+	clear: both;
+}
+
+/* SINGLE ATHLETES */
+
+.athlete img {
+	border-radius: 100%;
+	border: 2px solid rgb(58, 193, 98);
+  	width: 120px;
+  	height: 120px;
+  	display: block;
+	margin: 10px auto;
+	transition: all 0.5s ease;
+}
+
+.athlete img:hover {
+	border: 3px solid black;
+}
+
+/* SINGLE SEGMENTS */
+
+.segment {
+	min-height: 200px;
+}
+
+.segment img {
+	border: 2px solid rgb(58, 193, 98);
+  	width: 120px;
+  	height: 120px;
+  	display: block;
+	margin: 10px auto;
+	transition: all 0.5s ease;
+}
+
+.segment:hover img {
+	border: 2px solid black;
+}
+
+.segment p {
+	text-align: center;
+}
+
+/* FORMS */
+
+textarea {
+	width: 100%;
+	min-height: 100px;
+}
+
+input[type=radio] {
+	margin: 15px 5px;
+}
+
+/* FOOTER */
+
+footer {
+	clear: both;
+}
+
+/* D3 CHARTS */
+
+#chart {
+	width: 100%;
+	height: 400px;
+	min-height: 400px;
+	max-height: 700px;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+
+svg {
+  margin: 0px auto;
+}
+
+
+
+.axis path,
+.axis line {
+				fill: none;
+				stroke: gray;
+				shape-rendering: geometricPrecision;
+			}
+
+
+			
+.axis text {
+				font-size: 11px;
+			}
+
+
+
+.label {
+  
+}
+
+div.graph-tooltip, div.detail {   
+  position: absolute;           
+  text-align: center;                
+  padding: 5px;             
+  font: 12px;  
+  color: white;
+  border: 1px solid black;       
+  background: black;  
+  pointer-events: none;         
+}
