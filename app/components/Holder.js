@@ -19,7 +19,7 @@ var Main = React.createClass({
         var city = this.state.city;
 
         $.get("/api/geocode?city=" + city, function(data) {
-            console.log(data);
+
             component.setState({location: data})
         });
     },

@@ -87,7 +87,7 @@ module.exports = function (app, passport) {
 	app.get('/auth/strava/callback', 
   	passport.authenticate('strava', { failureRedirect: '/login' }),
   		function(req, res) {
-  			console.log("it was successful")
+  			
     // Successful authentication, redirect home.
     	res.redirect('/');
   	});
@@ -135,11 +135,11 @@ module.exports = function (app, passport) {
 				
 				var main = ReactDOMServer.renderToString(Main({data: data}));
 				var sidebar = ReactDOMServer.renderToString(Sidebar({data: data}));
-				var header = ReactDOMServer.renderToString(Header({data: data}));
+				var header = ReactDOMServer.renderToString(Header({data: data, type: "front"}));
 
 
 
-				res.render("index", {main: main, sidebar: sidebar, header: header, data: JSON.stringify(data), user: JSON.stringify(user)});
+				res.render("index", {main: main, sidebar: sidebar, header: header, pageType: "front", data: JSON.stringify(data), user: JSON.stringify(user)});
 				}).catch(function(err) {
 					console.log("got an error server side rendering components " + err);
 				});
@@ -180,9 +180,9 @@ module.exports = function (app, passport) {
 
 				var single = ReactDOMServer.renderToString(Single({data: data}));
 				var sidebar = ReactDOMServer.renderToString(Sidebar({data: data}));
-				var header = ReactDOMServer.renderToString(Header({data: data}));
+				var header = ReactDOMServer.renderToString(Header({data: data, type: "single"}));
 
-				res.render("single", {main: single, sidebar: sidebar, header: header, data: JSON.stringify(data), user: JSON.stringify(user)});
+				res.render("single", {main: single, sidebar: sidebar, header: header, pageType: "single", data: JSON.stringify(data), user: JSON.stringify(user)});
 				}).catch(function(err) {
 					console.log("got an error server side rendering components " + err);
 				});
@@ -316,7 +316,6 @@ module.exports = function (app, passport) {
 
 		query.limit = +req.query.limit || 20;
 
-		console.log(query)
 
 		DAO.getAllCities(query).then(function(data) {
 			res.send(data);
@@ -347,10 +346,9 @@ module.exports = function (app, passport) {
 		.get(function(req, res) {
 			var slug = req.query.slug;
 			
-			console.log(slug)
 
 			DAO.getTips(slug).then(function(data) {
-				console.log(data)
+
 				res.send(data)
 			}).catch(function(error) {
 				console.log(error)
@@ -362,13 +360,6 @@ module.exports = function (app, passport) {
 			var tip = req.body.tip;
 			var activity = req.body.activity;
 			var user = "development user";
-
-	
-			console.log(req.body)
-			console.log(slug)
-			console.log(tip)
-			console.log(activity)
-
 			DAO.addTip(user, activity, slug, tip)
 
 			res.send("post tips working")
@@ -390,8 +381,6 @@ module.exports = function (app, passport) {
 			var description = req.body.description;
 			var slug = req.body.slug;
 			var user = "development user";
-
-			console.log(req.body)
 
 			DAO.addDescription(slug, description, user);
 

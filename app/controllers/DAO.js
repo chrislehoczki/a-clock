@@ -11,7 +11,6 @@ function DAO () {
 
 	this.getHotelValues = function() {
 
-		console.log("through to dao")
 		var deferred = Q.defer();
 
 		var functions = [];
@@ -20,7 +19,6 @@ function DAO () {
 		functions.push(getValue("min"))
 
 		Q.all(functions).then(function(data) {
-			console.log(data)
 			var prices = [];
 
 			data.forEach(function(value) {
@@ -67,7 +65,6 @@ function DAO () {
 
 	this.getAllCities = function(query) {
 		var deferred = Q.defer();
-		console.log(query.query)
 		Cities.find(query.query, query.projection)
 			.sort(query.sort)
 			.limit(query.limit)
@@ -109,7 +106,6 @@ function DAO () {
 
 		var query = {"info.city.slug": slug}
 
-		console.log(query)
 		Cities
 			.findOne(query, {"running.tips": 1, "riding.tips": 1})
 			.exec(function (err, result) {
@@ -117,7 +113,6 @@ function DAO () {
 						deferred.reject(err)
 					}
 					else {
-						console.log(result)
 						deferred.resolve(result)
 				}
 
@@ -138,7 +133,7 @@ function DAO () {
 		functions.push(updateCity())
 
 		Q.all(functions).then(function(data) {
-			console.log(data);
+
 		}).catch(function(error) {
 			console.log(error)
 		});
@@ -220,7 +215,6 @@ function DAO () {
 		functions.push(updateCity())
 
 		Q.all(functions).then(function(data) {
-			console.log(data);
 		}).catch(function(error) {
 			console.log(error)
 		});
@@ -356,327 +350,6 @@ function DAO () {
 
 	},
 
-	this.getPosts = function(req, res) {
-		console.log("getting through")
-		var user = req.params.user;
-
-
-		var query = {"facebook.id": 10100866060381880};
-
-		Users.findOne(query, { posts: 1 })
-			.sort({ "dateAdded" : "desc"})
-			.exec(function (err, result) {
-					if (err) { throw err; }
-						/*
-					function compare(a,b) {
-						  return b.dateAdded - a.dateAdded;
-						}
-					console.log(result)
-					result.posts.sort(compare)
-					*/
-
-					res.json("blah");  //change this back
-				});
-	},
-
-	this.getPost = function(req, res) {
-
-		var postTitle = req.params.title;
-
-	    var query = {"facebook.id": 10100866060381880, "posts.postTitle": postTitle};
-
-	    
-		Users.findOne(query, {posts: 1, _id: 0})
-			.exec(function (err, result) {
-					if (err) { throw err; }
-
-					res.json(result.posts);
-				});
-	
-	},
-
-
-	this.addPost = function(req, res) {
-
-
-		var post = req.body;
-		var date = new Date();
-
-		post.mainImg = req.files.mainImg;
-		post.supportImg = req.files.supportImg;
-		post.dateAdded = date;
-		//console.log(post)
-
-
-		//ADD FILE TO SERVER LIST FOR UPLOADS
-		var file = "uploads/filelist.json";
-		if (req.files.mainImg) {
-			var data = {"image": "\\" + req.files.mainImg[0].path}
-			var obj = jsonfile.readFileSync(file)
-			console.log(obj)
-
-			obj.push(data)
-			console.log(obj)
-
-			jsonfile.writeFileSync(file, obj)
-
-		}
-
-		if (req.files.supportImg) {
-
-			req.files.supportImg.map(function(image) {
-			if (image.path) {
-				data = {"image": "\\" + image.path}
-				var obj = jsonfile.readFileSync(file)
-				console.log(obj)
-
-				obj.push(data)
-				console.log(obj)
-
-				jsonfile.writeFileSync(file, obj)
-				}
-			});	
-		}
-
-		
-		
-
-
-	    var query = {"facebook.id": 10100866060381880};
-	    /*
-		if (req.user.local.username) {
-			query = {"local.username": req.user.local.username};
-		}
-		*/
-
-		Users
-		.findOneAndUpdate(query, { $push: { posts: post } }, {"new": true})
-		.exec(function (err, result) {
-			if (err) { throw err; }
-			console.log(result)
-
-			res.json(result.posts);
-
-		});
-
-		},
-
-		
-
-	this.deletePost = function(req, res) {
-
-		console.log(req.params.title)
-
-		var postTitle = req.params.title;
-		
-		var query = {"facebook.id": 10100866060381880};
-
-		Users
-		.findOneAndUpdate(query, { $pull: { "posts": { postTitle : postTitle} }}, {"new": true})
-		.exec(function (err, result) {
-		if (err) { throw err; }
-			res.json(result);
-		});
-		
-
-	},
-
-	this.editPost = function(req, res) {
-
-		console.log(req.body)
-
-		var mainImg = JSON.parse(req.body.mainImg);
-		var mainPath = mainImg[0].path;
-
-		var supportImages = JSON.parse(req.body.supportImg);
-		
-		var supportPaths = [];
-
-		if (supportImages) {
-			supportImages.map(function(image) {
-						supportPaths.push(image.path);
-					});
-
-		}
-		
-
-
-
-		//ADD FILE TO SERVER LIST FOR UPLOADS
-		var file = "uploads/filelist.json";
-		if (req.files.mainImg) {
-			var data = {"image": "\\" + req.files.mainImg[0].path}
-			var obj = jsonfile.readFileSync(file)
-			console.log(obj)
-
-			obj.push(data)
-			console.log(obj)
-
-			jsonfile.writeFileSync(file, obj)
-
-		}
-
-		if (req.files.supportImg) {
-
-			req.files.supportImg.map(function(image) {
-			if (image.path) {
-				data = {"image": "\\" + image.path}
-				var obj = jsonfile.readFileSync(file)
-				console.log(obj)
-
-				obj.push(data)
-				console.log(obj)
-
-				jsonfile.writeFileSync(file, obj)
-				}
-			});	
-		}
-		
-
-		//IF NEW IMAGE UPLOADED && HAS IMAGE ATTACHED- DELETE IMAGE
-		if (req.files.mainImg && req.body.mainImg) { 
-			fs.unlinkSync(mainPath);
-		}
-
-		if (req.files.supportImg) {
-			supportPaths.forEach(function(filename) {	
-	  			fs.unlink(filename);
-			});
-		}
-
-
-
-
-		//UPDATE POST
-
-		var post = req.body;
-		var date = new Date();
-
-		//IF NEW FILE - replace, otherwise keep mainImg
-		post.mainImg = req.files.mainImg || mainImg;
-		post.supportImg = req.files.supportImg || supportImages;
-		post.dateModified = date;
-		
-		console.log(post)
-
-		var query = {"facebook.id": 10100866060381880, "posts.postTitle": req.params.title};
-		var modifier = { 
-        "$set": { 
-            "posts.$": post
-        	}
-        };
-		
-		Users
-		.findOneAndUpdate(query, modifier, {"new": true})
-		.exec(function (err, result) {
-			if (err) { throw err; }
-			console.log(result)
-
-			res.json(result);
-
-		});
-
-
-		
-	
-	},
-
-
-	this.singlePost = function(req, res) {
-
-		var postTitle = req.params.title;
-		console.log(postTitle)
-
-	    var query = {"facebook.id": 10100866060381880, "posts.postTitle": postTitle};
-	    var projection = {'posts.$': 1, '_id': 0};
-	    
-		Users.findOne(query, projection)
-			.exec(function (err, result) {
-					if (err) { 
-						throw err; 
-					}
-
-					console.log(result)
-					if (!result) {
-						res.render("error")
-						return;
-					}
-
-					res.render('single', { post: result.posts[0] }); 
-
-
-				
-				});
-	
-	},
-
-
-
-
-	this.getAllPosts = function(req, res) {
-
-		Users.find({}, { pins: 1, _id: 0 })
-			.exec(function (err, result) {
-				if (err) { throw err; }
-
-				var pinsArray = [];
-        		result.map(function(userData) {
-	          		var pins = userData.pins
-
-	            	pins.map(function(pin) {
-	                pinsArray.push(pin)
-	            	})
-
-	            	function compare(a,b) {
-						  return b.date - a.date;
-						}
-
-						pinsArray.sort(compare)
-
-        		})
-				res.json(pinsArray);
-			});
-
-
-	},
-
-	this.getUserPosts = function(req, res) {
-
-			var query = {"twitter.id": req.user.twitter.id};
-			if (req.user.local.username) {
-				query = {"local.username": req.user.local.username};
-			}
-
-
-		Users.findOne(query, { pins: 1, _id: 0 })
-			.exec(function (err, result) {
-					if (err) { throw err; }
-
-					function compare(a,b) {
-						  return b.date - a.date;
-						}
-					result.pins.sort(compare)
-
-					res.json(result);
-				});
-
-	},
-
-	this.addComment = function (req, res) {
-
-		if (!req.user) {
-			res.json("You must be logged in to upVote!")
-		}
-
-		var query = {"_id": req.body.user, "pins.title": req.body.title};
-
-
-		Users.findOneAndUpdate(query, {$addToSet: {"pins.$.upVotes" : req.user._id}}, {"new": true})
-		.exec(function (err, result) {
-			res.end()
-		})
-
-	},
 
 	this.getUsers = function(req, res) {
 

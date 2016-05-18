@@ -2,7 +2,6 @@ var React = require('react');
 var ReactBootstrap = require("react-bootstrap")
 var Modal = ReactBootstrap.Modal;
 var Button = ReactBootstrap.Button;
-var ajaxFunctions = require("../common/ajax-functions.js")
 
 var SignupModal= React.createClass({
 

@@ -1,6 +1,7 @@
 var React = require('react');
 
 var Group = require("./Group.js")
+var Controls = require("./Controls.js");
 
 var Main = React.createClass({
 
@@ -56,19 +57,7 @@ var Main = React.createClass({
        return (
 
             <div>
-               <button onClick={this.showRunningGroups}>Running</button>
-               <button onClick={this.showRidingGroups}>Riding</button>
-
-               {this.state.runningGroups.length < 1 ?
-                <p> No Running Groups Found </p>
-               :null}
-
-               {this.state.ridingGroups.length < 1 ?
-                <p> No Riding Groups Found </p>
-               :null}
-
-
-
+              <Controls showRiders={this.showRidingGroups} showRunners={this.showRunningGroups} selected={this.state.type} />
                {this.state.type === "running" ?
                 this.state.runningGroups.map(function(group) {
                 return <Group key={group.id} group={group} />

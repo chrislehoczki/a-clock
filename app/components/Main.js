@@ -11,9 +11,7 @@ var Main = React.createClass({
     },
 
     updateCities: function(data) {
-
         this.setState({data: data}, console.log(this.state.data));
-
     },
 
    

@@ -7,14 +7,11 @@ var Segment = React.createClass({
     getInitialState: function() {
         return {
           restaurants: [],
-          data: false
+          data: true
         };
     },
 
     componentDidMount: function() {
-
-
-
 
         var url = "/api/foursquare"
 
@@ -27,9 +24,6 @@ var Segment = React.createClass({
 
 
         $.get(url, query, function(data) {
-            console.log("this is restaurant")
-            console.log(data)
-            console.log(data)
             if (data.length > 0) {
                 component.setState({restaurants: data, data: true});
             } 
@@ -50,7 +44,7 @@ var Segment = React.createClass({
             <div>
             
 
-            {this.state.data === "true" ?
+            {this.state.data === true ?
                 <div>
                     {this.state.restaurants.map(function(restaurant) {
                     return <Restaurant key={restaurant.id} data={restaurant} />

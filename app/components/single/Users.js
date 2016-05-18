@@ -1,6 +1,7 @@
 var React = require('react');
 
-var User = require("./User.js")
+var User = require("./User.js");
+var Controls = require("./Controls.js");
 
 var Users = React.createClass({
 
@@ -28,8 +29,7 @@ var Users = React.createClass({
        return (
 
             <div>
-                <button onClick={this.showRunners}>Running</button>
-                <button onClick={this.showRiders}>Riding</button>
+                <Controls showRiders={this.showRiders} showRunners={this.showRunners} selected={this.state.type} />
 
                 {this.state.type === "running" ?
                     <div className="single-runners row">

@@ -1,5 +1,5 @@
 var React = require('react');
-
+var DescriptionString = require("./DescriptionString.js")
 
 var Weather = React.createClass({
 
@@ -190,7 +190,7 @@ var tooltip = d3.select("#chart").append("div").attr("class", "graph-tooltip").s
             location = i;
             month = stops[i].month;
             monthData = stops[i].data;
-            console.log(stops[i])
+
             break;
         }
         else {
@@ -359,7 +359,7 @@ function checkData(data, value) {
 
          return (
             <div>
-            <p> {this.state.title} </p>
+            <DescriptionString city={this.props.data}/>
             <div id="chart"></div>
             </div>
           );

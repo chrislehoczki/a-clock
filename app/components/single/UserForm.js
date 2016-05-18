@@ -21,7 +21,6 @@ var Main = React.createClass({
 
 
         if (!this.state.activityChosen && this.props.type === "tips") {
-            console.log("not chosen activity");
             this.setState({userMsg: "You must choose an activity before posting a tip."})
             return;
         }
@@ -35,10 +34,8 @@ var Main = React.createClass({
             url = "/api/tips"
         }
 
-        console.log(body)
-
         $.post(url, body, function(data) {
-                console.log(data)
+
                 component.props.type === "description" ? component.removeForm() : component.setState({msgClass: "alert alert-success", userMsg: "Great, we received it!"})
                 component.props.update();
         });
@@ -60,7 +57,6 @@ var Main = React.createClass({
     },
 
     addActivity: function(e) {
-        console.log(e.target.value.toLowerCase())
 
         this.setState({
               activity: e.target.value.toLowerCase(),

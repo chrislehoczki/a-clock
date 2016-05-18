@@ -13,7 +13,7 @@ var Segment = React.createClass({
     render: function() {  
 
         var href = "http://www.strava.com/segments/" + this.props.data.id;
-        var src = "http://maps.google.com/maps/api/staticmap?maptype=terrain&size=" + "100" + "x" + "100" + "&sensor=false&path=color:0xFF0000BF|weight:2|enc:";
+        var src = "http://maps.google.com/maps/api/staticmap?maptype=terrain&size=" + "100" + "x" + "100" + "&key=AIzaSyDZTyENWRBeduSGtY8bBmwstMpKRDUN9YE&sensor=false&path=color:0xFF0000BF|weight:2|enc:";
         if (this.props.data.points.length < 2000) {
           src += this.props.data.points;
 

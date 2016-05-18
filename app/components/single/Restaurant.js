@@ -22,11 +22,11 @@ var Restaurant = React.createClass({
       }
 
          return (
-          <div>
-          <a target="_blank" href={link}>
-          <img style={style} src={src} />
-          <p> {this.props.data.name} </p>
-          </a>
+          <div className="restaurant col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+            <a target="_blank" href={link}>
+              <img style={style} src={src} />
+              <p> {this.props.data.name} </p>
+            </a>
           </div>
       )
       }

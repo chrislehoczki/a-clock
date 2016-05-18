@@ -44,15 +44,14 @@ var Filter = React.createClass({
                 month: month,
                 maxRain: 10,
                 minHotelCost: 0,
-                maxHotelCost: 100
-                
+                maxHotelCost: 100,
+                limit: 20    
         };
     },
 
 
     updateHotel: function(data) {
       this.setState(data);
-      console.log(data)
     },
 
     sortBy: function(data) {
@@ -72,37 +71,33 @@ var Filter = React.createClass({
             terrain: this.state.terrain,
             continent: this.state.continent,
             alt: this.state.alt,
-            rain: this.state.maxRain
+            rain: this.state.maxRain,
+            limit: this.state.limit
             }
 
         var url = "/api/cities"
 
         $.get(url, query, function(data) {
-            console.log(data)
             component.props.updateCities(data);
         })
 
     },
 
     updateTemp: function(data) {
-      console.log(data)
       this.setState(data)
 
     },
 
     updateRain: function(data) {
-      console.log(data)
       this.setState(data)
     },
 
     selectMonth: function(data) {
-
         this.setState(data)
     },
 
     setTerrain: function(e) {
       this.setState({terrain: e.target.value})
-
     },
 
     updateTerrain: function(data) {
@@ -111,16 +106,27 @@ var Filter = React.createClass({
 
     updateAlt: function(data) {
       this.setState(data) 
-      console.log(this.state.alt)
     },
 
     selectContinent: function(data) {
       this.setState(data)
-
     },
 
     componentDidMount: function() {
+        var component = this;
+
       $('button').tooltip()
+
+      //INFINITE SCROLL
+      
+        $(window).scroll(function() {
+           if($(window).scrollTop() + $(window).height() == $(document).height()) {
+               component.setState({limit: component.state.limit + 10})
+               component.filter()
+           }
+        });
+
+       
 
     },
 

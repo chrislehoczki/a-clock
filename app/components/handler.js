@@ -15,16 +15,18 @@ var data = JSON.parse(document.getElementById("data").innerHTML);
 
 var user = JSON.parse(document.getElementById("user").innerHTML);
 
+var pageType = document.getElementById("pageType").innerHTML;
+
 var headerHolder = document.getElementById("header-react-holder");
 var sidebarHolder = document.getElementById("sidebar-react-holder");
 var mainHolder = document.getElementById("main-react-holder");
 var singleHolder = document.getElementById("single-react-holder");
 
 if (user !== "none") {
-	ReactDOM.render(<UserHeader user={user}/>, headerHolder);
+	ReactDOM.render(<UserHeader data={data} user={user} type={pageType}/>, headerHolder);
 }
 else {
-	ReactDOM.render(<Header />, headerHolder);
+	ReactDOM.render(<Header data={data} type={pageType} />, headerHolder);
 }
 
 ReactDOM.render(<SideBar data={data}/>, sidebarHolder);

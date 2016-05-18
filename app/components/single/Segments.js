@@ -1,5 +1,6 @@
 var React = require('react');
 var Segment = require("./Segment.js")
+var Controls = require("./Controls.js");
 
 var Segments = React.createClass({
 
@@ -21,9 +22,7 @@ var Segments = React.createClass({
        return (
 
             <div>
-                <h3> Popular Segments </h3>
-                <button onClick={this.showRunners}>Running</button>
-                <button onClick={this.showRiders}>Riding</button>
+                <Controls showRiders={this.showRiders} showRunners={this.showRunners} selected={this.state.type} />
 
                 {this.state.type === "running" ?
                     <div className="row single-runners-segments">

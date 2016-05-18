@@ -141,7 +141,7 @@ var Main = React.createClass({
        return (
 
             
-            <div onMouseEnter={this.onEnter} onMouseLeave={this.onLeave} className="city col-lg-3 col-md-4 col-sm-6 col-xs-12">
+            <div onMouseEnter={this.onEnter} onMouseLeave={this.onLeave} className="city col-lg-3 col-md-4 col-sm-4 col-xs-12">
                 <a href={url}>
                     <div style={this.state.style} className="city-image">
                         <div className="city-data">

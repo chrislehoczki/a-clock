@@ -25,8 +25,6 @@ var Tips = React.createClass({
         
         var url = "/api/tips?slug=" + this.props.slug
         $.get(url, function(data) {
-            console.log("tips data")
-            console.log(data)
             component.setState({runningTips: data.running.tips, ridingTips: data.riding.tips})
         });
 

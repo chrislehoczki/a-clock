@@ -10,7 +10,7 @@ var User = React.createClass({
          return (
 
           <div className="single-group">
-          <a target="_blank" href={href}> <h4> {this.props.group.name} </h4> </a>
+          	<a target="_blank" href={href}> <h4> {this.props.group.name} </h4> </a>
           </div>
 
 
