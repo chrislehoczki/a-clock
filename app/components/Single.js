@@ -13,10 +13,7 @@ var Weather = require("./single/Weather.js")
 var Overview = require("./single/OverView.js")
 
 
-var Accordion = ReactBootstrap.Accordion;
-var Panel = ReactBootstrap.Panel;
-
-var Main = React.createClass({
+var Single = React.createClass({
 
 
     getInitialState: function() {
@@ -90,4 +87,4 @@ var Main = React.createClass({
       }
 });
 
-module.exports=Main
+module.exports=Single

@@ -3,7 +3,7 @@
 
 var path = process.cwd();
 //var bodyParser   = require('body-parser');
-
+var Q = require("q")
 
 var passport = require('passport');
 
@@ -16,6 +16,9 @@ var flickr = require("./apis/flickr.js");
 var fourSquare = require("./apis/foursquare.js");
 var locate = require("./apis/ipLocate.js");
 var skyscan = require("./apis/skyscanner.js");
+var geo = require("./apis/geo.js");
+var Strava = require("./apis/Strava.js");
+var Weather = require("./apis/Weather.js")
 
 //REACT
 var React = require('react');
@@ -431,6 +434,7 @@ module.exports = function (app, passport) {
 
     });
 
+    //SKYSCAN
     app.get("/api/skyscan", function(req, res) {
     	var destination = req.query.destination;
     	skyscan("Manchester", destination, "TH", "GBP", "en_US", "2016-05-11").then(function(data) {
@@ -439,6 +443,99 @@ module.exports = function (app, passport) {
 		})
     });
 
+    //GOOGLE GEOCODE
+    app.get("/api/geocode", function(req, res) {
+
+    	geo(req.query.city).then(function(data) {
+    		res.send(data)
+    	}).catch(function(err) {
+    		res.send(err)
+    	})
+
+
+    });
+
+
+    //STRAVA SEGMENTS
+
+    app.post("/api/getsegs", function(req, res) {
+
+    	console.log(req.body)
+    	var city = {}
+    	
+    	city.info = {};
+    	city.info.country = {};
+    	city.info.city = {};
+    	city.info.location = {};
+
+    	city.info.city.name = req.body.city;
+    	city.info.country.name = req.body.country;
+    	city.info.location.latitude = +req.body.lat;
+    	city.info.location.longitude = +req.body.long;
+
+    	city.datasets = {};
+
+    	console.log(city)
+    	
+    	var strava = new Strava(city.info.location.latitude, city.info.location.longitude)
+    	var weather = new Weather(city.info.location.latitude, city.info.location.longitude, process.env.NCDC_TOKEN);
+
+    	var buildCity = [];
+
+    	buildCity.push(weather.monthlyAverages())
+    	buildCity.push(strava.singleCity())
+
+    	Q.all(buildCity).then(function(data) {
+
+    		var weatherData = data[0];
+    		var stravaData = data[1];
+
+    		city.running = stravaData[0];
+			city.riding = stravaData[1];
+			city.datasets.strava = true;
+
+			var weatherObj = {
+			station: weather.station,
+			elevation: weather.elevation,
+			data: weather.fullData
+			}
+
+			city.weather = weatherObj;
+			city.datasets.weather = true;
+			console.log(city)
+    		res.send(city)
+    	}).catch(function(err) {
+    		res.send(err)
+    	})
+
+    	/*
+    	weather.monthlyAverages().then(function(data) {
+	
+		var weatherObj = {
+			station: weather.station,
+			elevation: weather.elevation,
+			data: weather.fullData
+		}
+
+		city.weather = weatherObj;
+		city.datasets.weather = true;
+
+		
+		}).catch(function(err) {
+			console.log(err)
+		})
+
+		strava.singleCity().then(function(data) {
+			city.running = data[0];
+			city.riding = data[1];
+			
+			city.datasets.strava = true;
+			res.send(city)
+		}).catch(function(err) {
+			console.log(err)
+		})
+		*/
+    });
 
 
 

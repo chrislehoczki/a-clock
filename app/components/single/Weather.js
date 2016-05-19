@@ -131,19 +131,24 @@ svg.append("g")
         .attr("transform", "rotate(90)")
         .style("text-anchor", "start");
   
+if (checkData(data, "totalPrec")) {
+
 svg.append("g")
     .attr("class", "axis")
     .style("fill", rain)
     .attr("transform", "translate(" + width + "," + 0 + ")")
     .call(axis2)
     .classed("axis", true)
+  }
+
+  if (checkData(data, "avgTemp")) {
 
 svg.append("g")
     .attr("class", "axis")
     .call(axis3)
     .classed("axis", true)
     .style("fill", temp)
-
+}
 }
 
 function addTooltip(xAx) {

@@ -339,7 +339,7 @@ input[type=range]:focus::-ms-fill-upper {
 }
 
 .city-data {
-	width: 100.3%;
+	width: 100.2%;
 	min-height: 200px;
 	height: 200px;
 	display: table;
@@ -672,4 +672,14 @@ div.graph-tooltip, div.detail {
   border: 1px solid black;       
   background: black;  
   pointer-events: none;         
+}
+
+
+//ADD CITY
+.location-buttons button {
+	width: 100%;
+}
+
+.addCityModal {
+	width: 90%;
 }

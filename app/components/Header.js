@@ -1,15 +1,18 @@
 var React = require('react');
 
-var LoginModal = require("./Login.js")
-var SignupModal = require("./Signup.js")
-var IntroText = require("./IntroText.js")
-var Overview = require("./single/Overview.js")
+var LoginModal = require("./Login.js");
+var SignupModal = require("./Signup.js");
+var AddCityModal = require("./addcity/AddCityModal.js");
+var IntroText = require("./IntroText.js");
+var Overview = require("./single/Overview.js");
+
 var Header = React.createClass({
 
     getInitialState: function() {
         return { 
           showSignupModal: false,
           showLoginModal: false,
+          addCityModal: false,
           attr: ""
         };
     },
@@ -57,6 +60,14 @@ var Header = React.createClass({
       this.setState({showSignupModal: false})
     },
 
+    showAddCityModal: function () {
+      this.setState({showAddCityModal: true})
+    },
+
+    hideAddCityModal: function () {
+      this.setState({showAddCityModal: false})
+    },
+
     changeModal: function() {
       this.setState({showLoginModal: false}) 
       this.setState({showSignupModal: true})     
@@ -92,7 +103,7 @@ var Header = React.createClass({
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
+              <li><a href="#" onClick={this.showAddCityModal}>Add City</a></li>
                <li className="dropdown">
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
                 <ul className="dropdown-menu">
@@ -124,6 +135,7 @@ var Header = React.createClass({
           
           <LoginModal changeModal={this.changeModal} showMessage={this.state.showLoginModal} hideMessage={this.hideLoginModal}/>
           <SignupModal showMessage={this.state.showSignupModal} hideMessage={this.hideSignupModal}/>
+          <AddCityModal showMessage={this.state.showAddCityModal} hideMessage={this.hideAddCityModal}/>
         </div>
 
            

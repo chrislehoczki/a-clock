@@ -6,8 +6,12 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
 var routes = require('./app/routes/index.js');
-var stravaRoute = require('./app/routes/strava.js');
-var geoRoute = require('./app/routes/geo.js');
+
+var port = process.env.PORT || 8080
+app.listen(port, function () {
+  console.log('App listening on port: ' + port);
+});
+
 
 var request = require('request');
 var fs = require("fs");
@@ -16,15 +20,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 //var flash    = require('connect-flash');
 
-
-
+var morgan = require('morgan')
+app.use(morgan('combined'))
 //MODULES FOR ISOMORPHIC REACT
 
 require("node-jsx").install();
+/*
 var React = require('react');
 var ReactDOMServer = require("react-dom/server")
 var ReactBootstrap = require("react-bootstrap")
-
+*/
 
 
 require('./app/config/passport')(passport);
@@ -63,14 +68,9 @@ app.use(passport.session());
 
 //ROUTES
 routes(app, passport);
-stravaRoute(app,passport);
-geoRoute(app,passport);
 
 
 
 
 
-var port = process.env.PORT || 8080
-app.listen(port, function () {
-  console.log('App listening on port: ' + port);
-});
+
