@@ -1,5 +1,4 @@
 var React = require('react');
-var Range = require('react-range');
 
 var Cities = require("./Cities.js")
 

@@ -1,8 +1,6 @@
 'use strict';
 
-
 var path = process.cwd();
-//var bodyParser   = require('body-parser');
 var Q = require("q")
 
 var passport = require('passport');

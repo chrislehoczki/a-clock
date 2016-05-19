@@ -13,31 +13,20 @@ app.listen(port, function () {
 });
 
 
-var request = require('request');
-var fs = require("fs");
-
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
-//var flash    = require('connect-flash');
 
 var morgan = require('morgan')
-app.use(morgan('combined'))
-//MODULES FOR ISOMORPHIC REACT
+app.use(morgan('dev'));
+
 
 require("node-jsx").install();
-/*
-var React = require('react');
-var ReactDOMServer = require("react-dom/server")
-var ReactBootstrap = require("react-bootstrap")
-*/
-
 
 require('./app/config/passport')(passport);
 
 //VIEW ENGINE
 app.set("view engine", "ejs");
 app.set('views', __dirname + '/public/views');
-
 
 
 //MONGOOSE CONNECT
@@ -60,14 +49,13 @@ app.use(session({
 	resave: false,
 	saveUninitialized: true
 }));
-
-
 app.use(passport.initialize());
 app.use(passport.session());
-//app.use(flash())
 
 //ROUTES
 routes(app, passport);
+
+
 
 
 

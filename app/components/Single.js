@@ -10,7 +10,7 @@ var Tips = require("./single/Tips.js");
 var UserForm = require("./single/UserForm.js");
 var Description = require("./single/Description.js");
 var Weather = require("./single/Weather.js")
-var Overview = require("./single/OverView.js")
+
 
 
 var Single = React.createClass({
@@ -33,10 +33,6 @@ var Single = React.createClass({
        return (
 
             <div>
-            
-                <div className="single-overview"> 
-                    
-                </div>
 
                 
                
