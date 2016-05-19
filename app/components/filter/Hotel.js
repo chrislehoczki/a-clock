@@ -49,7 +49,7 @@ var Hotel = React.createClass({
               value={this.state.minHotelCost}
               min={0}
               max={200} />
-              <p>{this.state.minHotelCost}</p>
+              <p>${this.state.minHotelCost}</p>
 
             <p> Max Hotel Cost </p>
             <input
@@ -58,8 +58,8 @@ var Hotel = React.createClass({
               type='range'
               value={this.state.maxHotelCost}
               min={0}
-              max={200} />
-              <p>{this.state.maxHotelCost}</p>
+              max={150} />
+              <p>${this.state.maxHotelCost}</p>
           </div>
         );
   

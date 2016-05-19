@@ -63,9 +63,9 @@ var Terrain = React.createClass({
       
        return (
           <div>
-            <p> I like it </p>
-            <button style={this.state.terrainControl.hilly} value="hilly" onClick={this.setTerrain}> Hilly </button>
-            <button style={this.state.terrainControl.flat} value="flat" onClick={this.setTerrain}> Flat </button>
+            <p> Terrain </p>
+            <button className="btn filter-btn btn-two" style={this.state.terrainControl.hilly} value="hilly" onClick={this.setTerrain}> Hilly </button>
+            <button className="btn filter-btn btn-two" style={this.state.terrainControl.flat} value="flat" onClick={this.setTerrain}> Flat </button>
           </div>
         );
   

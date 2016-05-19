@@ -78,9 +78,9 @@ var Sort = React.createClass({
         <div>
          <p> Altitude </p>
           
-            <button style={this.state.altControl.low} value="low" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"0 - 500m"}> Low </button>
-            <button style={this.state.altControl.medium} value="medium" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"500 - 1000m"}> Medium </button>
-            <button style={this.state.altControl.high} value="high" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"1000m+"}> High </button>
+            <button className="btn filter-btn btn-three" style={this.state.altControl.low} value="low" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"0 - 500m"}> Low </button>
+            <button className="btn filter-btn btn-three" style={this.state.altControl.medium} value="medium" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"500 - 1000m"}> Medium </button>
+            <button className="btn filter-btn btn-three" style={this.state.altControl.high} value="high" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"1000m+"}> High </button>
             
           
         </div>

@@ -80,10 +80,10 @@ var Temp = React.createClass({
       
        return (
           <div>
-            <p> I like it </p>
-            <button style={this.state.tempControl.hot} value="hot" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"26+ deg C"}> Hot </button>
-            <button style={this.state.tempControl.warm} value="warm" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"15 to 26 deg C"}> Warm </button>
-            <button style={this.state.tempControl.cool} value="cool" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"-5 to 15 deg C"}> Cold </button>
+            <p> Temperature </p>
+            <button className="btn filter-btn btn-three" style={this.state.tempControl.hot} value="hot" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"26+ deg C"}> Hot </button>
+            <button className="btn filter-btn btn-three" style={this.state.tempControl.warm} value="warm" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"15 to 26 deg C"}> Warm </button>
+            <button className="btn filter-btn btn-three" style={this.state.tempControl.cool} value="cool" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"-5 to 15 deg C"}> Cold </button>
           </div>
         );
   

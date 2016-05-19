@@ -22,18 +22,12 @@ var Filter = React.createClass({
 
         var defaultStyle = {
             backgroundColor: "#F8F8F8",
-            padding: "4px",
-            color: "rgb(58, 193, 98)",
-            borderRadius: "5%",
-            margin: "4px"
+            color: "rgb(58, 193, 98)"
         }
 
         var selectedStyle = {
             backgroundColor: "rgb(58, 193, 98)",
-            padding: "4px",
-            color: "black",
-            borderRadius: "5%",
-            margin: "4px"
+            color: "white"
         }
 
 
@@ -44,7 +38,7 @@ var Filter = React.createClass({
                 month: month,
                 maxRain: 10,
                 minHotelCost: 0,
-                maxHotelCost: 100,
+                maxHotelCost: 150,
                 limit: 20    
         };
     },
@@ -54,8 +48,7 @@ var Filter = React.createClass({
       this.setState(data);
     },
 
-    sortBy: function(data) {
-       
+    updateSort: function(data) {
         this.setState(data);
     },
 
@@ -135,43 +128,48 @@ var Filter = React.createClass({
   
       
        return (
+            <div>
+                <div className="row filter-holder">
 
-            <div className="row">
+                <div className="filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <Hotel minCost={this.state.minHotelCost} maxCost={this.state.maxHotelCost} updateHotel={this.updateHotel}/>
+                    <Sort defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateSort={this.updateSort} sortBy={this.state.sortBy} />
+                </div>
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Hotel minCost={this.state.minHotelCost} maxCost={this.state.maxHotelCost} updateHotel={this.updateHotel}/>
-            </div>
+                <div className="filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <Temp defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateTemp={this.updateTemp} temp={this.state.temp}/>
+                </div>
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Temp defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateTemp={this.updateTemp} temp={this.state.temp}/>
-            </div>
+                <div className="filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <Rain updateRain={this.updateRain} maxRain={this.state.maxRain} />
+                </div>
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Rain updateRain={this.updateRain} maxRain={this.state.maxRain} />
-            </div>
+                <div className="filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <Terrain defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateTerrain={this.updateTerrain} terrain={this.state.terrain}/>
+                </div>
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Terrain defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateTerrain={this.updateTerrain} terrain={this.state.terrain}/>
-            </div>
+                <div className="filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <Altitude defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateAlt={this.updateAlt} alt={this.state.alt}/>
+                </div>
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Altitude defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateAlt={this.updateAlt} alt={this.state.alt}/>
-            </div>
+                <div className="filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <Month selectMonth={this.selectMonth} month={this.state.month} />
+                </div>
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Month selectMonth={this.selectMonth} month={this.state.month} />
-            </div>
+                <div className="filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12">
+                    <Continent selectContinent={this.selectContinent}/>
+                </div>
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Continent selectContinent={this.selectContinent}/>
-            </div>
+                
 
-            <div className="col-lg-3 col-md-4 col-sm-6 col-xs-12">
-                <Sort sortBy={this.sortBy} />
-            </div>
+                
 
-          
-            <button className="btn btn-primary" onClick={this.filter}>Filter</button>
+              
+                
+                </div>
+
+                
+                <button className="btn btn-filter-send" onClick={this.filter}>Filter</button>
             </div>
             
         );

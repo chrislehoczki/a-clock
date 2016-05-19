@@ -162,7 +162,7 @@ module.exports = function (app, passport) {
 
 
 		DAO.getSingleCity(query).then(function(data) {
-
+			
 				data = JSON.stringify(data);
 				data = JSON.parse(data);
 			

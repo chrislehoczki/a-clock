@@ -16,6 +16,7 @@ var Overview = React.createClass({
 
 	componentDidMount: function() {
         //FLIGHT
+        /*
         var url = "/api/skyscan"
         var query = {};
         query.origin = "Manchester" //THIS WILL BE CODED ON SERVER IN FUTURE
@@ -25,6 +26,7 @@ var Overview = React.createClass({
         $.get(url, query, function(data) {
             component.setState({flight: data});
         });
+        */
 
     },
 

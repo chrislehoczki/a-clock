@@ -59,9 +59,6 @@ var SideBar = React.createClass({
             <div> 
             <SearchBox />
             <DataDisplay />
-            <input type="text" value={this.state.city} onChange={this.setCity} />
-            <button className="btn btn-primary" onClick={this.geocode}>Geocode</button>
-            <button className="btn btn-secondary" onClick={this.getSegments}>Get Segments</button>
             </div>
         );
   

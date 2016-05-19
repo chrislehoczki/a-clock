@@ -1,7 +1,8 @@
 var React = require('react');
 
-var UserForm = require("./UserForm.js")
-var Tip = require("./Tip.js")
+var UserForm = require("./UserForm.js");
+var Tip = require("./Tip.js");
+var Controls = require("./Controls.js");
 
 var Tips = React.createClass({
 
@@ -30,11 +31,11 @@ var Tips = React.createClass({
 
     },
  
-    showRunningGroups: function() {
+    showRunningTips: function() {
         this.setState({type: "running"})
     },
 
-    showRidingGroups: function() {
+    showRidingTips: function() {
         this.setState({type: "riding"})
     },
 
@@ -43,8 +44,7 @@ var Tips = React.createClass({
        return (
 
             <div> 
-                <button onClick={this.showRunningGroups}>Running</button>
-                <button onClick={this.showRidingGroups}>Riding</button>
+                <Controls showRiders={this.showRidingTips} showRunners={this.showRunningTips} selected={this.state.type} />
                 
 
                 {this.state.type === "riding" ?

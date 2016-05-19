@@ -43,6 +43,7 @@ var SearchBox = React.createClass({
 
        return (
             <div>
+            <h3> Search Cities </h3>
             <input type="text" value={this.state.value} onChange={this.changeValue} onSelect={this.selectValue} list="languages"/>
             <datalist id="languages">
             {this.state.cities.map(function(city) {

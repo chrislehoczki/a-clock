@@ -153,7 +153,6 @@ var Main = React.createClass({
                             <div className="details">
                             <h4> Runners: {this.state.runners} </h4>
                             <h4> Riders: {this.state.riders} </h4>
-                            <h4> Hotel: {this.props.data.cost.hotel.USD} </h4>
                             </div>
 
                         </div>

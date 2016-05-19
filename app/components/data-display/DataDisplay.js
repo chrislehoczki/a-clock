@@ -9,7 +9,8 @@ var DataDisplay = React.createClass({
         running: [],
         riding: [],
         hotel: [],
-        altitude: []
+        altitude: [],
+        data: false
     };
     },
 
@@ -29,24 +30,25 @@ var DataDisplay = React.createClass({
 
        return (
             <div>
-            <p> Top Cities </p>
 
-            <p> Total Runners </p>
+            <h4> Top Three </h4>
+
+            <h4> Total Runners </h4>
             {this.state.running.map(function(city) {
                 return <TopCity key={city.info.city.slug} city={city} />
             })}
 
-            <p> Total Riders </p>
+            <h4> Total Riders </h4>
             {this.state.riding.map(function(city) {
                 return <TopCity key={city.info.city.slug} city={city} />
             })}
 
-            <p> Highest </p>
+            <h4> Highest </h4>
             {this.state.altitude.map(function(city) {
                 return <TopCity key={city.info.city.slug} city={city} />
             })}
 
-            <p> Cheapest </p>
+            <h4> Cheapest </h4>
             {this.state.hotel.map(function(city) {
                 return <TopCity key={city.info.city.slug} city={city} />
             })}

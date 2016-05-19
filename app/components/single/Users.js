@@ -6,7 +6,7 @@ var Controls = require("./Controls.js");
 var Users = React.createClass({
 
     getInitialState: function() {
-        return {type: "running"};
+        return {type: "riding"};
     },
 
     showRunners: function() {
@@ -21,6 +21,10 @@ var Users = React.createClass({
         setTimeout(function() {
             $('.athlete img').tooltip()
         },500)
+    },
+
+    componentDidMount: function() {
+        this.setState({type: "running"})
     },
 
     render: function() {    

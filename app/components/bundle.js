@@ -704,11 +704,6 @@ var Cities = React.createClass({
             "div",
             { id: "cities-holder" },
             React.createElement(
-                "h3",
-                null,
-                " Cities "
-            ),
-            React.createElement(
                 "div",
                 { className: "row" },
                 this.props.cities.length === 0 ? React.createElement(
@@ -898,13 +893,6 @@ var Main = React.createClass({
                                 " Riders: ",
                                 this.state.riders,
                                 " "
-                            ),
-                            React.createElement(
-                                "h4",
-                                null,
-                                " Hotel: ",
-                                this.props.data.cost.hotel.USD,
-                                " "
                             )
                         )
                     )
@@ -1004,18 +992,12 @@ var Filter = React.createClass({
 
         var defaultStyle = {
             backgroundColor: "#F8F8F8",
-            padding: "4px",
-            color: "rgb(58, 193, 98)",
-            borderRadius: "5%",
-            margin: "4px"
+            color: "rgb(58, 193, 98)"
         };
 
         var selectedStyle = {
             backgroundColor: "rgb(58, 193, 98)",
-            padding: "4px",
-            color: "black",
-            borderRadius: "5%",
-            margin: "4px"
+            color: "white"
         };
 
         return {
@@ -1025,7 +1007,7 @@ var Filter = React.createClass({
             month: month,
             maxRain: 10,
             minHotelCost: 0,
-            maxHotelCost: 100,
+            maxHotelCost: 150,
             limit: 20
         };
     },
@@ -1034,8 +1016,7 @@ var Filter = React.createClass({
         this.setState(data);
     },
 
-    sortBy: function sortBy(data) {
-
+    updateSort: function updateSort(data) {
         this.setState(data);
     },
 
@@ -1109,50 +1090,50 @@ var Filter = React.createClass({
 
         return React.createElement(
             'div',
-            { className: 'row' },
+            null,
             React.createElement(
                 'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Hotel, { minCost: this.state.minHotelCost, maxCost: this.state.maxHotelCost, updateHotel: this.updateHotel })
-            ),
-            React.createElement(
-                'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Temp, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTemp: this.updateTemp, temp: this.state.temp })
-            ),
-            React.createElement(
-                'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Rain, { updateRain: this.updateRain, maxRain: this.state.maxRain })
-            ),
-            React.createElement(
-                'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Terrain, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTerrain: this.updateTerrain, terrain: this.state.terrain })
-            ),
-            React.createElement(
-                'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Altitude, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateAlt: this.updateAlt, alt: this.state.alt })
-            ),
-            React.createElement(
-                'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Month, { selectMonth: this.selectMonth, month: this.state.month })
-            ),
-            React.createElement(
-                'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Continent, { selectContinent: this.selectContinent })
-            ),
-            React.createElement(
-                'div',
-                { className: 'col-lg-3 col-md-4 col-sm-6 col-xs-12' },
-                React.createElement(Sort, { sortBy: this.sortBy })
+                { className: 'row filter-holder' },
+                React.createElement(
+                    'div',
+                    { className: 'filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12' },
+                    React.createElement(Hotel, { minCost: this.state.minHotelCost, maxCost: this.state.maxHotelCost, updateHotel: this.updateHotel }),
+                    React.createElement(Sort, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateSort: this.updateSort, sortBy: this.state.sortBy })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12' },
+                    React.createElement(Temp, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTemp: this.updateTemp, temp: this.state.temp })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12' },
+                    React.createElement(Rain, { updateRain: this.updateRain, maxRain: this.state.maxRain })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12' },
+                    React.createElement(Terrain, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTerrain: this.updateTerrain, terrain: this.state.terrain })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12' },
+                    React.createElement(Altitude, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateAlt: this.updateAlt, alt: this.state.alt })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12' },
+                    React.createElement(Month, { selectMonth: this.selectMonth, month: this.state.month })
+                ),
+                React.createElement(
+                    'div',
+                    { className: 'filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12' },
+                    React.createElement(Continent, { selectContinent: this.selectContinent })
+                )
             ),
             React.createElement(
                 'button',
-                { className: 'btn btn-primary', onClick: this.filter },
+                { className: 'btn btn-filter-send', onClick: this.filter },
                 'Filter'
             )
         );
@@ -1747,6 +1728,11 @@ var SearchBox = React.createClass({
         return React.createElement(
             "div",
             null,
+            React.createElement(
+                "h3",
+                null,
+                " Search Cities "
+            ),
             React.createElement("input", { type: "text", value: this.state.value, onChange: this.changeValue, onSelect: this.selectValue, list: "languages" }),
             React.createElement(
                 "datalist",
@@ -1823,18 +1809,7 @@ var SideBar = React.createClass({
             "div",
             null,
             React.createElement(SearchBox, null),
-            React.createElement(DataDisplay, null),
-            React.createElement("input", { type: "text", value: this.state.city, onChange: this.setCity }),
-            React.createElement(
-                "button",
-                { className: "btn btn-primary", onClick: this.geocode },
-                "Geocode"
-            ),
-            React.createElement(
-                "button",
-                { className: "btn btn-secondary", onClick: this.getSegments },
-                "Get Segments"
-            )
+            React.createElement(DataDisplay, null)
         );
     }
 });
@@ -2443,7 +2418,8 @@ var DataDisplay = React.createClass({
             running: [],
             riding: [],
             hotel: [],
-            altitude: []
+            altitude: [],
+            data: false
         };
     },
 
@@ -2461,12 +2437,12 @@ var DataDisplay = React.createClass({
             "div",
             null,
             React.createElement(
-                "p",
+                "h4",
                 null,
-                " Top Cities "
+                " Top Three "
             ),
             React.createElement(
-                "p",
+                "h4",
                 null,
                 " Total Runners "
             ),
@@ -2474,7 +2450,7 @@ var DataDisplay = React.createClass({
                 return React.createElement(TopCity, { key: city.info.city.slug, city: city });
             }),
             React.createElement(
-                "p",
+                "h4",
                 null,
                 " Total Riders "
             ),
@@ -2482,7 +2458,7 @@ var DataDisplay = React.createClass({
                 return React.createElement(TopCity, { key: city.info.city.slug, city: city });
             }),
             React.createElement(
-                "p",
+                "h4",
                 null,
                 " Highest "
             ),
@@ -2490,7 +2466,7 @@ var DataDisplay = React.createClass({
                 return React.createElement(TopCity, { key: city.info.city.slug, city: city });
             }),
             React.createElement(
-                "p",
+                "h4",
                 null,
                 " Cheapest "
             ),
@@ -2618,17 +2594,17 @@ var Sort = React.createClass({
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.altControl.low, value: "low", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "0 - 500m" },
+                        { className: "btn filter-btn btn-three", style: this.state.altControl.low, value: "low", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "0 - 500m" },
                         " Low "
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.altControl.medium, value: "medium", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "500 - 1000m" },
+                        { className: "btn filter-btn btn-three", style: this.state.altControl.medium, value: "medium", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "500 - 1000m" },
                         " Medium "
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.altControl.high, value: "high", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "1000m+" },
+                        { className: "btn filter-btn btn-three", style: this.state.altControl.high, value: "high", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "1000m+" },
                         " High "
                   )
             );
@@ -2775,6 +2751,7 @@ var Hotel = React.createClass({
             React.createElement(
                 'p',
                 null,
+                '$',
                 this.state.minHotelCost
             ),
             React.createElement(
@@ -2788,10 +2765,11 @@ var Hotel = React.createClass({
                 type: 'range',
                 value: this.state.maxHotelCost,
                 min: 0,
-                max: 200 }),
+                max: 150 }),
             React.createElement(
                 'p',
                 null,
+                '$',
                 this.state.maxHotelCost
             )
         );
@@ -2960,29 +2938,76 @@ module.exports = Rain;
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var Sort = React.createClass({
-  displayName: "Sort",
+      displayName: "Sort",
 
 
-  sortBy: function sortBy(e) {
-    this.setState({ sortBy: e.target.value });
-    this.props.sortBy({ sortBy: e.target.value });
-  },
+      getInitialState: function getInitialState() {
+            return {
+                  sortControl: { running: this.props.defaultStyle, riding: this.props.defaultStyle },
+                  defaultStyle: this.props.defaultStyle,
+                  selectedStyle: this.props.selectedStyle
+            };
+      },
 
-  render: function render() {
-    return React.createElement(
-      "div",
-      null,
-      React.createElement(
-        "p",
-        null,
-        " Sort By "
-      ),
-      React.createElement("input", { type: "radio", name: "activity", value: "running.runnerCount", onChange: this.sortBy }),
-      " Running",
-      React.createElement("input", { type: "radio", name: "activity", value: "riding.riderCount", onChange: this.sortBy }),
-      " Riding"
-    );
-  }
+      setSort: function setSort(e) {
+
+            var component = this;
+
+            var sortControlStyles = this.state.sortControl;
+
+            for (var property in sortControlStyles) {
+                  if (sortControlStyles.hasOwnProperty(property)) {
+                        sortControlStyles[property] = this.state.defaultStyle;
+                  }
+            }
+
+            sortControlStyles[e.target.value] = this.state.selectedStyle;
+
+            this.setState({ sortControl: sortControlStyles });
+
+            //SEND TO PARENT HERE
+            this.props.updateSort({ sortBy: e.target.value });
+
+            //IF SELECTED
+            if (this.props.sortBy) {
+                  if (this.props.sortBy === e.target.value) {
+                        defaultStyles();
+                        //NEED TO SEND TO PARENT HERE
+                        this.props.updateSort({ sortBy: null });
+                  }
+            }
+
+            function defaultStyles() {
+                  var sortControlStyles = component.state.sortControl;
+                  for (var property in sortControlStyles) {
+                        if (sortControlStyles.hasOwnProperty(property)) {
+                              sortControlStyles[property] = component.state.defaultStyle;
+                        }
+                  }
+            }
+      },
+
+      render: function render() {
+            return React.createElement(
+                  "div",
+                  null,
+                  React.createElement(
+                        "p",
+                        null,
+                        " Sort By "
+                  ),
+                  React.createElement(
+                        "button",
+                        { className: "btn filter-btn btn-two", style: this.state.sortControl.running, value: "running", onClick: this.setSort },
+                        " Runners "
+                  ),
+                  React.createElement(
+                        "button",
+                        { className: "btn filter-btn btn-two", style: this.state.sortControl.riding, value: "riding", onClick: this.setSort },
+                        " Riders "
+                  )
+            );
+      }
 });
 
 module.exports = Sort;
@@ -3065,21 +3090,21 @@ var Temp = React.createClass({
                   React.createElement(
                         "p",
                         null,
-                        " I like it "
+                        " Temperature "
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.tempControl.hot, value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
+                        { className: "btn filter-btn btn-three", style: this.state.tempControl.hot, value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
                         " Hot "
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.tempControl.warm, value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
+                        { className: "btn filter-btn btn-three", style: this.state.tempControl.warm, value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
                         " Warm "
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.tempControl.cool, value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
+                        { className: "btn filter-btn btn-three", style: this.state.tempControl.cool, value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
                         " Cold "
                   )
             );
@@ -3153,16 +3178,16 @@ var Terrain = React.createClass({
                   React.createElement(
                         "p",
                         null,
-                        " I like it "
+                        " Terrain "
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.terrainControl.hilly, value: "hilly", onClick: this.setTerrain },
+                        { className: "btn filter-btn btn-two", style: this.state.terrainControl.hilly, value: "hilly", onClick: this.setTerrain },
                         " Hilly "
                   ),
                   React.createElement(
                         "button",
-                        { style: this.state.terrainControl.flat, value: "flat", onClick: this.setTerrain },
+                        { className: "btn filter-btn btn-two", style: this.state.terrainControl.flat, value: "flat", onClick: this.setTerrain },
                         " Flat "
                   )
             );
@@ -3564,14 +3589,17 @@ var Overview = React.createClass({
 
     componentDidMount: function componentDidMount() {
         //FLIGHT
-        var url = "/api/skyscan";
+        /*
+        var url = "/api/skyscan"
         var query = {};
-        query.origin = "Manchester"; //THIS WILL BE CODED ON SERVER IN FUTURE
+        query.origin = "Manchester" //THIS WILL BE CODED ON SERVER IN FUTURE
         query.destination = this.props.data.info.city.name;
-
-        $.get(url, query, function (data) {
-            component.setState({ flight: data });
+          
+        $.get(url, query, function(data) {
+            component.setState({flight: data});
         });
+        */
+
     },
 
     render: function render() {
@@ -3702,14 +3730,17 @@ var Overview = React.createClass({
 
     componentDidMount: function componentDidMount() {
         //FLIGHT
-        var url = "/api/skyscan";
+        /*
+        var url = "/api/skyscan"
         var query = {};
-        query.origin = "Manchester"; //THIS WILL BE CODED ON SERVER IN FUTURE
+        query.origin = "Manchester" //THIS WILL BE CODED ON SERVER IN FUTURE
         query.destination = this.props.data.info.city.name;
-
-        $.get(url, query, function (data) {
-            component.setState({ flight: data });
+          
+        $.get(url, query, function(data) {
+            component.setState({flight: data});
         });
+        */
+
     },
 
     render: function render() {
@@ -4028,6 +4059,7 @@ var React = (typeof window !== "undefined" ? window['React'] : typeof global !==
 
 var UserForm = require("./UserForm.js");
 var Tip = require("./Tip.js");
+var Controls = require("./Controls.js");
 
 var Tips = React.createClass({
     displayName: "Tips",
@@ -4056,11 +4088,11 @@ var Tips = React.createClass({
         });
     },
 
-    showRunningGroups: function showRunningGroups() {
+    showRunningTips: function showRunningTips() {
         this.setState({ type: "running" });
     },
 
-    showRidingGroups: function showRidingGroups() {
+    showRidingTips: function showRidingTips() {
         this.setState({ type: "riding" });
     },
 
@@ -4069,16 +4101,7 @@ var Tips = React.createClass({
         return React.createElement(
             "div",
             null,
-            React.createElement(
-                "button",
-                { onClick: this.showRunningGroups },
-                "Running"
-            ),
-            React.createElement(
-                "button",
-                { onClick: this.showRidingGroups },
-                "Riding"
-            ),
+            React.createElement(Controls, { showRiders: this.showRidingTips, showRunners: this.showRunningTips, selected: this.state.type }),
             this.state.type === "riding" ? React.createElement(
                 "div",
                 { className: "riding-tips" },
@@ -4101,18 +4124,25 @@ var Tips = React.createClass({
 module.exports = Tips;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Tip.js":40,"./UserForm.js":43}],42:[function(require,module,exports){
+},{"./Controls.js":29,"./Tip.js":40,"./UserForm.js":43}],42:[function(require,module,exports){
 (function (global){
-"use strict";
+'use strict';
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var User = React.createClass({
-    displayName: "User",
+    displayName: 'User',
 
 
     getInitialState: function getInitialState() {
         return {};
+    },
+
+    componentDidMount: function componentDidMount() {
+        console.log(this.props.athlete.id);
+        $("#" + this.props.athlete.id).on('load', function () {}).on('error', function () {
+            $(this).attr("src", "/public/images/profile.png");
+        });
     },
 
     render: function render() {
@@ -4123,12 +4153,12 @@ var User = React.createClass({
             return null;
         } else {
             return React.createElement(
-                "div",
-                { className: "athlete col-lg-2 col-md-3 col-sm-3 col-xs-6" },
+                'div',
+                { className: 'athlete col-lg-2 col-md-3 col-sm-3 col-xs-6' },
                 React.createElement(
-                    "a",
-                    { href: href, target: "_blank" },
-                    React.createElement("img", { onError: this.checkError, className: "athlete-img", src: this.props.athlete.pic, alt: this.props.athlete.name, "data-toggle": "tooltip", "data-placement": "top", title: this.props.athlete.name })
+                    'a',
+                    { href: href, target: '_blank' },
+                    React.createElement('img', { id: this.props.athlete.id, onError: this.checkError, className: 'athlete-img', src: this.props.athlete.pic, alt: this.props.athlete.name, 'data-toggle': 'tooltip', 'data-placement': 'top', title: this.props.athlete.name })
                 )
             );
         }
@@ -4262,7 +4292,7 @@ var Users = React.createClass({
 
 
     getInitialState: function getInitialState() {
-        return { type: "running" };
+        return { type: "riding" };
     },
 
     showRunners: function showRunners() {
@@ -4277,6 +4307,10 @@ var Users = React.createClass({
         setTimeout(function () {
             $('.athlete img').tooltip();
         }, 500);
+    },
+
+    componentDidMount: function componentDidMount() {
+        this.setState({ type: "running" });
     },
 
     render: function render() {
