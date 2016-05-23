@@ -13,8 +13,8 @@ var User = new Schema({
    facebook: {
        id: String,
        token: String,
-       name: String,
-       email: String
+       firstName: String,
+       secondName: String
    },
    strava: {
        id: String,
@@ -27,7 +27,7 @@ var User = new Schema({
 
    tips: Array,
    descriptions: Array,
-   guideCity: String
+   guideCities: []
 
 });
 

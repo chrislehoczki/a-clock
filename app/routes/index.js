@@ -111,7 +111,7 @@ module.exports = function (app, passport) {
             var query = {};
 			query.query = {};
 			query.projection = {"running.segments": 0, "riding.segments": 0, "running.runners": 0, "riding.riders": 0};
-			query.sort = { "riding.riderCount" : "desc"}
+			query.sort = { "running.runnerCount" : "desc"}
 			query.limit = +req.query.limit || 20;
 
 			DAO.getAllCities(query).then(function(data) {
@@ -128,7 +128,7 @@ module.exports = function (app, passport) {
 				var Header = React.createFactory(require("../components/Header.js"))
 
 				//IF HERE IS USER - USE USER HEADER
-				var user = "none";
+				var user = "none"
 				if (req.user) {
 					Header = React.createFactory(require("../components/UserHeader.js"))
 					user = req.user;
@@ -137,8 +137,6 @@ module.exports = function (app, passport) {
 				var main = ReactDOMServer.renderToString(Main({data: data}));
 				var sidebar = ReactDOMServer.renderToString(Sidebar({data: data}));
 				var header = ReactDOMServer.renderToString(Header({data: data, type: "front"}));
-
-
 
 				res.render("index", {main: main, sidebar: sidebar, header: header, pageType: "front", data: JSON.stringify(data), user: JSON.stringify(user)});
 				}).catch(function(err) {
@@ -173,13 +171,13 @@ module.exports = function (app, passport) {
 				
 
 				//IF HERE IS USER - USE USER HEADER
-				var user = "none";
+				var user = "none"
 				if (req.user) {
 					Header = React.createFactory(require("../components/UserHeader.js"))
 					user = req.user;
 				}
 
-				var single = ReactDOMServer.renderToString(Single({data: data}));
+				var single = ReactDOMServer.renderToString(Single({data: data, weatherContainer: "chart"}));
 				var sidebar = ReactDOMServer.renderToString(Sidebar({data: data}));
 				var header = ReactDOMServer.renderToString(Header({data: data, type: "single"}));
 
@@ -307,7 +305,8 @@ module.exports = function (app, passport) {
 			var sortField = req.query.sortBy;	
 			query.sort = {};
 			query.sort[sortField] = -1;	
-
+		} else {
+			query.sort = { "running.runnerCount" : "desc"}
 		}
 		
 
@@ -316,7 +315,9 @@ module.exports = function (app, passport) {
 		//LIMIT 
 
 		query.limit = +req.query.limit || 20;
+	
 
+		console.log(query)		
 
 		DAO.getAllCities(query).then(function(data) {
 			res.send(data);
@@ -342,6 +343,34 @@ module.exports = function (app, passport) {
 	});
 
 	//REST API 
+
+	app.get("/api/user", DAO.getUserProfile);
+
+	app.route("/api/guides")
+		.get(function(req, res) {
+			var slug = req.query.slug;
+			console.log(slug)
+		})
+		.post(function(req, res) {
+			console.log(req.body)
+			var slug = req.body.slug;
+			var user = req.user;
+			var cityName = req.body.cityName;
+
+			DAO.addGuide(user, slug, cityName)
+
+			console.log(slug)
+
+			res.send(req.body)
+		})
+		.delete(function(req, res) {
+
+
+			DAO.removeGuide(req.user, req.body.slug)
+			res.send(req.body)
+
+		});
+
 
 	app.route("/api/tips")
 		.get(function(req, res) {
@@ -503,7 +532,8 @@ module.exports = function (app, passport) {
 			console.log(city)
     		res.send(city)
     	}).catch(function(err) {
-    		res.send(err)
+    		console.log(err)
+    		res.send("error")
     	})
 
     	/*

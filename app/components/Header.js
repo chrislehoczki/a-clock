@@ -135,7 +135,7 @@ var Header = React.createClass({
           
           <LoginModal changeModal={this.changeModal} showMessage={this.state.showLoginModal} hideMessage={this.hideLoginModal}/>
           <SignupModal showMessage={this.state.showSignupModal} hideMessage={this.hideSignupModal}/>
-          <AddCityModal showMessage={this.state.showAddCityModal} hideMessage={this.hideAddCityModal}/>
+          <AddCityModal showMessage={this.state.showAddCityModal} hideMessage={this.hideAddCityModal} />
         </div>
 
            

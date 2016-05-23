@@ -176,7 +176,7 @@ var SignupModal= React.createClass({
 
        return (
  		  <div>
-        <Modal style={center} show={this.props.showMessage} >
+        <Modal style={center} show={this.props.showMessage} onHide={this.props.hideMessage} >
 
           <Modal.Body style={center}>
             <h2> Sign Up  </h2>

@@ -20,7 +20,6 @@ var AddCityModal= React.createClass({
 
     changeCity: function(e) {
       this.setState({city: e.target.value})
-
     },
 
     geocode: function() {
@@ -41,20 +40,21 @@ var AddCityModal= React.createClass({
     var url = "/api/getsegs";
     var data = city;
     $.post(url, data, function(data) {
-      console.log("receiving data")
-      console.log(data)
-      component.setState({data: data})
-      setTimeout(function(){ 
+
+      if (data === "error") {
+
+          component.setState({statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request."})
+          return;
+      }
 
 
-        console.log(component.state)
-        component.setState({dataReceived: true})
-
-
-      },5000)
+      component.setState({data: data, statusMsg: ""})
+      component.setState({dataReceived: true})
+    }).fail(function(response) {
+      component.setState({statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request."})
     });
     
-
+    this.setState({statusMsg: "Loading city data now..."})
     },
 
     declareCity: function(cityChoice) {
@@ -74,6 +74,21 @@ var AddCityModal= React.createClass({
 
     },
 
+    destroy: function() {
+
+      this.props.hideMessage()
+      $(".add-city-single").fadeOut("slow");
+    },
+
+    checkEnter: function(e) {
+      console.log(e.keyCode);
+
+      if (e.keyCode === 13) {
+        this.geocode();
+      }
+
+    },
+
 
 
 
@@ -83,13 +98,14 @@ var AddCityModal= React.createClass({
 
        return (
  		  <div>
-        <Modal dialogClassName="addCityModal" show={this.props.showMessage} >
+        <Modal dialogClassName="addCityModal" show={this.props.showMessage} backdrop={true}  keyboard={true} onHide={this.destroy} >
 
+          <Modal.Header closeButton><h1> Add Your City </h1></Modal.Header>
           <Modal.Body>
-            <h1> Add Your City </h1>
+            
 
-            <input type="text" onChange={this.changeCity} value={this.state.city} />
-            <button className="btn btn-primary" onClick={this.geocode}>Find City</button>
+            <input type="text" onChange={this.changeCity} value={this.state.city} onKeyDown={this.checkEnter}/>
+            <button className="btn filter-btn" onClick={this.geocode}>Find City</button>
 
             <div className="location-buttons row">
             {this.state.locations.map(function(city) {
@@ -97,15 +113,15 @@ var AddCityModal= React.createClass({
             })}
             </div>
 
-            {this.state.dataReceived ? <Single data={this.state.data} /> : null }
+            <p> {this.state.statusMsg} </p>
 
-
-
-
+            <div className="add-city-single">
+            {this.state.dataReceived ? <Single data={this.state.data} weatherContainer={"modal-chart"} addCity={true} /> : null }
+            </div>
           </Modal.Body>
 
           <Modal.Footer>
-            <Button onClick={this.props.hideMessage}>Close</Button>
+            <Button onClick={this.destroy}>Close</Button>
           </Modal.Footer>
         </Modal>
       </div>

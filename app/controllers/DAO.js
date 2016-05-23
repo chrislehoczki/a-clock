@@ -205,6 +205,173 @@ function DAO () {
 		
 	},
 
+	this.addGuide = function(user, slug, cityName) {
+		console.log(user)
+		console.log(slug)
+		var date = new Date();
+
+		var functions = [];
+
+		functions.push(updateUser())
+		functions.push(updateCity())
+
+		Q.all(functions).then(function(data) {
+			
+		}).catch(function(error) {
+			console.log(error)
+		});
+
+
+		function updateUser() {
+			var deferred = Q.defer();
+
+			var cityObj = {
+			slug: slug,
+			cityName: cityName
+			}
+
+			var query = createUserQuery(user);
+			console.log(query)
+
+
+
+			Users
+			.findOneAndUpdate(query, { $addToSet: {guideCities: cityObj} }, {"new": true})
+			.exec(function (err, result) {
+				if (err) { 
+						deferred.reject(err)
+					}
+					else {
+						console.log(result)
+						deferred.resolve(result)
+				}
+
+			});
+
+			return deferred.promise;
+
+		}
+
+		function updateCity() {
+
+			var deferred = Q.defer();
+
+			var query = {"info.city.slug" : slug}
+
+			//CREATE SIMPLE USER OBJ WITHOUT DETAILS FOR SECURITY
+			var userObj = {
+			user: createBasicUser(user)
+			}
+
+			function createBasicUser(user) {
+				console.log(user)
+			 	if (user.strava.id) {
+			 		console.log("things its strava")
+			 		return {id: user.strava.id, firstName: user.strava.details.firstName, secondName: user.strava.details.secondName, img: user.strava.details.profileImg}
+			 	}
+			 	else if (user.facebook.id) {
+			 		console.log("thinks its facebook")
+			 		return {id: user.facebook.id, firstName: user.facebook.firstName, secondName: user.facebook.secondName, img: "/public/images/profile.png"}
+			 	}
+
+			}
+
+			Cities
+			.findOneAndUpdate(query, { $addToSet: {guides: userObj}}, {"new": true})
+			.exec(function (err, result) {
+				if (err) { 
+						console.log(err)
+						deferred.reject(err)
+					}
+					else {
+						console.log(result)
+						deferred.resolve(result)
+				}
+			});
+
+			return deferred.promise;
+
+		}
+		
+	},
+
+	this.removeGuide = function(user, slug) {
+
+		var functions = [];
+
+		functions.push(updateUser())
+		functions.push(updateCity())
+
+		Q.all(functions).then(function(data) {
+			
+		}).catch(function(error) {
+			console.log(error)
+		});
+
+
+		function updateUser() {
+			var deferred = Q.defer();
+
+
+
+			var query = createUserQuery(user);
+			console.log(query)
+
+
+
+			Users
+			.findOneAndUpdate(query, { $pull: {"guideCities": {slug: slug}} }, {"new": true})
+			.exec(function (err, result) {
+				if (err) { 
+						deferred.reject(err)
+					}
+					else {
+						console.log(result)
+						deferred.resolve(result)
+				}
+
+			});
+
+			return deferred.promise;
+
+		}
+
+		function updateCity() {
+
+			var deferred = Q.defer();
+
+			var query = {"info.city.slug" : slug}
+
+			//CREATE SIMPLE USER OBJ WITHOUT DETAILS FOR SECURITY
+			var id;
+			if (user.strava) {
+				id = user.strava.id
+			}	
+			else {
+				id = user.facebook.id
+			}
+
+			console.log(id)
+			Cities
+			.findOneAndUpdate(query, { $pull: {"guides": {id: id}}}, {"new": true})
+			.exec(function (err, result) {
+				if (err) { 
+						console.log(err)
+						deferred.reject(err)
+					}
+					else {
+						console.log(result)
+						deferred.resolve(result)
+				}
+			});
+
+			return deferred.promise;
+
+		}
+		
+	},
+
+
 	this.addDescription = function(slug, description, user) {
 
 		var date = new Date();
@@ -350,6 +517,21 @@ function DAO () {
 
 	},
 
+	this.getUserProfile = function(req, res) {
+
+		var username = req.user._id;
+
+		Users.find({_id: req.user._id})
+			.exec(function (err, result) {
+					if (err) { throw err; }
+					else {
+						res.json(result)
+					}
+
+		});
+
+	},
+
 
 	this.getUsers = function(req, res) {
 
@@ -463,5 +645,17 @@ function DAO () {
 
 
 }
+
+ function createUserQuery(user) {
+
+ 	if (user.strava) {
+ 		return {"strava.id": user.strava.id}
+ 	}
+ 	else if (user.facebook) {
+ 		return {"facebook.id": user.facebook.id}
+ 	}
+
+ }
+
 
 module.exports=DAO;

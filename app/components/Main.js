@@ -2,16 +2,32 @@ var React = require('react');
 var Cities = require("./Cities.js");
 var Filter = require("./Filter.js");
 
+var Map = require("./map/Map.js")
 
 var Main = React.createClass({
 
 
     getInitialState: function() {
-        return {data: this.props.data};
+        return {data: this.props.data,
+            view: "list",
+            btnMessage: "Map View"
+        };
     },
 
     updateCities: function(data) {
-        this.setState({data: data}, console.log(this.state.data));
+        this.setState({data: data});
+    },
+
+
+    changeView: function() {
+
+        if (this.state.view === "list") {
+            this.setState({view: "map", btnMessage: "List View"})
+        }
+        else {
+            this.setState({view: "list", btnMessage: "Map View"})
+        }
+
     },
 
    
@@ -20,8 +36,13 @@ var Main = React.createClass({
        return (
 
             <div> 
+                
                 <Filter updateCities={this.updateCities}/>
-                <Cities cities={this.state.data} />
+                <button style={{zIndex: 999}} onClick={this.changeView} className="filter-btn pull-right">{this.state.btnMessage}</button>
+                <div style={{clear:"both"}}> </div>
+                {this.state.view === "list" ? <Cities cities={this.state.data} /> : <Map cities={this.state.data} />}
+                
+                
             </div>
         );
   

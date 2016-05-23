@@ -167,6 +167,7 @@ function Weather (lat, long, token) {
 			  } 
 			  else if (!IsJsonString(body)) {
 					console.log("returned xml... unknown error")
+					deferred.reject("returned xml... unknown error")
 				}
 			  
 				else {

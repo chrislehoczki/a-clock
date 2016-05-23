@@ -24,7 +24,22 @@ a:hover, a:selected, a:visited, a:focus {
 }
 
 
+.main-btn {
+	padding: 10px;
+	border-radius: 5px;
+	margin: 2px;
+	border: 1px solid $green;
+	display: inline-block!important;
+	transition: all 0.5s ease;
+	background: white;
+	width: auto;
+}
 
+.main-btn:hover {
+	background: $green!important;
+	color: white!important;
+	border: 1px solid white;
+}
 
 
 /* MAIN CONTAINERS */
@@ -43,7 +58,7 @@ a:hover, a:selected, a:visited, a:focus {
 	padding: 20px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
     .sidebar {
     	display: none;
     }
@@ -283,6 +298,8 @@ input[type=range]:focus::-ms-fill-upper {
 	border: 1px solid $green;
 	display: inline-block!important;
 	transition: all 0.5s ease;
+	background: white;
+	width: auto;
 }
 
 .filter-btn:hover {
@@ -632,6 +649,13 @@ footer {
 	max-height: 700px;
 }
 
+#modal-chart {
+	width: 100%;
+	height: 400px;
+	min-height: 400px;
+	max-height: 700px;
+}
+
 .overlay {
   fill: none;
   pointer-events: all;
@@ -682,4 +706,64 @@ div.graph-tooltip, div.detail {
 
 .addCityModal {
 	width: 90%;
+	text-align: center;
+}
+
+.auto-width {
+	min-width: 100%;
+	width: auto!important;
+}
+
+ .modal-container {
+   position: relative;
+ }
+ .modal-container .modal, .modal-container .modal-backdrop {
+   position: absolute;
+  }
+
+
+//PROFILE 
+
+.profileModal {
+	text-align: center;
+}
+
+/* FRONTPAGE MAP */
+
+
+.map-path {
+  stroke: $green;
+  stroke-width: 1px;
+  fill: white; }
+
+.pointer-line {
+  stroke: steelblue;
+  stroke-width: 4px;
+  fill: none; }
+
+#map-holder {
+  position: relative;
+  width: 100%;
+  display: block;
+  margin: 0px auto;
+  padding: 0; }
+
+
+div.cities-tooltip {
+	position: absolute;
+	padding: 10px;
+	font: 12px;
+	color: white;
+	text-align: left;
+	background: $green;
+	font-weight: 5px;
+	text-align: center;
+}
+
+div.cities-tooltip a{
+	color: white!important;
+}
+
+div.cities-tooltip a:hover{
+	text-decoration: none!important;
 }

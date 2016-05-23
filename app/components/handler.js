@@ -22,6 +22,8 @@ var sidebarHolder = document.getElementById("sidebar-react-holder");
 var mainHolder = document.getElementById("main-react-holder");
 var singleHolder = document.getElementById("single-react-holder");
 
+console.log(user)
+
 if (user !== "none") {
 	ReactDOM.render(<UserHeader data={data} user={user} type={pageType}/>, headerHolder);
 }
@@ -35,7 +37,7 @@ if (mainHolder) {
 	ReactDOM.render(<Main data={data}/>, mainHolder);
 }
 else if (singleHolder) {
-	ReactDOM.render(<Single data={data} />, singleHolder);
+	ReactDOM.render(<Single data={data} weatherContainer={"chart"} />, singleHolder);
 }
 
 

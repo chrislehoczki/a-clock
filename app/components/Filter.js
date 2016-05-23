@@ -35,7 +35,6 @@ var Filter = React.createClass({
                 defaultStyle: defaultStyle,
                 selectedStyle: selectedStyle,
                 month: month,
-                maxRain: 10,
                 minHotelCost: 0,
                 maxHotelCost: 150,
                 limit: 20    
@@ -110,10 +109,15 @@ var Filter = React.createClass({
       $('button').tooltip()
 
       //INFINITE SCROLL
-      
+    
+
         $(window).scroll(function() {
-           if($(window).scrollTop() + $(window).height() == $(document).height()) {
-               component.setState({limit: component.state.limit + 10})
+
+    
+    var scrolledHeight = $($(window).scrollTop() + $(window).height()) //scrolled from top + height of browser windo
+    var total = scrolledHeight[0] + 20;
+           if(total > $(document).height()) {
+                component.setState({limit: component.state.limit + 10})
                component.filter()
            }
         });

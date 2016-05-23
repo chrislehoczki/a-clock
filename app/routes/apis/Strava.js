@@ -21,10 +21,10 @@ function Strava (lat, lon) {
 
 	this.boundary = function() {
 
-		var x1 = this.lat - 0.05;
-		var x2 = this.lat + 0.05;
-		var y1 = this.lon - 0.05;
-		var y2 = this.lon + 0.05;
+		var x1 = this.lat - 0.08;
+		var x2 = this.lat + 0.08;
+		var y1 = this.lon - 0.08;
+		var y2 = this.lon + 0.08;
 
 		var boundary = x1.toFixed(3).toString() + "," + y1.toFixed(3).toString() + "," + x2.toFixed(3).toString() + "," + y2.toFixed(3).toString();
 

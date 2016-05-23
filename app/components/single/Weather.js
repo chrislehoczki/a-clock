@@ -5,7 +5,8 @@ var Weather = React.createClass({
 
     getInitialState: function() {
         return {
-            title: "Weather Data for " + this.props.city
+            title: "Weather Data for " + this.props.city,
+            container: this.props.container
         }
     },
 
@@ -16,6 +17,9 @@ var Weather = React.createClass({
             this.setState({title: "No Weather Data Found - We're Working On It"})
         return;
     }
+
+
+var containerId = "#" + this.state.container;
 
 
 var d3_time_months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
@@ -29,15 +33,15 @@ var temp = "#E57373"
 
 
 window.addEventListener('resize', function(event){
-    var containerHeight = $("#chart").height();
-    var containerWidth = $("#chart").width();
+    var containerHeight = $(containerId).height();
+    var containerWidth = $(containerId).width();
 
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
    
     d3.select("svg").remove();
     d3.select(".graph-tooltip").remove();
-    makeChart()
+    makeChart();
 
 });
 
@@ -45,8 +49,8 @@ var height, width, margin, svg;
   
 margin = {top: 70, right: 70, bottom: 70, left: 70};
 
-var containerHeight = $("#chart").height();
-var containerWidth = $(".main").width();
+var containerHeight = $(containerId).height();
+var containerWidth = $(containerId).width();
 
 
 setTimeout(function() {
@@ -71,8 +75,8 @@ setTimeout(function() {
 function makeChart() {
 
 //CREATE SVG
-svg = d3.select("#chart").append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+svg = d3.select(containerId).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")").classed("weather-svg", true)
 
 //DEFINE MIN AND MAX VALUES
   
@@ -154,7 +158,7 @@ svg.append("g")
 function addTooltip(xAx) {
 
 //CREATE TOOLTIP
-var tooltip = d3.select("#chart").append("div").attr("class", "graph-tooltip").style("opacity", 0)
+var tooltip = d3.select(containerId).append("div").attr("class", "graph-tooltip").style("opacity", 0)
 
 
   svg.append("rect")
@@ -365,7 +369,7 @@ function checkData(data, value) {
          return (
             <div>
             <DescriptionString city={this.props.data}/>
-            <div id="chart"></div>
+            <div id={this.state.container}></div>
             </div>
           );
       

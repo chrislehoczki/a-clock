@@ -8,7 +8,6 @@ var User = React.createClass({
     },
 
     componentDidMount: function() {
-      console.log(this.props.athlete.id)
       $("#" + this.props.athlete.id)
         .on('load', function() { })
         .on('error', function() {  $(this).attr("src", "/public/images/profile.png") })

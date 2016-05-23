@@ -11,6 +11,21 @@ a:hover, a:selected, a:visited, a:focus {
   color: black !important;
   text-decoration: none; }
 
+.main-btn {
+  padding: 10px;
+  border-radius: 5px;
+  margin: 2px;
+  border: 1px solid #3ac162;
+  display: inline-block !important;
+  transition: all 0.5s ease;
+  background: white;
+  width: auto; }
+
+.main-btn:hover {
+  background: #3ac162 !important;
+  color: white !important;
+  border: 1px solid white; }
+
 /* MAIN CONTAINERS */
 .sidebar {
   float: left;
@@ -24,7 +39,7 @@ a:hover, a:selected, a:visited, a:focus {
   width: 70%;
   padding: 20px; }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1000px) {
   .sidebar {
     display: none; }
 
@@ -220,7 +235,9 @@ input[type=range]:focus::-ms-fill-upper {
   margin: 2px;
   border: 1px solid #3ac162;
   display: inline-block !important;
-  transition: all 0.5s ease; }
+  transition: all 0.5s ease;
+  background: white;
+  width: auto; }
 
 .filter-btn:hover {
   background: #3ac162 !important;
@@ -481,6 +498,12 @@ footer {
   min-height: 400px;
   max-height: 700px; }
 
+#modal-chart {
+  width: 100%;
+  height: 400px;
+  min-height: 400px;
+  max-height: 700px; }
+
 .overlay {
   fill: none;
   pointer-events: all; }
@@ -511,6 +534,54 @@ div.graph-tooltip, div.detail {
   width: 100%; }
 
 .addCityModal {
-  width: 90%; }
+  width: 90%;
+  text-align: center; }
+
+.auto-width {
+  min-width: 100%;
+  width: auto !important; }
+
+.modal-container {
+  position: relative; }
+
+.modal-container .modal, .modal-container .modal-backdrop {
+  position: absolute; }
+
+.profileModal {
+  text-align: center; }
+
+/* FRONTPAGE MAP */
+.map-path {
+  stroke: #3ac162;
+  stroke-width: 1px;
+  fill: white; }
+
+.pointer-line {
+  stroke: steelblue;
+  stroke-width: 4px;
+  fill: none; }
+
+#map-holder {
+  position: relative;
+  width: 100%;
+  display: block;
+  margin: 0px auto;
+  padding: 0; }
+
+div.cities-tooltip {
+  position: absolute;
+  padding: 10px;
+  font: 12px;
+  color: white;
+  text-align: left;
+  background: #3ac162;
+  font-weight: 5px;
+  text-align: center; }
+
+div.cities-tooltip a {
+  color: white !important; }
+
+div.cities-tooltip a:hover {
+  text-decoration: none !important; }
 
 /*# sourceMappingURL=main.css.map */

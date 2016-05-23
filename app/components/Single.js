@@ -10,7 +10,7 @@ var Tips = require("./single/Tips.js");
 var UserForm = require("./single/UserForm.js");
 var Description = require("./single/Description.js");
 var Weather = require("./single/Weather.js")
-
+var CityGuides = require("./single/CityGuides.js")
 
 
 var Single = React.createClass({
@@ -34,9 +34,6 @@ var Single = React.createClass({
 
             <div>
 
-                
-               
-
 
 
                     <div className="single-users">
@@ -44,7 +41,12 @@ var Single = React.createClass({
                         <Users riders={this.state.data.riding.riders} runners={this.state.data.running.runners} />
                     </div>
 
-
+                     {!this.props.addCity ? 
+                    <div className="single-city-guides">
+                        <h3 className="sub-title"> City Guides </h3>
+                        <CityGuides data={this.state.data}/>
+                    </div>
+                    : null }
 
                     <div className="single-segments">
                         <h3 className="sub-title"> Routes </h3>
@@ -60,7 +62,7 @@ var Single = React.createClass({
            
                     <div className="single-weather"> 
                         <h3 className="sub-title"> Weather </h3>
-                        <Weather city={this.state.data.info.city.name} weather={this.state.data.weather} data={this.state.data} />
+                        <Weather container={this.props.weatherContainer} city={this.state.data.info.city.name} weather={this.state.data.weather} data={this.state.data} />
                     </div>
      
        
@@ -70,11 +72,13 @@ var Single = React.createClass({
                     </div>
  
                     <div style={clearFix}> </div>
+
+                    {!this.props.addCity ? 
                     <div className="single-tips">
                         <h3 className="sub-title"> Tips </h3>
                         <Tips slug={this.state.data.info.city.slug} />
                     </div>
-
+                    : null }
                 
             </div>
         );

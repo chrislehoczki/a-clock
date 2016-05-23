@@ -50,21 +50,23 @@ module.exports = function (passport) {
                     
                     
                     // set all of the facebook information in our user model
-                    console.log(profile)
-                   
+                   console.log(profile)
                     newUser.strava.id = profile.id;
                     newUser.strava.email = profile._json.email;
                     newUser.strava.token = profile.token;
                     newUser.strava.details = {};
 
                     newUser.strava.details.firstName = profile._json.firstname;
-                    newUser.strava.details.secondName = profile._json.lastnamName;
+                    newUser.strava.details.secondName = profile._json.lastname;
                     newUser.strava.details.profileImg = profile._json.profile_medium;
                     newUser.strava.details.city = profile._json.city;
                     newUser.strava.details.country = profile._json.country;
 
-                    //newUser.strava.token = profile.token
-                    //newUser.strava.email = profile.
+                                    // save the user
+                    newUser.tips = [];
+                    newUser.descriptions = [];
+                    newUser.guideCities = [];
+
                   
                     // save our user to the database
                     newUser.save(function(err) {
@@ -120,7 +122,7 @@ module.exports = function (passport) {
                 // save the user
                 newUser.tips = [];
                 newUser.descriptions = [];
-                newUser.guideCity = "None Specified Yet";
+                newUser.guideCities = [];
 
                 newUser.save(function(err) {
                     if (err)
@@ -196,19 +198,19 @@ passport.use('local-login', new LocalStrategy({
                     // if there is no user found with that facebook id, create them
                     var newUser = new User();
 					
-					console.log(profile)
-					
                     // set all of the facebook information in our user model
                     newUser.facebook.id    = profile.id; // set the users facebook id                   
                     newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
-                    newUser.facebook.name  = profile.displayName // look at the passport user profile to see how names are returned
-                    newUser.facebook.email = profile.emails[0].value;
+                    newUser.facebook.firstName  = profile._json.first_name; // look at the passport user profile to see how names are returned
+                    newUser.facebook.secondName  = profile._json.last_name;
+
                      // facebook can return multiple emails so we'll take the first
                     newUser.tips = [];
                     newUser.descriptions = [];
-                    newUser.guideCity = "None Specified Yet";
-                    //newUser.requests = [];
-                    // save our user to the database
+                    newUser.guideCities = [];
+                    
+
+   
                     newUser.save(function(err) {
                         if (err)
                             throw err;

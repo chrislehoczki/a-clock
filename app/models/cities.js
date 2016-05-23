@@ -23,6 +23,8 @@ var City = new Schema({
    		tips: Array
    },
 
+   guides: Array,
+
    strava: {
        id: String,
        token: String,

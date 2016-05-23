@@ -7,10 +7,6 @@ var passport = require('passport');
 var session = require('express-session');
 var routes = require('./app/routes/index.js');
 
-var port = process.env.PORT || 8080
-app.listen(port, function () {
-  console.log('App listening on port: ' + port);
-});
 
 
 var cookieParser = require('cookie-parser');
@@ -62,3 +58,7 @@ routes(app, passport);
 
 
 
+var port = process.env.PORT || 8080
+app.listen(port, function () {
+  console.log('App listening on port: ' + port);
+});

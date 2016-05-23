@@ -4,13 +4,32 @@ var LoginModal = require("./Login.js");
 var SignupModal = require("./Signup.js");
 var IntroText = require("./IntroText.js");
 var Overview = require("./single/Overview.js");
+var AddCityModal = require("./addcity/AddCityModal.js");
+var ProfileModal = require("./profile/ProfileModal.js")
 
 var Header = React.createClass({
 
      getInitialState: function() {
         return { 
-          attr: ""
+          attr: "",
+          showAddCityModal: false
         };
+    },
+
+    showAddCityModal: function () {
+      this.setState({showAddCityModal: true})
+    },
+
+    hideAddCityModal: function () {
+      this.setState({showAddCityModal: false})
+    },
+
+    showProfileModal: function () {
+      this.setState({showProfileModal: true})
+    },
+
+    hideProfileModal: function () {
+      this.setState({showProfileModal: false})
     },
 
     componentDidMount: function() {
@@ -71,7 +90,7 @@ var Header = React.createClass({
             </ul>
             <ul className="nav navbar-nav navbar-right">
               <li><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
+              <li><a href="#" onClick={this.showAddCityModal}>Add City</a></li>
                <li className="dropdown">
                 <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span className="caret"></span></a>
                 <ul className="dropdown-menu">
@@ -84,7 +103,7 @@ var Header = React.createClass({
                   <li><a href="#">One more separated link</a></li>
                 </ul>
               </li>
-              <li><a href="/profile" >Profile</a></li>
+              <li><a href="#" onClick={this.showProfileModal} >Profile</a></li>
               <li><a href="/logout" >Logout</a></li>
             </ul>
           </div>
@@ -99,10 +118,8 @@ var Header = React.createClass({
             </div>
           }
 
-
-          
-          <LoginModal changeModal={this.changeModal} showMessage={this.state.showLoginModal} hideMessage={this.hideLoginModal}/>
-          <SignupModal showMessage={this.state.showSignupModal} hideMessage={this.hideSignupModal}/>
+          <AddCityModal showMessage={this.state.showAddCityModal} hideMessage={this.hideAddCityModal} />
+          <ProfileModal user={this.props.user} showMessage={this.state.showProfileModal} hideMessage={this.hideProfileModal} />
         </div>
 
         );
