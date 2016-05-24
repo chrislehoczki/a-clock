@@ -134,6 +134,8 @@ function Strava (lat, lon) {
 						
 					}
 
+					athletes = self.trimAthletes(athletes)
+
 					
 					deferred.resolve({count: count, athletes: athletes});
 				}

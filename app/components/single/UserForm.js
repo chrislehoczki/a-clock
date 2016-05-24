@@ -8,7 +8,7 @@ var Main = React.createClass({
             message: "",
             activityChosen: false,
             userMsg: "",
-            msgClass: "alert alert-warning"
+            msgClass: "alert alert-success"
         }
 
 
@@ -20,59 +20,36 @@ var Main = React.createClass({
         var url;
 
 
-        if (!this.state.activityChosen && this.props.type === "tips") {
-            this.setState({userMsg: "You must choose an activity before posting a tip."})
-            return;
-        }
+       
+        body = {slug: this.props.slug, tip: this.state.data, activity: this.props.activity}
+        url = "/api/tips"
 
-        if (this.props.type === "description") {
-            body = {slug: this.props.slug, description: this.state.data}
-            url = "/api/description"
-        }
-        else {
-            body = {slug: this.props.slug, tip: this.state.data, activity: this.state.activity}
-            url = "/api/tips"
-        }
+
+        var user = JSON.parse(document.getElementById("user").innerHTML);
+
+          if (user === "none") {
+            this.setState({userMsg: "You must be logged in to submit a tip"})
+            return;
+          }
+        
 
         $.post(url, body, function(data) {
-
-                component.props.type === "description" ? component.removeForm() : component.setState({msgClass: "alert alert-success", userMsg: "Great, we received it!"})
+                component.setState({msgClass: "alert alert-success", userMsg: "Great, we received it!"})
                 component.props.update();
         });
         
        
     },
 
-    removeForm: function() {
-        $(".single-form").animate({
-            left: "2000px",
-            opacity: 0,
-            display: "none"
-        }, 1000);
-    },
 
 
     changeData: function(e) {
         this.setState({data: e.target.value})
     },
 
-    addActivity: function(e) {
-
-        this.setState({
-              activity: e.target.value.toLowerCase(),
-              activityChosen: true
-        })
-    },
-
-
     componentDidMount: function() {
 
-        if (this.props.type === "description") {
-            this.setState({message: "Add a description"})
-        }
-        else {
-            this.setState({message: "Add a tip"})
-        }
+            this.setState({message: "Add a " + this.props.activity + " tip"})
 
     },
    
@@ -81,17 +58,12 @@ var Main = React.createClass({
        return (
 
             <div className="single-form"> 
-            <p>{this.state.message}</p>
+            <p>{"Add a " + this.props.activity + " tip"}</p>
         
             <textarea value={this.state.data} onChange={this.changeData} className="form-control" />
 
-            {this.props.type !== "description" ? 
-                <div>
-                <input type="radio" name="activity" value="Running" ref="activity" onChange={this.addActivity}/>Running
-                <input type="radio" name="activity" value="Riding"  ref="activity" onChange={this.addActivity} />Riding
-                </div>
-            : null}
-            <button onClick={this.postData} className="btn btn-primary" type="submit">Submit</button>
+
+            <button style={{float: "right"}} onClick={this.postData} className="btn main-btn" type="submit">{"Submit " + this.props.activity + " tip"}</button>
 
             {this.state.userMsg !== "" ?
             <p className={this.state.msgClass}>{this.state.userMsg}</p>

@@ -33,18 +33,23 @@ var SignupModal= React.createClass({
         return;
       }
 
+      if (!component.state.name) {
+        return;
+      }
+
       //MAKE PARAMS HERE
       var url = "/signup"
       
 
       var username = this.state.user;
       var password = this.state.confirmPassword;
+      var name = this.state.name;
         console.log(username)
-      var params = "username=" + username + "&password=" + password;
+      var params = "username=" + username + "&password=" + password + "&name=" + name;
         console.log(params)
-      ajaxFunctions.postRequest("POST", url, params, function(data) {
-          if (data.length < 100) {
-              component.setState({errorMessage: data})
+      $.post(url, params, function(data) {
+          if (data.failure) {
+              component.setState({errorMessage: data.message})
           }
           else {
             window.location.replace("/");
@@ -61,9 +66,8 @@ var SignupModal= React.createClass({
 
         var url = "/checkuser/" + user;
 
-        ajaxFunctions.ajaxRequest("GET", url, function(data) {
-          console.log(data)
-            data = JSON.parse(data)
+        $.get(url, function(data) {
+          
             component.setState({usernameMessage: data.message, userAlert: data.alert}, function() {
                 if (data.alert === "success") {
                   component.setState({userOK: true})
@@ -119,6 +123,10 @@ var SignupModal= React.createClass({
 
         })
 
+    },
+
+    confirmName: function(e) {
+      this.setState({name: e.target.value})
     },
 
     createUserMarkup: function(data, alertType) {
@@ -180,15 +188,21 @@ var SignupModal= React.createClass({
 
           <Modal.Body style={center}>
             <h2> Sign Up  </h2>
-            <a className="btn btn-social btn-facebook btn-block" href="/auth/facebook">
+            <a className="btn btn-social btn-facebook" href="/auth/facebook">
             <span className="fa fa-facebook"></span> Sign Up with Facebook</a>
 
-            <a className="btn btn-social btn-strava btn-block" href="/auth/strava">
-            <span className="fa fa-strava"></span> Sign Up with Strava</a>
+            <a className="btn-strava" href="/auth/strava">
+            <img src="/public/images/strava-connect.png"/></a>
 
-            <h4 className="form-element"> Or Sign Up With Username </h4>
+            <h4 className="form-element"> Or Sign Up With Email </h4>
+
+            <div className="form-group">
+              <label>Name</label>
+            <input type="text" onChange={this.confirmName} value={this.state.name} className="form-control" name="name" id="name"/>
+            </div>
+
             <div className="form-group" >
-              <label>Username</label>
+              <label>Email</label>
               <input type="text" onBlur={this.addUser} onKeyUp={this.checkUsername} className="form-control" name="username" id="username" />
             </div>
 
@@ -205,8 +219,7 @@ var SignupModal= React.createClass({
             <div className="form-group">
             <label>Confirm Password</label>
             <input type="password" onKeyUp={this.confirmPassword} className="form-control" name="confirmpassword" id="password"/>
-
-
+            
             <div dangerouslySetInnerHTML={this.createConfirmPasswordMarkup(this.state.passwordMatch, this.state.confirmPasswordAlert)} />
             </div>
             <button  type="submit" onClick={this.sendForm} className="btn btn-primary">Submit</button>

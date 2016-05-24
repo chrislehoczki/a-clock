@@ -29,7 +29,7 @@ var Rain = React.createClass({
               type='range'
               value={this.state.maxRain}
               min={0}
-              max={15} />
+              max={30} />
               <p>{this.state.maxRain}</p>
             </div>
             

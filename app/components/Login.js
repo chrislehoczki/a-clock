@@ -4,7 +4,7 @@ var ReactBootstrap = require("react-bootstrap")
 var Modal = ReactBootstrap.Modal;
 var Button = ReactBootstrap.Button;
 
-var SignupModal= React.createClass({
+var LoginModal= React.createClass({
 
 
         getInitialState: function() {
@@ -12,6 +12,11 @@ var SignupModal= React.createClass({
         userOK: false,
         passwordOK: false
     };
+    },
+
+    componentDidMount: function() {
+      this.setState({stravaDirect: "/auth/strava?redirect=" + window.location.pathname, facebookDirect: "/auth/facebook?redirect=" + window.location.pathname})
+
     },
 
     sendForm: function() {
@@ -23,14 +28,15 @@ var SignupModal= React.createClass({
       var username = this.state.user;
       var password = this.state.password;
       var params = "username=" + username + "&password=" + password;
+
         console.log(params)
-      ajaxFunctions.postRequest("POST", url, params, function(data) {
-          if (data.length < 100) {
+      $.post(url, params, function(data) {
+          if (data.failure) {
             console.log(data)
-              component.setState({errorMessage: data})
+            component.setState({errorMessage: data.message})
           }
           else {
-            window.location.replace("/");
+            window.location.replace(window.location.pathname);
           }
 
       })
@@ -57,6 +63,8 @@ var SignupModal= React.createClass({
       },
 
     render: function() {
+
+
 
     	var inline = {
     		display: "inline",
@@ -85,17 +93,17 @@ var SignupModal= React.createClass({
         <h2> Log In </h2>  
        <div className="signup-container"> 
 
-    <a className="btn btn-social btn-facebook btn-block" href="/auth/facebook">
+    <a style={{color: "white"}} className="btn btn-social btn-facebook" href={this.state.facebookDirect}>
     <span className="fa fa-facebook"></span> Login with Facebook</a>
 
-    <a className="btn btn-social btn-strava btn-block" href="/auth/strava">
-    <span className="fa fa-strava"></span> Login with Strava</a>
+    <a className="btn-strava" href={this.state.stravaDirect}>
+    <img src="/public/images/strava-login.png"/></a>
 
-    <h4 className="form-element"> Or Login With Username </h4>
+    <h4 className="form-element"> Or Login With Email </h4>
 
 
     <div className="form-group">
-      <label>Username</label>
+      <label>Email</label>
       <input onKeyUp={this.addUser} type="text" className="form-control" name="username"/>
     </div>
     <div className="form-group">
@@ -121,5 +129,5 @@ var SignupModal= React.createClass({
       }
 });
 
-module.exports=SignupModal;
+module.exports=LoginModal;
 

@@ -8,21 +8,27 @@ var User = new Schema({
     
     local: {
        username: String,
-       password : String
+       password : String,
+       name: String,
+       profileImg: String
     },
    facebook: {
        id: String,
        token: String,
        firstName: String,
-       secondName: String
+       secondName: String,
+       profileImg: String,
+       email: String
    },
    strava: {
-       id: String,
-       token: String,
-       email: String,
-       details: Object
-
-
+      id: String,
+      token: String,
+      email: String,
+      firstName : String,
+      secondName : String,
+      profileImg: String,
+      city: String,
+      country: String
     },
 
    tips: Array,

@@ -53,54 +53,86 @@ module.exports = function (app, passport) {
 	]
 
 	//FBOOK LOGIN
-	app.get('/auth/facebook', passport.authenticate('facebook', { scope: fbookScope }));
+	app.get('/auth/facebook', function(req, res, next) {
+
+		req.session.redirect = req.query.redirect;
+    	console.log(req.session)
+  		next();
+
+	},passport.authenticate('facebook', { scope: fbookScope }));
 
     // handle the callback after facebook has authenticated the user
     app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', {
-            successRedirect : '/',
-            failureRedirect : '/login'
-        }));
+        passport.authenticate('facebook', {failureRedirect : '/signinfailure'}),
+        	function(req, res) {
+	        console.log(req.session)
+	    // Successful authentication, redirect home.
+	    	res.redirect(req.session.redirect || "/");
+        	});
+
+
+        
+
+
+    //STRAVA
+
+    app.get('/auth/strava', function(req, res, next) {
+
+    	req.session.redirect = req.query.redirect;
+    	console.log(req.session)
+  		next();
+
+    },  passport.authenticate('strava'/*, { scope: ['write'] }*/))
+ 		
+
+	app.get('/auth/strava/callback', 
+  	passport.authenticate('strava', { failureRedirect: '/signinfailure' }),
+  		function(req, res) {
+  		console.log(req.session)
+    // Successful authentication, redirect home.
+    	res.redirect(req.session.redirect || "/");
+    	
+  	});
 
 
 	//LOCAL
-   
 
     app.post('/signup', 
     	passport.authenticate('local-signup', {
         successRedirect : '/', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
+        failureRedirect : '/failure'
     }));
     
      // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/', // redirect to the secure profile section
-        failureRedirect : '/login', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
+        successRedirect : '/city/san-francisco-ca-united-states#', // redirect to the secure profile section
+        failureRedirect : '/signinfailure'
     }));
 
-    //STRAVA
+    
+  	//SIGN IN FAILURES
 
-    app.get('/auth/strava',
- 		 passport.authenticate('strava'/*, { scope: ['write'] }*/));
-
-	app.get('/auth/strava/callback', 
-  	passport.authenticate('strava', { failureRedirect: '/login' }),
-  		function(req, res) {
-  			
-    // Successful authentication, redirect home.
-    	res.redirect('/');
-  	});
-
+  	app.route("/failure")
+    	.get(function (req, res) {
+    		res.send({message: "There was an error when trying to add you as a user, perhaps you left a field blank?", failure: true})
+    	});
+    app.route("/signinfailure")
+    	.get(function (req, res) {
+    		res.send({message: "There was an error logging you in, please check your email and password or your social login information.", failure: true})
+    	});
 
 
-	//API////////////////
-	app.route('/login')
+    //LOGOUT
+
+
+    app.route('/logout')
 		.get(function (req, res) {
-
-			res.render('login', { /*signupMessage: req.flash("signupMessage"), loginMessage: req.flash("loginMessage") */}); 
+			var url = req.query.redirect;
+			req.logout();
+			res.redirect(url || "/");
 		});
+
+    //ROUTES AND API
 
 	app.route('/')
 		.get(/*isLoggedIn,*/ function (req, res) {
@@ -188,11 +220,7 @@ module.exports = function (app, passport) {
 
 		});
 
-	app.route('/logout')
-		.get(function (req, res) {
-			req.logout();
-			res.redirect('/');
-		});
+
 
 
 	//DATA ROUTES
@@ -344,6 +372,9 @@ module.exports = function (app, passport) {
 
 	//REST API 
 
+
+	//GUIDES
+
 	app.get("/api/user", DAO.getUserProfile);
 
 	app.route("/api/guides")
@@ -352,44 +383,63 @@ module.exports = function (app, passport) {
 			console.log(slug)
 		})
 		.post(function(req, res) {
-			console.log(req.body)
-			var slug = req.body.slug;
-			var user = req.user;
-			var cityName = req.body.cityName;
 
-			DAO.addGuide(user, slug, cityName)
+			if (!req.user) {
+				res.send("No user logged in.")
+			}
+			else {
+				console.log(req.body)
+				var slug = req.body.slug;
+				var user = req.user;
+				var cityName = req.body.cityName;
 
-			console.log(slug)
+				DAO.addGuide(user, slug, cityName)
 
-			res.send(req.body)
+				console.log(slug)
+
+				res.send(req.body)
+			}
+
+			
 		})
 		.delete(function(req, res) {
-
 
 			DAO.removeGuide(req.user, req.body.slug)
 			res.send(req.body)
 
 		});
 
+	//CONTACT GUIDES 
 
+	app.route("/api/contactguide")
+		.post(function(req, res) {
+			res.send(req.body)
+		});
+
+	//TIPS
 	app.route("/api/tips")
 		.get(function(req, res) {
-			var slug = req.query.slug;
+
+	
+
+				var slug = req.query.slug;
+				
+
+				DAO.getTips(slug).then(function(data) {
+
+					res.send(data)
+				}).catch(function(error) {
+					console.log(error)
+				});
+	
+
 			
-
-			DAO.getTips(slug).then(function(data) {
-
-				res.send(data)
-			}).catch(function(error) {
-				console.log(error)
-			});
-
 		})
 		.post(function(req, res) {
 			var slug = req.body.slug;
 			var tip = req.body.tip;
 			var activity = req.body.activity;
-			var user = "development user";
+			var user = req.user;
 			DAO.addTip(user, activity, slug, tip)
 
 			res.send("post tips working")
@@ -432,7 +482,6 @@ module.exports = function (app, passport) {
 		fbook(req.query.query).then(function(data) {
 			res.send(data);
 		}).catch(function(err) {
-			console.log(err)
 			res.send(err);
 		});
 	});
@@ -483,6 +532,36 @@ module.exports = function (app, passport) {
     });
 
 
+    //WEATHER
+    app.post("/api/weather", function(req, res) { 
+    	var city = req.body;
+    	console.log(city)
+
+    	var weather = new Weather(+city.info.location.latitude, +city.info.location.longitude, process.env.NCDC_TOKEN);
+
+    	weather.monthlyAverages().then(function(data) {
+	
+		var weatherObj = {
+			station: weather.station,
+			elevation: weather.elevation,
+			data: weather.fullData
+		}
+
+		city.weather = weatherObj;
+		city.datasets.weather = true;
+
+		res.json(city);
+		}).catch(function(err) {
+			console.log(err)
+			res.send("error")
+		})
+
+
+    	
+
+    });
+
+
     //STRAVA SEGMENTS
 
     app.post("/api/getsegs", function(req, res) {
@@ -505,8 +584,21 @@ module.exports = function (app, passport) {
     	console.log(city)
     	
     	var strava = new Strava(city.info.location.latitude, city.info.location.longitude)
-    	var weather = new Weather(city.info.location.latitude, city.info.location.longitude, process.env.NCDC_TOKEN);
+    	
 
+
+    	strava.singleCity().then(function(data) {
+			city.running = data[0];
+			city.riding = data[1];
+			
+			city.datasets.strava = true;
+			res.send(city)
+		}).catch(function(err) {
+			console.log(err)
+		})
+
+
+		/*
     	var buildCity = [];
 
     	buildCity.push(weather.monthlyAverages())
@@ -535,7 +627,7 @@ module.exports = function (app, passport) {
     		console.log(err)
     		res.send("error")
     	})
-
+		*/
     	/*
     	weather.monthlyAverages().then(function(data) {
 	
@@ -553,19 +645,17 @@ module.exports = function (app, passport) {
 			console.log(err)
 		})
 
-		strava.singleCity().then(function(data) {
-			city.running = data[0];
-			city.riding = data[1];
-			
-			city.datasets.strava = true;
-			res.send(city)
-		}).catch(function(err) {
-			console.log(err)
-		})
+		
 		*/
     });
 
 
+
+    //LOGIN / SIGNUP
+
+    //CHECK LIST OF CURRENT USERS
+	app.route('/checkuser/:user')
+		.get(DAO.getUsers);
 
 
 		

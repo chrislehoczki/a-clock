@@ -47,7 +47,7 @@ var Main = React.createClass({
         $.get(url + ridingQuery, function(data) {
             data = JSON.parse(data);
             component.setState({ridingGroups: data.data});
-        });
+        })
 
     },
 

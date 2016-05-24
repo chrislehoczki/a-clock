@@ -151,7 +151,9 @@ function DAO () {
 			date: date
 			}
 
-			var query = {"facebook.id": 10100866060381880};
+			console.log(user)
+
+			var query = {_id: user._id};
 
 			Users
 			.findOneAndUpdate(query, { $push: {tips: tipObj} }, {"new": true})
@@ -174,6 +176,8 @@ function DAO () {
 			var deferred = Q.defer();
 
 			var query = {"info.city.slug" : slug}
+
+			user = createBasicUser(user)
 
 			var tipObj = {
 			activity: activity,
@@ -230,8 +234,7 @@ function DAO () {
 			cityName: cityName
 			}
 
-			var query = createUserQuery(user);
-			console.log(query)
+			var query = {_id: user._id};
 
 
 
@@ -263,18 +266,7 @@ function DAO () {
 			user: createBasicUser(user)
 			}
 
-			function createBasicUser(user) {
-				console.log(user)
-			 	if (user.strava.id) {
-			 		console.log("things its strava")
-			 		return {id: user.strava.id, firstName: user.strava.details.firstName, secondName: user.strava.details.secondName, img: user.strava.details.profileImg}
-			 	}
-			 	else if (user.facebook.id) {
-			 		console.log("thinks its facebook")
-			 		return {id: user.facebook.id, firstName: user.facebook.firstName, secondName: user.facebook.secondName, img: "/public/images/profile.png"}
-			 	}
-
-			}
+			
 
 			Cities
 			.findOneAndUpdate(query, { $addToSet: {guides: userObj}}, {"new": true})
@@ -546,7 +538,7 @@ function DAO () {
 						console.log(user)
 						if (user.local.username === username) {
 
-							message = "That username is taken."
+							message = "That email has already been registered."
 							var obj = {}
 							obj.message = message
 							obj.alert = "warning"
@@ -556,7 +548,7 @@ function DAO () {
 						}
 					})
 					if (!taken) {
-						message = "Your username is available."
+						message = "Your email is available."
 						var obj = {}
 						obj.message = message
 						obj.alert = "success"
@@ -656,6 +648,24 @@ function DAO () {
  	}
 
  }
+
+
+ function createBasicUser(user) {
+				console.log(user)
+			 	if (user.strava.id) {
+			 		console.log("things its strava")
+			 		return {id: user._id, firstName: user.strava.firstName, secondName: user.strava.secondName, img: user.strava.profileImg}
+			 	}
+			 	else if (user.facebook.id) {
+			 		console.log("thinks its facebook")
+			 		return {id: user._id, firstName: user.facebook.firstName, secondName: user.facebook.secondName, img: user.facebook.profileImg}
+			 	}
+			 	else if (user.local) {
+			 		console.log("thinks its local")
+			 		return {id: user._id, firstName: user.local.name, secondName: null, img: "/public/images/profile.png"}
+			 	}	
+
+			}
 
 
 module.exports=DAO;

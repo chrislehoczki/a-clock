@@ -37,7 +37,10 @@ var Filter = React.createClass({
                 month: month,
                 minHotelCost: 0,
                 maxHotelCost: 150,
-                limit: 20    
+                limit: 20,
+                maxRain: 30
+
+
         };
     },
 

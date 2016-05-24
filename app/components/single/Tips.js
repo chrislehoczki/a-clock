@@ -23,9 +23,10 @@ var Tips = React.createClass({
 
     getTips: function() {
         var component = this;
-        
+        console.log("trying to update")
         var url = "/api/tips?slug=" + this.props.slug
         $.get(url, function(data) {
+            console.log(data)
             component.setState({runningTips: data.running.tips, ridingTips: data.riding.tips})
         });
 
@@ -46,6 +47,7 @@ var Tips = React.createClass({
             <div> 
                 <Controls showRiders={this.showRidingTips} showRunners={this.showRunningTips} selected={this.state.type} />
                 
+                <UserForm update={this.getTips} slug={this.props.slug} activity={this.state.type} />
 
                 {this.state.type === "riding" ?
                 <div className="riding-tips">
@@ -62,7 +64,7 @@ var Tips = React.createClass({
                     })}
                 </div> : null }
 
-                <UserForm update={this.getTips} slug={this.props.slug} type={"tips"} />
+                
             </div>
         );
   

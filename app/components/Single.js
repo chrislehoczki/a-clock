@@ -59,12 +59,12 @@ var Single = React.createClass({
                         <Groups city={this.state.data.info} />
                     </div>
             
-           
+                    {this.state.data.weather ? 
                     <div className="single-weather"> 
                         <h3 className="sub-title"> Weather </h3>
                         <Weather container={this.props.weatherContainer} city={this.state.data.info.city.name} weather={this.state.data.weather} data={this.state.data} />
                     </div>
-     
+                    : null }
        
                     <div className="single-nutrition">
                         <h3 className="sub-title"> Nutrition </h3>

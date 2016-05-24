@@ -42,19 +42,35 @@ var AddCityModal= React.createClass({
     $.post(url, data, function(data) {
 
       if (data === "error") {
-
           component.setState({statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request."})
           return;
       }
-
-
-      component.setState({data: data, statusMsg: ""})
-      component.setState({dataReceived: true})
+      component.setState({data: data})
+      component.getWeather();
     }).fail(function(response) {
       component.setState({statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request."})
     });
     
     this.setState({statusMsg: "Loading city data now..."})
+    },
+
+    getWeather: function() {
+        var component = this;
+        var url = "/api/weather"
+        var data = this.state.data;
+        $.post(url, data, function(data) {
+
+          console.log(data)
+          if (data !== "error" ) {
+            component.setState({data: data})
+
+          }
+          component.setState({dataReceived: true, statusMsg: ""})
+
+          
+          
+        });
+
     },
 
     declareCity: function(cityChoice) {

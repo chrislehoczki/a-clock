@@ -33,6 +33,7 @@ var Header = React.createClass({
     },
 
     componentDidMount: function() {
+      this.setState({logoutHref: "/logout?redirect=" +  window.location.pathname})
 
       if (this.props.type === "single") {
 
@@ -104,7 +105,7 @@ var Header = React.createClass({
                 </ul>
               </li>
               <li><a href="#" onClick={this.showProfileModal} >Profile</a></li>
-              <li><a href="/logout" >Logout</a></li>
+              <li><a href={this.state.logoutHref} >Logout</a></li>
             </ul>
           </div>
           </div>

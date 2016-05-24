@@ -27,11 +27,13 @@ module.exports = function (passport) {
 
      clientID        : configAuth.stravaAuth.clientID,
      clientSecret    : configAuth.stravaAuth.clientSecret,
-     callbackURL     : configAuth.stravaAuth.callbackURL
+     callbackURL     : configAuth.stravaAuth.callbackURL,
+     passReqToCallback: true
   },
-  function(accessToken, refreshToken, profile, done) {
+  function(req, accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
     process.nextTick(function() {
+
 
             // find the user in the database based on their facebook id
             User.findOne({ 'strava.id' : profile.id }, function(err, user) {
@@ -54,13 +56,13 @@ module.exports = function (passport) {
                     newUser.strava.id = profile.id;
                     newUser.strava.email = profile._json.email;
                     newUser.strava.token = profile.token;
-                    newUser.strava.details = {};
+                    
 
-                    newUser.strava.details.firstName = profile._json.firstname;
-                    newUser.strava.details.secondName = profile._json.lastname;
-                    newUser.strava.details.profileImg = profile._json.profile_medium;
-                    newUser.strava.details.city = profile._json.city;
-                    newUser.strava.details.country = profile._json.country;
+                    newUser.strava.firstName = profile._json.firstname;
+                    newUser.strava.secondName = profile._json.lastname;
+                    newUser.strava.profileImg = profile._json.profile_medium;
+                    newUser.strava.city = profile._json.city;
+                    newUser.strava.country = profile._json.country;
 
                                     // save the user
                     newUser.tips = [];
@@ -109,7 +111,7 @@ module.exports = function (passport) {
 
             // check to see if theres already a user with that email
             if (user) {
-                return done(null, false, req.flash('signupMessage', 'That username is already taken.'))
+                return done(null, false/*, req.flash('signupMessage', 'That username is already taken.')*/)
             } else {
 
                 // if there is no user with that email
@@ -117,8 +119,10 @@ module.exports = function (passport) {
                 var newUser            = new User();
 
                 // set the user's local credentials
-                newUser.local.username    = username;
+                newUser.local.email    = username;
                 newUser.local.password = newUser.generateHash(password);
+                newUser.local.name = req.body.name;
+                newUser.local.profileImg = "/public/images/profile.png"
                 // save the user
                 newUser.tips = [];
                 newUser.descriptions = [];
@@ -154,11 +158,11 @@ passport.use('local-login', new LocalStrategy({
 
             // if no user is found, return the message
             if (!user)
-                return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
+                return done(null, false/*, req.flash('loginMessage', 'No user found.')*/); // req.flash is the way to set flashdata using connect-flash
 
             // if the user is found but the password is wrong
             if (!user.validPassword(password))
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+                return done(null, false/*, req.flash('loginMessage', 'Oops! Wrong password.')*/); // create the loginMessage and save it to session as flashdata
 
             // all is well, return successful user
             return done(null, user);
@@ -174,11 +178,12 @@ passport.use('local-login', new LocalStrategy({
         clientID        : configAuth.facebookAuth.clientID,
         clientSecret    : configAuth.facebookAuth.clientSecret,
         callbackURL     : configAuth.facebookAuth.callbackURL,
-        profileFields: ['id', 'emails', 'name']
+        passReqToCallback: true,
+        profileFields: ['id', 'emails', 'name', 'displayName', 'picture.type(large)']
     },
 
     // facebook will send back the token and profile
-    function(token, refreshToken, profile, done) {
+    function(req, token, refreshToken, profile, done) {
 
         // asynchronous
         process.nextTick(function() {
@@ -197,19 +202,24 @@ passport.use('local-login', new LocalStrategy({
                 } else {
                     // if there is no user found with that facebook id, create them
                     var newUser = new User();
+                    console.log(profile)
 					
                     // set all of the facebook information in our user model
                     newUser.facebook.id    = profile.id; // set the users facebook id                   
                     newUser.facebook.token = token; // we will save the token that facebook provides to the user                    
                     newUser.facebook.firstName  = profile._json.first_name; // look at the passport user profile to see how names are returned
                     newUser.facebook.secondName  = profile._json.last_name;
+                    newUser.facebook.picture = profile.photos[0].value;
+                    newUser.facebook.email = profile.emails[0].value;
+                    newUser.facebook.profileImg = profile.photos[0].value;
 
                      // facebook can return multiple emails so we'll take the first
                     newUser.tips = [];
                     newUser.descriptions = [];
                     newUser.guideCities = [];
-                    
 
+
+                
    
                     newUser.save(function(err) {
                         if (err)

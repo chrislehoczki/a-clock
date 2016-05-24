@@ -1026,7 +1026,9 @@ var Filter = React.createClass({
             month: month,
             minHotelCost: 0,
             maxHotelCost: 150,
-            limit: 20
+            limit: 20,
+            maxRain: 30
+
         };
     },
 
@@ -1164,7 +1166,7 @@ var Filter = React.createClass({
 module.exports = Filter;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Cities.js":4,"./filter/Altitude.js":23,"./filter/Continent.js":24,"./filter/Hotel.js":25,"./filter/Month.js":26,"./filter/Rain.js":27,"./filter/Sort.js":28,"./filter/Temp.js":29,"./filter/Terrain.js":30}],8:[function(require,module,exports){
+},{"./Cities.js":4,"./filter/Altitude.js":24,"./filter/Continent.js":25,"./filter/Hotel.js":26,"./filter/Month.js":27,"./filter/Rain.js":28,"./filter/Sort.js":29,"./filter/Temp.js":30,"./filter/Terrain.js":31}],8:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1416,7 +1418,7 @@ var Header = React.createClass({
 module.exports = Header;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":14,"./addcity/AddCityModal.js":17,"./single/Overview.js":43}],9:[function(require,module,exports){
+},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":14,"./addcity/AddCityModal.js":17,"./single/Overview.js":44}],9:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1523,8 +1525,8 @@ var ReactBootstrap = (typeof window !== "undefined" ? window['ReactBootstrap'] :
 var Modal = ReactBootstrap.Modal;
 var Button = ReactBootstrap.Button;
 
-var SignupModal = React.createClass({
-    displayName: "SignupModal",
+var LoginModal = React.createClass({
+    displayName: "LoginModal",
 
 
     getInitialState: function getInitialState() {
@@ -1532,6 +1534,10 @@ var SignupModal = React.createClass({
             userOK: false,
             passwordOK: false
         };
+    },
+
+    componentDidMount: function componentDidMount() {
+        this.setState({ stravaDirect: "/auth/strava?redirect=" + window.location.pathname, facebookDirect: "/auth/facebook?redirect=" + window.location.pathname });
     },
 
     sendForm: function sendForm() {
@@ -1543,13 +1549,14 @@ var SignupModal = React.createClass({
         var username = this.state.user;
         var password = this.state.password;
         var params = "username=" + username + "&password=" + password;
+
         console.log(params);
-        ajaxFunctions.postRequest("POST", url, params, function (data) {
-            if (data.length < 100) {
+        $.post(url, params, function (data) {
+            if (data.failure) {
                 console.log(data);
-                component.setState({ errorMessage: data });
+                component.setState({ errorMessage: data.message });
             } else {
-                window.location.replace("/");
+                window.location.replace(window.location.pathname);
             }
         });
     },
@@ -1609,20 +1616,19 @@ var SignupModal = React.createClass({
                         { className: "signup-container" },
                         React.createElement(
                             "a",
-                            { className: "btn btn-social btn-facebook btn-block", href: "/auth/facebook" },
+                            { style: { color: "white" }, className: "btn btn-social btn-facebook", href: this.state.facebookDirect },
                             React.createElement("span", { className: "fa fa-facebook" }),
                             " Login with Facebook"
                         ),
                         React.createElement(
                             "a",
-                            { className: "btn btn-social btn-strava btn-block", href: "/auth/strava" },
-                            React.createElement("span", { className: "fa fa-strava" }),
-                            " Login with Strava"
+                            { className: "btn-strava", href: this.state.stravaDirect },
+                            React.createElement("img", { src: "/public/images/strava-login.png" })
                         ),
                         React.createElement(
                             "h4",
                             { className: "form-element" },
-                            " Or Login With Username "
+                            " Or Login With Email "
                         ),
                         React.createElement(
                             "div",
@@ -1630,7 +1636,7 @@ var SignupModal = React.createClass({
                             React.createElement(
                                 "label",
                                 null,
-                                "Username"
+                                "Email"
                             ),
                             React.createElement("input", { onKeyUp: this.addUser, type: "text", className: "form-control", name: "username" })
                         ),
@@ -1677,7 +1683,7 @@ var SignupModal = React.createClass({
     }
 });
 
-module.exports = SignupModal;
+module.exports = LoginModal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],11:[function(require,module,exports){
@@ -1738,7 +1744,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Cities.js":4,"./Filter.js":7,"./map/Map.js":32}],12:[function(require,module,exports){
+},{"./Cities.js":4,"./Filter.js":7,"./map/Map.js":33}],12:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1805,7 +1811,7 @@ var SearchBox = React.createClass({
 module.exports = SearchBox;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./searchbox/Option.js":35}],13:[function(require,module,exports){
+},{"./searchbox/Option.js":36}],13:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1832,7 +1838,7 @@ var SideBar = React.createClass({
 module.exports = SideBar;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./SearchBox.js":12,"./data-display/DataDisplay.js":21}],14:[function(require,module,exports){
+},{"./SearchBox.js":12,"./data-display/DataDisplay.js":22}],14:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1872,17 +1878,22 @@ var SignupModal = React.createClass({
       return;
     }
 
+    if (!component.state.name) {
+      return;
+    }
+
     //MAKE PARAMS HERE
     var url = "/signup";
 
     var username = this.state.user;
     var password = this.state.confirmPassword;
+    var name = this.state.name;
     console.log(username);
-    var params = "username=" + username + "&password=" + password;
+    var params = "username=" + username + "&password=" + password + "&name=" + name;
     console.log(params);
-    ajaxFunctions.postRequest("POST", url, params, function (data) {
-      if (data.length < 100) {
-        component.setState({ errorMessage: data });
+    $.post(url, params, function (data) {
+      if (data.failure) {
+        component.setState({ errorMessage: data.message });
       } else {
         window.location.replace("/");
       }
@@ -1896,9 +1907,8 @@ var SignupModal = React.createClass({
 
     var url = "/checkuser/" + user;
 
-    ajaxFunctions.ajaxRequest("GET", url, function (data) {
-      console.log(data);
-      data = JSON.parse(data);
+    $.get(url, function (data) {
+
       component.setState({ usernameMessage: data.message, userAlert: data.alert }, function () {
         if (data.alert === "success") {
           component.setState({ userOK: true });
@@ -1943,6 +1953,10 @@ var SignupModal = React.createClass({
         component.setState({ passwordMatch: "", confirmPasswordAlert: "success" }, console.log(this.state));
       }
     });
+  },
+
+  confirmName: function confirmName(e) {
+    this.setState({ name: e.target.value });
   },
 
   createUserMarkup: function createUserMarkup(data, alertType) {
@@ -2013,20 +2027,19 @@ var SignupModal = React.createClass({
           ),
           React.createElement(
             "a",
-            { className: "btn btn-social btn-facebook btn-block", href: "/auth/facebook" },
+            { className: "btn btn-social btn-facebook", href: "/auth/facebook" },
             React.createElement("span", { className: "fa fa-facebook" }),
             " Sign Up with Facebook"
           ),
           React.createElement(
             "a",
-            { className: "btn btn-social btn-strava btn-block", href: "/auth/strava" },
-            React.createElement("span", { className: "fa fa-strava" }),
-            " Sign Up with Strava"
+            { className: "btn-strava", href: "/auth/strava" },
+            React.createElement("img", { src: "/public/images/strava-connect.png" })
           ),
           React.createElement(
             "h4",
             { className: "form-element" },
-            " Or Sign Up With Username "
+            " Or Sign Up With Email "
           ),
           React.createElement(
             "div",
@@ -2034,7 +2047,17 @@ var SignupModal = React.createClass({
             React.createElement(
               "label",
               null,
-              "Username"
+              "Name"
+            ),
+            React.createElement("input", { type: "text", onChange: this.confirmName, value: this.state.name, className: "form-control", name: "name", id: "name" })
+          ),
+          React.createElement(
+            "div",
+            { className: "form-group" },
+            React.createElement(
+              "label",
+              null,
+              "Email"
             ),
             React.createElement("input", { type: "text", onBlur: this.addUser, onKeyUp: this.checkUsername, className: "form-control", name: "username", id: "username" })
           ),
@@ -2162,7 +2185,7 @@ var Single = React.createClass({
                 ),
                 React.createElement(Groups, { city: this.state.data.info })
             ),
-            React.createElement(
+            this.state.data.weather ? React.createElement(
                 "div",
                 { className: "single-weather" },
                 React.createElement(
@@ -2171,7 +2194,7 @@ var Single = React.createClass({
                     " Weather "
                 ),
                 React.createElement(Weather, { container: this.props.weatherContainer, city: this.state.data.info.city.name, weather: this.state.data.weather, data: this.state.data })
-            ),
+            ) : null,
             React.createElement(
                 "div",
                 { className: "single-nutrition" },
@@ -2204,7 +2227,7 @@ var Single = React.createClass({
 module.exports = Single;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./CityImage.js":6,"./single/CityGuides.js":36,"./single/Description.js":38,"./single/Groups.js":41,"./single/Nutrition.js":42,"./single/Segments.js":46,"./single/Tips.js":48,"./single/UserForm.js":50,"./single/Users.js":51,"./single/Weather.js":52}],16:[function(require,module,exports){
+},{"./CityImage.js":6,"./single/CityGuides.js":37,"./single/Description.js":39,"./single/Groups.js":42,"./single/Nutrition.js":43,"./single/Segments.js":47,"./single/Tips.js":49,"./single/UserForm.js":51,"./single/Users.js":52,"./single/Weather.js":53}],16:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2245,6 +2268,7 @@ var Header = React.createClass({
   },
 
   componentDidMount: function componentDidMount() {
+    this.setState({ logoutHref: "/logout?redirect=" + window.location.pathname });
 
     if (this.props.type === "single") {
 
@@ -2407,7 +2431,7 @@ var Header = React.createClass({
               null,
               React.createElement(
                 "a",
-                { href: "/logout" },
+                { href: this.state.logoutHref },
                 "Logout"
               )
             )
@@ -2442,7 +2466,7 @@ var Header = React.createClass({
 module.exports = Header;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":14,"./addcity/AddCityModal.js":17,"./profile/ProfileModal.js":34,"./single/Overview.js":43}],17:[function(require,module,exports){
+},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":14,"./addcity/AddCityModal.js":17,"./profile/ProfileModal.js":35,"./single/Overview.js":44}],17:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2456,145 +2480,157 @@ var Location = require("./Location.js");
 var Single = require("../Single.js");
 
 var AddCityModal = React.createClass({
-  displayName: "AddCityModal",
+    displayName: "AddCityModal",
 
 
-  getInitialState: function getInitialState() {
-    return {
-      city: "",
-      locations: [],
-      dataReceived: false
-    };
-  },
+    getInitialState: function getInitialState() {
+        return {
+            city: "",
+            locations: [],
+            dataReceived: false
+        };
+    },
 
-  changeCity: function changeCity(e) {
-    this.setState({ city: e.target.value });
-  },
+    changeCity: function changeCity(e) {
+        this.setState({ city: e.target.value });
+    },
 
-  geocode: function geocode() {
-    //REMOVE ALL DATA FROM PREVIOUS
-    this.setState({ dataReceived: false, data: {} });
+    geocode: function geocode() {
+        //REMOVE ALL DATA FROM PREVIOUS
+        this.setState({ dataReceived: false, data: {} });
 
-    var component = this;
-    var city = this.state.city;
+        var component = this;
+        var city = this.state.city;
 
-    $.get("/api/geocode?city=" + city, function (data) {
-      console.log(data);
-      component.setState({ locations: data });
-    });
-  },
+        $.get("/api/geocode?city=" + city, function (data) {
+            console.log(data);
+            component.setState({ locations: data });
+        });
+    },
 
-  getSegments: function getSegments(city) {
-    var component = this;
-    var url = "/api/getsegs";
-    var data = city;
-    $.post(url, data, function (data) {
+    getSegments: function getSegments(city) {
+        var component = this;
+        var url = "/api/getsegs";
+        var data = city;
+        $.post(url, data, function (data) {
 
-      if (data === "error") {
+            if (data === "error") {
+                component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
+                return;
+            }
+            component.setState({ data: data });
+            component.getWeather();
+        }).fail(function (response) {
+            component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
+        });
 
-        component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
-        return;
-      }
+        this.setState({ statusMsg: "Loading city data now..." });
+    },
 
-      component.setState({ data: data, statusMsg: "" });
-      component.setState({ dataReceived: true });
-    }).fail(function (response) {
-      component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
-    });
+    getWeather: function getWeather() {
+        var component = this;
+        var url = "/api/weather";
+        var data = this.state.data;
+        $.post(url, data, function (data) {
 
-    this.setState({ statusMsg: "Loading city data now..." });
-  },
+            console.log(data);
+            if (data !== "error") {
+                component.setState({ data: data });
+            }
+            component.setState({ dataReceived: true, statusMsg: "" });
+        });
+    },
 
-  declareCity: function declareCity(cityChoice) {
-    this.setState({ chosenCity: cityChoice }, console.log(this.state));
+    declareCity: function declareCity(cityChoice) {
+        this.setState({ chosenCity: cityChoice }, console.log(this.state));
 
-    var cities = this.state.locations;
-    var chosenCity = [];
-    cities.forEach(function (city) {
-      if (city === cityChoice) {
-        console.log(city);
-        chosenCity.push(city);
-      }
-    });
+        var cities = this.state.locations;
+        var chosenCity = [];
+        cities.forEach(function (city) {
+            if (city === cityChoice) {
+                console.log(city);
+                chosenCity.push(city);
+            }
+        });
 
-    console.log(chosenCity);
-    this.setState({ locations: chosenCity }, this.getSegments(cityChoice));
-  },
+        console.log(chosenCity);
+        this.setState({ locations: chosenCity }, this.getSegments(cityChoice));
+    },
 
-  destroy: function destroy() {
+    destroy: function destroy() {
 
-    this.props.hideMessage();
-    $(".add-city-single").fadeOut("slow");
-  },
+        this.props.hideMessage();
+        $(".add-city-single").fadeOut("slow");
+    },
 
-  checkEnter: function checkEnter(e) {
-    console.log(e.keyCode);
+    checkEnter: function checkEnter(e) {
+        console.log(e.keyCode);
 
-    if (e.keyCode === 13) {
-      this.geocode();
+        if (e.keyCode === 13) {
+            this.geocode();
+        }
+    },
+
+    render: function render() {
+
+        var component = this;
+
+        return React.createElement(
+            "div",
+            null,
+            React.createElement(
+                Modal,
+                { dialogClassName: "addCityModal", show: this.props.showMessage, backdrop: true, keyboard: true, onHide: this.destroy },
+                React.createElement(
+                    Modal.Header,
+                    { closeButton: true },
+                    React.createElement(
+                        "h1",
+                        null,
+                        " Add Your City "
+                    )
+                ),
+                React.createElement(
+                    Modal.Body,
+                    null,
+                    React.createElement("input", { type: "text", onChange: this.changeCity, value: this.state.city, onKeyDown: this.checkEnter }),
+                    React.createElement(
+                        "button",
+                        { className: "btn filter-btn", onClick: this.geocode },
+                        "Find City"
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "location-buttons row" },
+                        this.state.locations.map(function (city) {
+                            return React.createElement(Location, { declareCity: component.declareCity, key: city.id, city: city });
+                        })
+                    ),
+                    React.createElement(
+                        "p",
+                        null,
+                        " ",
+                        this.state.statusMsg,
+                        " "
+                    ),
+                    React.createElement(
+                        "div",
+                        { className: "add-city-single" },
+                        this.state.dataReceived ? React.createElement(Single, { data: this.state.data, weatherContainer: "modal-chart", addCity: true }) : null
+                    )
+                ),
+                React.createElement(
+                    Modal.Footer,
+                    null,
+                    React.createElement(
+                        Button,
+                        { onClick: this.destroy },
+                        "Close"
+                    )
+                )
+            )
+        );
     }
-  },
-
-  render: function render() {
-
-    var component = this;
-
-    return React.createElement(
-      "div",
-      null,
-      React.createElement(
-        Modal,
-        { dialogClassName: "addCityModal", show: this.props.showMessage, backdrop: true, keyboard: true, onHide: this.destroy },
-        React.createElement(
-          Modal.Header,
-          { closeButton: true },
-          React.createElement(
-            "h1",
-            null,
-            " Add Your City "
-          )
-        ),
-        React.createElement(
-          Modal.Body,
-          null,
-          React.createElement("input", { type: "text", onChange: this.changeCity, value: this.state.city, onKeyDown: this.checkEnter }),
-          React.createElement(
-            "button",
-            { className: "btn filter-btn", onClick: this.geocode },
-            "Find City"
-          ),
-          React.createElement(
-            "div",
-            { className: "location-buttons row" },
-            this.state.locations.map(function (city) {
-              return React.createElement(Location, { declareCity: component.declareCity, key: city.id, city: city });
-            })
-          ),
-          React.createElement(
-            "p",
-            null,
-            " ",
-            this.state.statusMsg,
-            " "
-          ),
-          React.createElement(
-            "div",
-            { className: "add-city-single" },
-            this.state.dataReceived ? React.createElement(Single, { data: this.state.data, weatherContainer: "modal-chart", addCity: true }) : null
-          )
-        ),
-        React.createElement(
-          Modal.Footer,
-          null,
-          React.createElement(
-            Button,
-            { onClick: this.destroy },
-            "Close"
-          )
-        )
-      )
-    );
-  }
 });
 
 module.exports = AddCityModal;
@@ -2808,7 +2844,7 @@ var Guide = React.createClass({
 
         return React.createElement(
             'div',
-            { className: 'athlete col-lg-2 col-md-3 col-sm-3 col-xs-6' },
+            { className: 'athlete col-lg-2 col-md-3 col-sm-3 col-xs-6', onClick: this.props.showGuide },
             React.createElement('img', { id: this.props.data.user.id, className: 'athlete-img', src: this.props.data.user.img, alt: this.props.data.user.firstName + " " + this.props.data.user.secondName, 'data-toggle': 'tooltip', 'data-placement': 'top', title: this.props.data.user.firstName + " " + this.props.data.user.secondName })
         );
     }
@@ -2818,6 +2854,110 @@ module.exports = Guide;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],21:[function(require,module,exports){
+(function (global){
+"use strict";
+
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+var ReactBootstrap = (typeof window !== "undefined" ? window['ReactBootstrap'] : typeof global !== "undefined" ? global['ReactBootstrap'] : null);
+var Modal = ReactBootstrap.Modal;
+
+var ContactGuide = React.createClass({
+    displayName: "ContactGuide",
+
+
+    getInitialState: function getInitialState() {
+        return {};
+    },
+
+    sendData: function sendData() {
+
+        var body = {
+            name: this.state.name,
+            email: this.state.email,
+            subject: this.state.subject
+        };
+
+        $.post("/api/contactguide", body, function (data) {
+            console.log(data);
+        });
+    },
+
+    addName: function addName(e) {
+        this.setState({ name: e.target.value });
+    },
+
+    addEmail: function addEmail(e) {
+        this.setState({ email: e.target.value });
+    },
+
+    addSubject: function addSubject(e) {
+        this.setState({ subject: e.target.value });
+    },
+
+    render: function render() {
+
+        var component = this;
+
+        return React.createElement(
+            "div",
+            null,
+            React.createElement(
+                Modal,
+                { show: this.props.showMessage, backdrop: true, keyboard: true, onHide: this.props.hideMessage },
+                React.createElement(
+                    Modal.Header,
+                    { closeButton: true },
+                    React.createElement(
+                        "h3",
+                        { className: "sub-title" },
+                        "Contact Guide"
+                    )
+                ),
+                React.createElement(
+                    Modal.Body,
+                    null,
+                    React.createElement(
+                        "p",
+                        null,
+                        "Your Name"
+                    ),
+                    React.createElement("input", { onChange: this.addName, value: this.state.name, className: "form-control", type: "text" }),
+                    React.createElement(
+                        "p",
+                        null,
+                        " Your Email "
+                    ),
+                    React.createElement("input", { onChange: this.addEmail, value: this.state.email, className: "form-control", type: "text" }),
+                    React.createElement(
+                        "p",
+                        null,
+                        " Subject "
+                    ),
+                    React.createElement("textarea", { onChange: this.addSubject, value: this.state.subject, className: "form-control" }),
+                    React.createElement(
+                        "button",
+                        { className: "btn main-btn", onClick: this.sendData },
+                        "Send"
+                    )
+                ),
+                React.createElement(
+                    Modal.Footer,
+                    null,
+                    React.createElement(
+                        "button",
+                        { className: "btn filter-btn", onClick: this.props.hideMessage },
+                        "Close"
+                    )
+                )
+            )
+        );
+    }
+});
+
+module.exports = ContactGuide;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],22:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2895,7 +3035,7 @@ var DataDisplay = React.createClass({
 module.exports = DataDisplay;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./TopCity.js":22}],22:[function(require,module,exports){
+},{"./TopCity.js":23}],23:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2926,7 +3066,7 @@ var TopCity = React.createClass({
 module.exports = TopCity;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3029,7 +3169,7 @@ var Sort = React.createClass({
 module.exports = Sort;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3105,7 +3245,7 @@ var Continent = React.createClass({
 module.exports = Continent;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3194,7 +3334,7 @@ var Hotel = React.createClass({
 module.exports = Hotel;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3295,7 +3435,7 @@ var Month = React.createClass({
 module.exports = Month;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3333,7 +3473,7 @@ var Rain = React.createClass({
         type: 'range',
         value: this.state.maxRain,
         min: 0,
-        max: 15 }),
+        max: 30 }),
       React.createElement(
         'p',
         null,
@@ -3346,7 +3486,7 @@ var Rain = React.createClass({
 module.exports = Rain;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3428,7 +3568,7 @@ var Sort = React.createClass({
 module.exports = Sort;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3529,7 +3669,7 @@ var Temp = React.createClass({
 module.exports = Temp;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3612,7 +3752,7 @@ var Terrain = React.createClass({
 module.exports = Terrain;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3654,7 +3794,7 @@ if (mainHolder) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Header.js":8,"./Main.js":11,"./Sidebar.js":13,"./Single.js":15,"./UserHeader.js":16}],32:[function(require,module,exports){
+},{"./Header.js":8,"./Main.js":11,"./Sidebar.js":13,"./Single.js":15,"./UserHeader.js":16}],33:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3708,7 +3848,7 @@ var MapDisplay = React.createClass({
 module.exports = MapDisplay;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../common/MapChart.js":2}],33:[function(require,module,exports){
+},{"../../common/MapChart.js":2}],34:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3765,7 +3905,7 @@ var GuideCity = React.createClass({
 module.exports = GuideCity;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3812,13 +3952,16 @@ var Profile = React.createClass({
 
     console.log(user);
     if (user.strava) {
-      firstName = user.strava.details.firstName;
-      secondName = user.strava.details.secondName;
-      img = user.strava.details.profileImg;
+      firstName = user.strava.firstName;
+      secondName = user.strava.secondName;
+      img = user.strava.profileImg;
     } else if (user.facebook) {
       firstName = user.facebook.firstName;
       secondName = user.facebook.secondName;
-      img = "/public/images/profile.png";
+      img = user.facebook.profileImg;
+    } else if (user.local) {
+      firstName = user.local.name;
+      img = user.local.profileImg;
     }
 
     var style = { width: "100px", height: "100px" };
@@ -3912,7 +4055,7 @@ var Profile = React.createClass({
 module.exports = Profile;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./GuideCity.js":33}],35:[function(require,module,exports){
+},{"./GuideCity.js":34}],36:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3931,7 +4074,7 @@ var Option = React.createClass({
 module.exports = Option;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],36:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3939,6 +4082,7 @@ var React = (typeof window !== "undefined" ? window['React'] : typeof global !==
 
 var CityGuideInfo = require("../city-guides/CityGuideInfo.js");
 var Guide = require("../city-guides/Guide.js");
+var GuideContact = require("../city-guides/GuideContact.js");
 
 var Main = React.createClass({
     displayName: "Main",
@@ -3948,7 +4092,8 @@ var Main = React.createClass({
         return {
             runningGroups: [],
             ridingGroups: [],
-            showInfo: false
+            showInfo: false,
+            guideContact: false
         };
     },
 
@@ -3961,8 +4106,17 @@ var Main = React.createClass({
         this.setState({ showInfo: false });
     },
 
-    render: function render() {
+    showGuideContact: function showGuideContact(guide) {
+        console.log("being called");
+        this.setState({ guideContact: true });
+    },
 
+    hideGuideContact: function hideGuideContact(guide) {
+        this.setState({ guideContact: false });
+    },
+
+    render: function render() {
+        var component = this;
         return React.createElement(
             "div",
             null,
@@ -3972,13 +4126,14 @@ var Main = React.createClass({
                 " Want to become a guide? "
             ),
             this.props.data.guides.length > 0 ? this.props.data.guides.map(function (guide) {
-                return React.createElement(Guide, { data: guide });
+                return React.createElement(Guide, { data: guide, showGuide: component.showGuideContact });
             }) : React.createElement(
                 "p",
                 null,
                 " We have no city guides for this city, why not consider being one? "
             ),
             React.createElement(CityGuideInfo, { showMessage: this.state.showInfo, hideMessage: this.hideCityGuideInfo, data: this.props.data }),
+            React.createElement(GuideContact, { showMessage: this.state.guideContact, hideMessage: this.hideGuideContact, data: "test" }),
             React.createElement("div", { style: { clear: "both" } })
         );
     }
@@ -3987,7 +4142,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../city-guides/CityGuideInfo.js":19,"../city-guides/Guide.js":20}],37:[function(require,module,exports){
+},{"../city-guides/CityGuideInfo.js":19,"../city-guides/Guide.js":20,"../city-guides/GuideContact.js":21}],38:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4028,7 +4183,7 @@ var Controls = React.createClass({
 module.exports = Controls;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4073,7 +4228,7 @@ var Description = React.createClass({
 module.exports = Description;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./UserForm.js":50}],39:[function(require,module,exports){
+},{"./UserForm.js":51}],40:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4122,7 +4277,7 @@ var DescriptionString = React.createClass({
 module.exports = DescriptionString;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../common/description.js":3}],40:[function(require,module,exports){
+},{"../../common/description.js":3}],41:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4159,7 +4314,7 @@ var User = React.createClass({
 module.exports = User;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4233,7 +4388,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":37,"./Group.js":40}],42:[function(require,module,exports){
+},{"./Controls.js":38,"./Group.js":41}],43:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4300,7 +4455,7 @@ var Segment = React.createClass({
 module.exports = Segment;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Restaurant.js":44}],43:[function(require,module,exports){
+},{"./Restaurant.js":45}],44:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4441,7 +4596,7 @@ var Overview = React.createClass({
 module.exports = Overview;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4490,7 +4645,7 @@ var Restaurant = React.createClass({
 module.exports = Restaurant;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],45:[function(require,module,exports){
+},{}],46:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4542,7 +4697,7 @@ var Segment = React.createClass({
 module.exports = Segment;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4593,17 +4748,31 @@ var Segments = React.createClass({
 module.exports = Segments;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":37,"./Segment.js":45}],47:[function(require,module,exports){
+},{"./Controls.js":38,"./Segment.js":46}],48:[function(require,module,exports){
 (function (global){
-'use strict';
+"use strict";
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var Tips = React.createClass({
-    displayName: 'Tips',
+    displayName: "Tips",
 
 
     render: function render() {
+
+        //STYLES
+
+        var imgStyle = {
+            width: "25px",
+            height: "25px",
+            float: "left",
+            margin: "0 10px 10px 0px"
+        };
+
+        var clearFix = {
+            clear: "both",
+            marginTop: "20px"
+        };
 
         //CONVERT DATE
 
@@ -4611,28 +4780,24 @@ var Tips = React.createClass({
         date = date.toDateString();
 
         return React.createElement(
-            'div',
-            null,
+            "div",
+            { style: clearFix },
+            React.createElement("img", { style: imgStyle, src: this.props.data.user.img }),
             React.createElement(
-                'p',
+                "p",
                 null,
-                ' ',
-                this.props.data.tip,
-                ' '
-            ),
-            React.createElement(
-                'p',
-                null,
-                ' ',
-                this.props.data.user,
-                ' '
-            ),
-            React.createElement(
-                'p',
-                null,
-                ' ',
+                " ",
+                this.props.data.user.firstName,
+                " | ",
                 date,
-                ' '
+                "  "
+            ),
+            React.createElement(
+                "p",
+                null,
+                " ",
+                this.props.data.tip,
+                " "
             )
         );
     }
@@ -4641,7 +4806,7 @@ var Tips = React.createClass({
 module.exports = Tips;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4671,9 +4836,10 @@ var Tips = React.createClass({
 
     getTips: function getTips() {
         var component = this;
-
+        console.log("trying to update");
         var url = "/api/tips?slug=" + this.props.slug;
         $.get(url, function (data) {
+            console.log(data);
             component.setState({ runningTips: data.running.tips, ridingTips: data.riding.tips });
         });
     },
@@ -4692,6 +4858,7 @@ var Tips = React.createClass({
             "div",
             null,
             React.createElement(Controls, { showRiders: this.showRidingTips, showRunners: this.showRunningTips, selected: this.state.type }),
+            React.createElement(UserForm, { update: this.getTips, slug: this.props.slug, activity: this.state.type }),
             this.state.type === "riding" ? React.createElement(
                 "div",
                 { className: "riding-tips" },
@@ -4705,8 +4872,7 @@ var Tips = React.createClass({
                 this.state.runningTips.map(function (tip) {
                     return React.createElement(Tip, { key: tip.tip + tip.date, data: tip });
                 })
-            ) : null,
-            React.createElement(UserForm, { update: this.getTips, slug: this.props.slug, type: "tips" })
+            ) : null
         );
     }
 });
@@ -4714,7 +4880,7 @@ var Tips = React.createClass({
 module.exports = Tips;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":37,"./Tip.js":47,"./UserForm.js":50}],49:[function(require,module,exports){
+},{"./Controls.js":38,"./Tip.js":48,"./UserForm.js":51}],50:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -4757,7 +4923,7 @@ var User = React.createClass({
 module.exports = User;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4773,7 +4939,7 @@ var Main = React.createClass({
             message: "",
             activityChosen: false,
             userMsg: "",
-            msgClass: "alert alert-warning"
+            msgClass: "alert alert-success"
         };
     },
 
@@ -4782,53 +4948,29 @@ var Main = React.createClass({
         var body;
         var url;
 
-        if (!this.state.activityChosen && this.props.type === "tips") {
-            this.setState({ userMsg: "You must choose an activity before posting a tip." });
+        body = { slug: this.props.slug, tip: this.state.data, activity: this.props.activity };
+        url = "/api/tips";
+
+        var user = JSON.parse(document.getElementById("user").innerHTML);
+
+        if (user === "none") {
+            this.setState({ userMsg: "You must be logged in to submit a tip" });
             return;
         }
 
-        if (this.props.type === "description") {
-            body = { slug: this.props.slug, description: this.state.data };
-            url = "/api/description";
-        } else {
-            body = { slug: this.props.slug, tip: this.state.data, activity: this.state.activity };
-            url = "/api/tips";
-        }
-
         $.post(url, body, function (data) {
-
-            component.props.type === "description" ? component.removeForm() : component.setState({ msgClass: "alert alert-success", userMsg: "Great, we received it!" });
+            component.setState({ msgClass: "alert alert-success", userMsg: "Great, we received it!" });
             component.props.update();
         });
-    },
-
-    removeForm: function removeForm() {
-        $(".single-form").animate({
-            left: "2000px",
-            opacity: 0,
-            display: "none"
-        }, 1000);
     },
 
     changeData: function changeData(e) {
         this.setState({ data: e.target.value });
     },
 
-    addActivity: function addActivity(e) {
-
-        this.setState({
-            activity: e.target.value.toLowerCase(),
-            activityChosen: true
-        });
-    },
-
     componentDidMount: function componentDidMount() {
 
-        if (this.props.type === "description") {
-            this.setState({ message: "Add a description" });
-        } else {
-            this.setState({ message: "Add a tip" });
-        }
+        this.setState({ message: "Add a " + this.props.activity + " tip" });
     },
 
     render: function render() {
@@ -4839,21 +4981,13 @@ var Main = React.createClass({
             React.createElement(
                 "p",
                 null,
-                this.state.message
+                "Add a " + this.props.activity + " tip"
             ),
             React.createElement("textarea", { value: this.state.data, onChange: this.changeData, className: "form-control" }),
-            this.props.type !== "description" ? React.createElement(
-                "div",
-                null,
-                React.createElement("input", { type: "radio", name: "activity", value: "Running", ref: "activity", onChange: this.addActivity }),
-                "Running",
-                React.createElement("input", { type: "radio", name: "activity", value: "Riding", ref: "activity", onChange: this.addActivity }),
-                "Riding"
-            ) : null,
             React.createElement(
                 "button",
-                { onClick: this.postData, className: "btn btn-primary", type: "submit" },
-                "Submit"
+                { style: { float: "right" }, onClick: this.postData, className: "btn main-btn", type: "submit" },
+                "Submit " + this.props.activity + " tip"
             ),
             this.state.userMsg !== "" ? React.createElement(
                 "p",
@@ -4867,7 +5001,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4899,7 +5033,7 @@ var Users = React.createClass({
     },
 
     componentDidMount: function componentDidMount() {
-        this.setState({ type: "running" });
+        this.showRunners();
     },
 
     render: function render() {
@@ -4912,14 +5046,14 @@ var Users = React.createClass({
                 "div",
                 { className: "single-runners row" },
                 this.props.runners.map(function (runner) {
-                    return React.createElement(User, { key: Math.random(), athlete: runner });
+                    return React.createElement(User, { key: "runner" + runner.id, athlete: runner });
                 })
             ) : null,
             this.state.type === "riding" ? React.createElement(
                 "div",
                 { className: "single-riders row" },
                 this.props.riders.map(function (rider) {
-                    return React.createElement(User, { key: rider.id, athlete: rider });
+                    return React.createElement(User, { key: "rider" + rider.id, athlete: rider });
                 })
             ) : null
         );
@@ -4929,7 +5063,7 @@ var Users = React.createClass({
 module.exports = Users;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":37,"./User.js":49}],52:[function(require,module,exports){
+},{"./Controls.js":38,"./User.js":50}],53:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -5207,4 +5341,4 @@ var Weather = React.createClass({
 module.exports = Weather;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./DescriptionString.js":39}]},{},[31]);
+},{"./DescriptionString.js":40}]},{},[32]);

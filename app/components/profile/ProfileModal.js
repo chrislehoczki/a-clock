@@ -44,14 +44,18 @@ var Profile= React.createClass({
 
       console.log(user)
       if (user.strava) {
-        firstName = user.strava.details.firstName;
-        secondName = user.strava.details.secondName;
-        img = user.strava.details.profileImg;
+        firstName = user.strava.firstName;
+        secondName = user.strava.secondName;
+        img = user.strava.profileImg;
       }
       else if (user.facebook) {
         firstName = user.facebook.firstName;
         secondName = user.facebook.secondName;
-        img = "/public/images/profile.png";
+        img = user.facebook.profileImg;
+      }
+      else if (user.local) {
+        firstName = user.local.name;
+        img = user.local.profileImg;
       }
 
       var style = {width: "100px", height: "100px"}

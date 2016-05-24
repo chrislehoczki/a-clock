@@ -24,7 +24,7 @@ var Users = React.createClass({
     },
 
     componentDidMount: function() {
-        this.setState({type: "running"})
+        this.showRunners()
     },
 
     render: function() {    
@@ -38,7 +38,7 @@ var Users = React.createClass({
                 {this.state.type === "running" ?
                     <div className="single-runners row">
                         {this.props.runners.map(function(runner) {
-                            return <User key={Math.random()} athlete={runner} />
+                            return <User key={"runner" + runner.id} athlete={runner} />
                         })}
                     </div>
                     :null}
@@ -46,7 +46,7 @@ var Users = React.createClass({
                          
                     <div className="single-riders row">
                         {this.props.riders.map(function(rider) {
-                            return <User key={rider.id} athlete={rider} />
+                            return <User key={"rider" + rider.id} athlete={rider} />
                         })}
                     </div>   
                     :null}

@@ -16,12 +16,12 @@ module.exports = function (query) {
 
 		var url = 'https://graph.facebook.com/search?q=' + query + '&limit=10&type=group&access_token=' + token;
 
-		
+		console.log(url)
 
 		request(url, function (error, response, body) {
 		  if (!error && response.statusCode == 200) {
-		    deferred.resolve(body);
-		    
+		    deferred.resolve(response.body);
+
 		  }
 		  else {
 		  	deferred.reject(error)
