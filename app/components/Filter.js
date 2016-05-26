@@ -119,7 +119,6 @@ var Filter = React.createClass({
             win.scroll(function() {
                 // End of the document reached?
                 if ($(document).height() - win.height() == win.scrollTop()) {
-                    console.log("reached the end")
                     component.setState({limit: component.state.limit + 10})
                     component.filter()
                     
