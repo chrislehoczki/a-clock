@@ -21,7 +21,6 @@
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.14.2",
-    "bootstrap-sass": "^3.3.6",
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "connect-flash": "^0.1.1",
