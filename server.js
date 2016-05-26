@@ -2,11 +2,14 @@ require('dotenv').load();
 
 var express = require('express');
 var app = express();
+//FAVICON
+var favicon = require('serve-favicon');
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 var mongoose = require('mongoose');
 var passport = require('passport');
 var session = require('express-session');
 var routes = require('./app/routes/index.js');
-var favicon = require('serve-favicon');
+
 
 
 var cookieParser = require('cookie-parser');
@@ -38,8 +41,7 @@ app.use('/public', express.static(process.cwd() + '/public'));
 app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
 app.use('/components', express.static(process.cwd() + '/app/components'));
 
-//FAVICON
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
+
 
 //SESSION INFO
 
