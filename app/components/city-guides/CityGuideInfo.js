@@ -44,6 +44,11 @@ var CityGuidesInfo= React.createClass({
       window.open(tweetUrl);
     },
 
+    showLoginModal: function() {
+        var showLoginEvent = new CustomEvent('showLogin');
+        window.dispatchEvent(showLoginEvent);   
+    },
+
     render: function() {
 
       var component = this;
@@ -61,7 +66,7 @@ var CityGuidesInfo= React.createClass({
             <p> Sound like a good idea? We think so. </p>
 
             <button className="btn main-btn btn-block" onClick={this.addCityGuide} > Become a guide for {component.props.data.info.city.name} </button>
-            {this.state.message ? <p className="alert alert-warning">{this.state.message}</p> : null }
+            {this.state.message ? <div><p className="alert alert-warning">{this.state.message}</p> <button onClick={this.showLoginModal} className="btn main-btn">Login Now</button></div>: null }
             {this.state.success ? <div><p className="alert alert-success">{this.state.success}</p> <button onClick={this.tweetIt} className="btn main-btn">Tweet Your Friends</button></div> : null }
             {this.state.success ? null : 
               <div>

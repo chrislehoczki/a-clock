@@ -1,16 +1,18 @@
 var React = require('react');
 
-var DataDisplay = require("./data-display/DataDisplay.js");
-var SearchBox = require("./SearchBox.js")
+var DataDisplay = require("./sidebar/DataDisplay.js");
+var SearchBox = require("./sidebar/SearchBox.js")
+var About = require("./sidebar/About.js")
 
 var SideBar = React.createClass({
 
     render: function() {
-            var component = this;
+            
        return (
 
             <div> 
             <SearchBox />
+            <About />
             <DataDisplay />
             </div>
         );

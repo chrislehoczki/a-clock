@@ -37,16 +37,16 @@ var Users = React.createClass({
 
                 {this.state.type === "running" ?
                     <div className="single-runners row">
-                        {this.props.runners.map(function(runner) {
-                            return <User key={"runner" + runner.id} athlete={runner} />
+                        {this.props.runners.map(function(runner, i) {
+                            return <User key={"runner" + runner.id + i} athlete={runner} />
                         })}
                     </div>
                     :null}
                 {this.state.type === "riding" ?
                          
                     <div className="single-riders row">
-                        {this.props.riders.map(function(rider) {
-                            return <User key={"rider" + rider.id} athlete={rider} />
+                        {this.props.riders.map(function(rider, i) {
+                            return <User key={"rider" + rider.id + i} athlete={rider} />
                         })}
                     </div>   
                     :null}

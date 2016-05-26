@@ -51,7 +51,7 @@ var AddCityModal= React.createClass({
       component.setState({statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request."})
     });
     
-    this.setState({statusMsg: "Loading city data now..."})
+    this.setState({statusMsg: "Loading city data now...", loader: true})
     },
 
     getWeather: function() {
@@ -65,7 +65,7 @@ var AddCityModal= React.createClass({
             component.setState({data: data})
 
           }
-          component.setState({dataReceived: true, statusMsg: ""})
+          component.setState({dataReceived: true, statusMsg: "", loader: false})
 
           
           
@@ -116,9 +116,11 @@ var AddCityModal= React.createClass({
  		  <div>
         <Modal dialogClassName="addCityModal" show={this.props.showMessage} backdrop={true}  keyboard={true} onHide={this.destroy} >
 
-          <Modal.Header closeButton><h1> Add Your City </h1></Modal.Header>
+          <Modal.Header closeButton><h1> City Explorer </h1></Modal.Header>
           <Modal.Body>
-            
+            <p> If we do not have a city, you can explore the world here. </p>
+            <p> We want to add in cities that people will want to represent and share, </p>
+            <p> so if you want to become a cityguide for this city, shoot us an email! </p>
 
             <input type="text" onChange={this.changeCity} value={this.state.city} onKeyDown={this.checkEnter}/>
             <button className="btn filter-btn" onClick={this.geocode}>Find City</button>
@@ -129,7 +131,8 @@ var AddCityModal= React.createClass({
             })}
             </div>
 
-            <p> {this.state.statusMsg} </p>
+            {this.state.statusMsg ? <p> {this.state.statusMsg} </p>: null }
+            {this.state.loader ? <img src="/public/images/loader.gif"/> : null}
 
             <div className="add-city-single">
             {this.state.dataReceived ? <Single data={this.state.data} weatherContainer={"modal-chart"} addCity={true} /> : null }

@@ -10,7 +10,9 @@ var Main = React.createClass({
     getInitialState: function() {
         return {data: this.props.data,
             view: "list",
-            btnMessage: "Map View"
+            btnMessage: "Map View",
+            mapStyle: {display: "none"},
+            listStyle: {display: "block"}
         };
     },
 
@@ -22,10 +24,10 @@ var Main = React.createClass({
     changeView: function() {
 
         if (this.state.view === "list") {
-            this.setState({view: "map", btnMessage: "List View"})
+            this.setState({view: "map", btnMessage: "List View", mapStyle: {display: "block"}, listStyle: {display: "none"}})
         }
         else {
-            this.setState({view: "list", btnMessage: "Map View"})
+            this.setState({view: "list", btnMessage: "Map View", mapStyle: {display: "none"}, listStyle: {display: "block"}})
         }
 
     },
@@ -40,7 +42,9 @@ var Main = React.createClass({
                 <Filter updateCities={this.updateCities}/>
                 <button style={{zIndex: 999}} onClick={this.changeView} className="filter-btn pull-right">{this.state.btnMessage}</button>
                 <div style={{clear:"both"}}> </div>
-                {this.state.view === "list" ? <Cities cities={this.state.data} /> : <Map cities={this.state.data} />}
+                <Map show={this.state.mapStyle} cities={this.state.data} />
+                <Cities show={this.state.listStyle} cities={this.state.data} /> 
+                
                 
                 
             </div>

@@ -23,10 +23,8 @@ var Tips = React.createClass({
 
     getTips: function() {
         var component = this;
-        console.log("trying to update")
         var url = "/api/tips?slug=" + this.props.slug
         $.get(url, function(data) {
-            console.log(data)
             component.setState({runningTips: data.running.tips, ridingTips: data.riding.tips})
         });
 

@@ -29,10 +29,10 @@ var LoginModal= React.createClass({
       var password = this.state.password;
       var params = "username=" + username + "&password=" + password;
 
-        console.log(params)
+  
       $.post(url, params, function(data) {
           if (data.failure) {
-            console.log(data)
+            
             component.setState({errorMessage: data.message})
           }
           else {

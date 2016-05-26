@@ -51,9 +51,7 @@ var Sort = React.createClass({
 
       //IF SELECTED
       if (this.props.alt) {
-        console.log("has been selected")
         if (this.props.alt.min === altQuery.min) {
-          console.log("trying to remove styling")
           defaultStyles();
           //NEED TO SEND TO PARENT HERE
           this.props.updateAlt({alt: null})

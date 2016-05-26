@@ -24,9 +24,9 @@ function CityMap (el, data, width, height, radius, hoverRadius) {
     this.tooltip = d3.select(el).append("div").attr("class", "cities-tooltip").style("opacity", 0),
 
     this.projection = d3.geo.mercator()
-            .center([95, 0]) //LON (left t0 right) + LAT (up and down)
-            .scale(150) //DEFAULT Is 150
-            .rotate([38,0, 0]), //longitude, latitude and roll - if roll not specified - uses 0 - rotates the globe
+            .center([0, 0]) //LON (left t0 right) + LAT (up and down)
+            .scale(135) //DEFAULT Is 150
+            .rotate([0,0, 0]), //longitude, latitude and roll - if roll not specified - uses 0 - rotates the globe
 
 
     this.appendSvg = function() {
@@ -46,6 +46,8 @@ function CityMap (el, data, width, height, radius, hoverRadius) {
         //PATH GENERATOR USING PROJECTION
         var path = d3.geo.path()
             .projection(projection);
+
+    
 
            // zoom and pan
         var zoom = d3.behavior.zoom()

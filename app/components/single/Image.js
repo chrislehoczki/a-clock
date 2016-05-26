@@ -7,7 +7,6 @@ var Image = React.createClass({
         var self = this;
         var img = new Image();
         img.onerror = function () {
-            console.log("image not loading")
             self.setState({ src: '/public/images/profile.jpg' });
         };
 

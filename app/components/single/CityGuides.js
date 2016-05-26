@@ -17,7 +17,6 @@ var Main = React.createClass({
     },
 
     showCityGuideInfo: function()  {
-      console.log("being called")
       this.setState({showInfo: true})
     },
 
@@ -27,12 +26,27 @@ var Main = React.createClass({
     },
 
     showGuideContact: function(guide)  {
-      console.log("being called")
-      this.setState({guideContact: true})
+      var component = this;
+      var user = JSON.parse(document.getElementById("user").innerHTML);
+
+      if (user === "none") {
+        this.setState({msg: "You must be logged in to message a city guide."})
+        return;
+      }
+
+      this.setState({chosenGuide: guide}, function() {
+        component.setState({guideContact: true});
+      });
     },
 
     hideGuideContact: function(guide) {
       this.setState({guideContact: false})
+    },
+
+    showLogin: function() {
+       var showLoginEvent = new CustomEvent('showLogin');
+       window.dispatchEvent(showLoginEvent);   
+
     },
 
    
@@ -43,16 +57,18 @@ var Main = React.createClass({
             <div>
               
               <button className="btn main-btn pull-right" onClick={this.showCityGuideInfo}> Want to become a guide? </button>
+              <div style={{clear: "both"}}></div>
               {this.props.data.guides.length > 0 ?
-                this.props.data.guides.map(function(guide) {
-                return <Guide data={guide} showGuide={component.showGuideContact}/>
+                this.props.data.guides.map(function(guide, i) {
+                return <Guide key={guide.user.id + i} data={guide} showGuide={component.showGuideContact}/>
               })
                 : <p> We have no city guides for this city, why not consider being one? </p>
               }
               
+              {this.state.msg ? <button onClick={this.showLogin} className="btn btn-warning">{this.state.msg}</button> : null}
 
                <CityGuideInfo showMessage={this.state.showInfo} hideMessage={this.hideCityGuideInfo} data={this.props.data} />
-               <GuideContact showMessage={this.state.guideContact} hideMessage={this.hideGuideContact} data={"test"} />
+               <GuideContact guide={this.state.chosenGuide} showMessage={this.state.guideContact} hideMessage={this.hideGuideContact} data={"test"} />
                <div style={{clear: "both"}}></div>
             </div>
         );

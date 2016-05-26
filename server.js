@@ -12,8 +12,8 @@ var routes = require('./app/routes/index.js');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 
-var morgan = require('morgan')
-app.use(morgan('dev'));
+//var morgan = require('morgan')
+//app.use(morgan('dev'));
 
 
 require("node-jsx").install();

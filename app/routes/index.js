@@ -17,6 +17,7 @@ var skyscan = require("./apis/skyscanner.js");
 var geo = require("./apis/geo.js");
 var Strava = require("./apis/Strava.js");
 var Weather = require("./apis/Weather.js")
+var NodeMailer = require("./apis/NodeMailer.js")
 
 //REACT
 var React = require('react');
@@ -163,14 +164,14 @@ module.exports = function (app, passport) {
 				var user = "none"
 				if (req.user) {
 					Header = React.createFactory(require("../components/UserHeader.js"))
-					user = req.user;
+					user = true;
 				}
 				
 				var main = ReactDOMServer.renderToString(Main({data: data}));
 				var sidebar = ReactDOMServer.renderToString(Sidebar({data: data}));
 				var header = ReactDOMServer.renderToString(Header({data: data, type: "front"}));
 
-				res.render("index", {main: main, sidebar: sidebar, header: header, pageType: "front", data: JSON.stringify(data), user: JSON.stringify(user)});
+				res.render("index", {main: main, sidebar: sidebar, header: header, pageType: "front", data: safeStringify(data), user: safeStringify(user)});
 				}).catch(function(err) {
 					console.log("got an error server side rendering components " + err);
 				});
@@ -206,14 +207,14 @@ module.exports = function (app, passport) {
 				var user = "none"
 				if (req.user) {
 					Header = React.createFactory(require("../components/UserHeader.js"))
-					user = req.user;
+					user = true;
 				}
 
 				var single = ReactDOMServer.renderToString(Single({data: data, weatherContainer: "chart"}));
 				var sidebar = ReactDOMServer.renderToString(Sidebar({data: data}));
 				var header = ReactDOMServer.renderToString(Header({data: data, type: "single"}));
 
-				res.render("single", {main: single, sidebar: sidebar, header: header, pageType: "single", data: JSON.stringify(data), user: JSON.stringify(user)});
+				res.render("single", {main: single, sidebar: sidebar, header: header, pageType: "single", data: safeStringify(data), user: safeStringify(user)});
 				}).catch(function(err) {
 					console.log("got an error server side rendering components " + err);
 				});
@@ -413,7 +414,41 @@ module.exports = function (app, passport) {
 
 	app.route("/api/contactguide")
 		.post(function(req, res) {
-			res.send(req.body)
+
+			console.log(req.body)
+			//console.log(req.user)
+
+			DAO.getUserById(req.body.guideId).then(function(data) {
+				console.log("guide user info")
+				console.log(data);
+
+				//EMAILS
+				var recipEmail = data.strava.email || data.facebook.email || data.local.email;
+				var userEmail = req.user.strava.email || req.user.facebook.email || req.user.local.email;
+
+				console.log(recipEmail)
+				console.log(userEmail)
+
+
+				NodeMailer(userEmail, recipEmail, req.body.subject, req.body.info + "<br><br> From " + req.body.name).then(function(data) {
+					console.log(data)
+					res.send(data)
+				}).catch(function(err) {
+					console.log(err)
+					res.send(err)
+				})
+
+
+
+
+			}).catch(function(err) {
+				console.log(err)
+			})
+
+			
+
+
+			
 		});
 
 	//TIPS
@@ -479,7 +514,17 @@ module.exports = function (app, passport) {
 
 	//FBOOK
 	app.get("/api/fbookgroups", function(req, res) {
-		fbook(req.query.query).then(function(data) {
+
+		//IF USER IS LOGGED IN WITH FBOOK - use their token
+		var token;
+	
+		if (req.user) {
+			if (req.user.facebook) {
+				token = req.user.facebook.token;
+			}
+		}
+	
+		fbook(req.query.query, token).then(function(data) {
 			res.send(data);
 		}).catch(function(err) {
 			res.send(err);
@@ -660,3 +705,7 @@ module.exports = function (app, passport) {
 
 		
 };
+
+function safeStringify(obj) {
+  return JSON.stringify(obj).replace(/<\/script/g, '<\\/script').replace(/<!--/g, '<\\!--')
+}

@@ -7,7 +7,7 @@ var bcrypt   = require('bcrypt-nodejs');
 var User = new Schema({
     
     local: {
-       username: String,
+       email: String,
        password : String,
        name: String,
        profileImg: String

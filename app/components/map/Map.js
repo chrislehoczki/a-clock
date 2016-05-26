@@ -51,7 +51,7 @@ var MapDisplay = React.createClass({
     render: function() {   
       
        return (
-            <div id="map-holder"></div>
+            <div style={this.props.show} id="map-holder"></div>
         );
   
   

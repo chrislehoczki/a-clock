@@ -26,6 +26,7 @@ var User = React.createClass({
                     <a href={href} target="_blank">
                         <img id={this.props.athlete.id} onError={this.checkError} className="athlete-img" src={this.props.athlete.pic} alt={this.props.athlete.name} data-toggle="tooltip" data-placement="top" title={this.props.athlete.name} />
                     </a>
+                    <p> Strava Profile </p>
                 </div>;
         }  
       

@@ -47,6 +47,11 @@ var Main = React.createClass({
         this.setState({data: e.target.value})
     },
 
+    showLoginModal: function() {
+        var showLoginEvent = new CustomEvent('showLogin');
+        window.dispatchEvent(showLoginEvent);   
+    },
+
     componentDidMount: function() {
 
             this.setState({message: "Add a " + this.props.activity + " tip"})
@@ -63,10 +68,10 @@ var Main = React.createClass({
             <textarea value={this.state.data} onChange={this.changeData} className="form-control" />
 
 
-            <button style={{float: "right"}} onClick={this.postData} className="btn main-btn" type="submit">{"Submit " + this.props.activity + " tip"}</button>
+            <button onClick={this.postData} className="btn main-btn" type="submit">{"Submit " + this.props.activity + " tip"}</button>
 
             {this.state.userMsg !== "" ?
-            <p className={this.state.msgClass}>{this.state.userMsg}</p>
+            <div><p className={this.state.msgClass}>{this.state.userMsg}</p><button onClick={this.showLoginModal} className="btn main-btn">Login Now</button></div>
             : null}
             
             </div>

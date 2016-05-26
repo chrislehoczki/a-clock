@@ -82,14 +82,14 @@ var Main = React.createClass({
         var runnerCount = 0;  
         //var runnerSpeed = (1 / runners) * 100000;
         runnerInterval = setInterval(function() {
-            runnerCount += 100;
+            runnerCount += 200;
             component.setState({runners: runnerCount})
                      
            if (runnerCount >= runners) {
              clearInterval(runnerInterval)
             
            }
-        }, 5)
+        }, 2)
 
         this.setState({runnerInterval: runnerInterval})
 
@@ -98,14 +98,14 @@ var Main = React.createClass({
         var riderCount = 0;  
         //var riderSpeed = (1 / riders) * 100000;
         riderInterval = setInterval(function() {
-            riderCount += 100;
+            riderCount += 200;
             component.setState({riders: riderCount})
                      
            if (riderCount >= riders) {
              clearInterval(riderInterval)
              
            }
-        }, 5)
+        }, 2)
 
         this.setState({riderInterval: riderInterval})
     
@@ -141,7 +141,7 @@ var Main = React.createClass({
        return (
 
             
-            <div onMouseEnter={this.onEnter} onMouseLeave={this.onLeave} className="city col-lg-3 col-md-4 col-sm-4 col-xs-12">
+            <div onMouseEnter={this.onEnter} onMouseLeave={this.onLeave} className="city col-lg-3 col-sm-4 col-ms-6 col-xs-12 ">
                 <a href={url}>
                     <div style={this.state.style} className="city-image">
                         <div className="city-data">

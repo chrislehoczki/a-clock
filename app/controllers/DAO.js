@@ -363,6 +363,28 @@ function DAO () {
 		
 	},
 
+	this.getUserById = function(_id) {
+		var deferred = Q.defer();
+		console.log(_id)
+		var query = {_id: _id}
+
+		Users
+			.findOne(query)
+			.exec(function (err, result) {
+				if (err) { 
+						deferred.reject(err)
+					}
+					else {
+
+						deferred.resolve(result)
+				}
+
+			});
+
+			return deferred.promise;
+
+	},
+
 
 	this.addDescription = function(slug, description, user) {
 

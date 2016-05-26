@@ -16,9 +16,9 @@ var Profile= React.createClass({
     getUser: function() {
       var component = this;
       this.setState({user: this.props.user})
-        console.log("its being shown")
+
         $.get("/api/user", function(data) {
-          console.log(data)
+
         component.setState({user: data[0]})
         })
      
@@ -42,7 +42,7 @@ var Profile= React.createClass({
 
       var user = this.state.user;
 
-      console.log(user)
+    
       if (user.strava) {
         firstName = user.strava.firstName;
         secondName = user.strava.secondName;

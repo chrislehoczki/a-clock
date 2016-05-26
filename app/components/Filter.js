@@ -65,7 +65,6 @@ var Filter = React.createClass({
             terrain: this.state.terrain,
             continent: this.state.continent,
             alt: this.state.alt,
-            rain: this.state.maxRain,
             limit: this.state.limit
             }
 
@@ -112,19 +111,23 @@ var Filter = React.createClass({
       $('button').tooltip()
 
       //INFINITE SCROLL
-    
+        
+         $(document).ready(function() {
+            var win = $(window);
 
-        $(window).scroll(function() {
-
-    
-    var scrolledHeight = $($(window).scrollTop() + $(window).height()) //scrolled from top + height of browser windo
-    var total = scrolledHeight[0] + 20;
-           if(total > $(document).height()) {
-                component.setState({limit: component.state.limit + 10})
-               component.filter()
-           }
+            // Each time the user scrolls
+            win.scroll(function() {
+                // End of the document reached?
+                if ($(document).height() - win.height() == win.scrollTop()) {
+                    console.log("reached the end")
+                    component.setState({limit: component.state.limit + 10})
+                    component.filter()
+                    
+                }
+            });
         });
 
+    
        
 
     },

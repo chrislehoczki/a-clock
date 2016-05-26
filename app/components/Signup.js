@@ -9,7 +9,8 @@ var SignupModal= React.createClass({
         getInitialState: function() {
         return { 
             userOK: false,
-            passwordOK: false
+            passwordOK: false,
+            emailValid: false
         };
     },
 
@@ -44,9 +45,7 @@ var SignupModal= React.createClass({
       var username = this.state.user;
       var password = this.state.confirmPassword;
       var name = this.state.name;
-        console.log(username)
       var params = "username=" + username + "&password=" + password + "&name=" + name;
-        console.log(params)
       $.post(url, params, function(data) {
           if (data.failure) {
               component.setState({errorMessage: data.message})
@@ -62,7 +61,21 @@ var SignupModal= React.createClass({
     checkUsername: function(e) {
 
         var component = this;
+
         var user = e.target.value;
+
+        var reg = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i
+        var test = user.match(reg)
+        console.log(test)
+
+        if (!test) {
+          component.setState({usernameMessage: "That email address is not valid", userAlert: "alert alert-warning", emailValid: false});
+          return;
+        }
+        else {
+          component.setState({emailValid: true});
+        }
+        
 
         var url = "/checkuser/" + user;
 
@@ -79,7 +92,10 @@ var SignupModal= React.createClass({
         })
 
 
+
+
     },
+
 
     addUser: function (e) {
       var user = e.target.value;
@@ -101,12 +117,12 @@ var SignupModal= React.createClass({
         var test = password.match(regex)
         
           if (test) {
-            this.setState({passwordMessage: "", passwordAlert: "success", passwordOK: true}, console.log(this.state))
+            this.setState({passwordMessage: "", passwordAlert: "success", passwordOK: true})
 
           }
   
           else {
-            this.setState({passwordMessage: " Your password must be at least 8 characters and contain one uppercase letter, one lowercase letter, and one number", passwordAlert: "warning", passwordOK: false}, console.log(this.state))
+            this.setState({passwordMessage: " Your password must be at least 8 characters and contain one uppercase letter, one lowercase letter, and one number", passwordAlert: "warning", passwordOK: false})
          }
 
     },
@@ -115,10 +131,10 @@ var SignupModal= React.createClass({
       var component = this;
         this.setState({confirmPassword: e.target.value}, function() {
             if (component.state.password !== component.state.confirmPassword) {
-              component.setState({passwordMatch: "Your passwords don't match!", confirmPasswordAlert: "warning"}, console.log(this.state))
+              component.setState({passwordMatch: "Your passwords don't match!", confirmPasswordAlert: "warning"})
             }
             else {
-              component.setState({passwordMatch: "", confirmPasswordAlert: "success"}, console.log(this.state))
+              component.setState({passwordMatch: "", confirmPasswordAlert: "success"})
             }
 
         })

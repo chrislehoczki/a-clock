@@ -25,7 +25,6 @@ var GuideCity= React.createClass({
         data: data,
         type: 'DELETE',
         success: function(result) {
-           console.log(result);
            component.props.getUser();
         }
     });

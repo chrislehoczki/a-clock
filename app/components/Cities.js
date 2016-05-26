@@ -10,12 +10,12 @@ var Cities = React.createClass({
       
        return (
 
-            <div id="cities-holder"> 
+            <div style={this.props.show} id="cities-holder"> 
                 <div className="row">
-                {this.props.cities.length === 0 ? <h3> No Cities Found, Try A Different Search </h3> : null}
-                {this.props.cities.map(function(city) {
-                    return <City key={city._id} data={city}/>
-                })}
+                    {this.props.cities.length === 0 ? <h3> No Cities Found, Try A Different Search </h3> : null}
+                    {this.props.cities.map(function(city) {
+                        return <City key={city._id} data={city}/>
+                    })}
                 </div>
             </div>
         );
