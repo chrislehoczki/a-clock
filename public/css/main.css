@@ -289,16 +289,19 @@ input[type=range]:focus::-ms-fill-upper {
 .city {
   min-height: 100%;
   position: relative;
-  margin: 15px 0px; }
+  margin: 15px 0px;
+  padding: 0; }
 
 .city a {
   text-decoration: none; }
 
 .city-image {
-  width: 100%;
+  width: 100.3%;
   height: 100%;
   transition: all 1s ease;
-  opacity: 0; }
+  opacity: 0;
+  padding: 0;
+  margin: 0; }
 
 .city-data {
   width: 100.2%;
@@ -307,7 +310,9 @@ input[type=range]:focus::-ms-fill-upper {
   display: table;
   background-color: rgba(0, 0, 0, 0.5);
   transition: all 0.5s ease;
-  overflow: hidden; }
+  overflow: hidden;
+  margin: 0;
+  padding: 0; }
 
 .city-data .title {
   color: white;
