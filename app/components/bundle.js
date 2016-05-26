@@ -1672,7 +1672,7 @@ var Main = React.createClass({
             React.createElement(Filter, { updateCities: this.updateCities }),
             React.createElement(
                 "button",
-                { style: { zIndex: 999 }, onClick: this.changeView, className: "filter-btn pull-right" },
+                { onClick: this.changeView, className: "map-toggle main-btn pull-right" },
                 this.state.btnMessage
             ),
             React.createElement(
@@ -2062,7 +2062,7 @@ var Single = React.createClass({
                 React.createElement(
                     "h3",
                     { className: "sub-title" },
-                    " Routes "
+                    " Popular Segments "
                 ),
                 React.createElement(Segments, { ridingSegments: this.state.data.riding.segments, runningSegments: this.state.data.running.segments })
             ),
@@ -2705,7 +2705,7 @@ var Guide = React.createClass({
 
         return React.createElement(
             'div',
-            { className: 'athlete col-lg-2 col-md-3 col-sm-3 col-xs-6', onClick: this.showGuide },
+            { className: 'guide col-lg-2 col-md-3 col-sm-3 col-xs-6', onClick: this.showGuide },
             React.createElement(
                 'div',
                 null,
@@ -4912,11 +4912,6 @@ var User = React.createClass({
                     'a',
                     { href: href, target: '_blank' },
                     React.createElement('img', { id: this.props.athlete.id, onError: this.checkError, className: 'athlete-img', src: this.props.athlete.pic, alt: this.props.athlete.name, 'data-toggle': 'tooltip', 'data-placement': 'top', title: this.props.athlete.name })
-                ),
-                React.createElement(
-                    'p',
-                    null,
-                    ' Strava Profile '
                 )
             );
         }

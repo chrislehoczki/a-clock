@@ -5,11 +5,20 @@ body {
 
 a {
   color: #3ac162 !important;
-  transition: all 0.5s ease; }
+  transition: all 0.5s ease;
+  text-decoration: none !important; }
 
 a:hover, a:selected, a:visited, a:focus {
   color: black !important;
-  text-decoration: none; }
+  text-decoration: none !important; }
+
+a p, h4 {
+  transition: all 0.5s ease;
+  text-decoration: none !important; }
+
+.single-group a:hover h4 {
+  text-decoration: none !important;
+  color: black; }
 
 .main-btn {
   padding: 10px;
@@ -433,12 +442,12 @@ input[type=range]:focus::-ms-fill-upper {
   float: right;
   display: inline; }
 
-.athlete {
+.athlete, .guide {
   cursor: pointer;
   cursor: hand;
   display: table; }
 
-.athlete p {
+.guide p {
   position: absolute;
   bottom: 0;
   width: 75%;
@@ -455,21 +464,15 @@ input[type=range]:focus::-ms-fill-upper {
   line-height: 20px;
   pointer-events: none; }
 
-.athlete:hover p {
-  bottom: 50%;
-  margin-bottom: -5px;
-  opacity: 1; }
-
-.athlete:hover p {
+.guide:hover p {
   bottom: 50%;
   margin-bottom: -10px;
   opacity: 1; }
 
-.athlete:hover img {
-  opacity: 0.2;
-  background-color: green; }
+.guide:hover img {
+  opacity: 0.5; }
 
-.athlete img {
+.athlete img, .guide img {
   border-radius: 100%;
   border: 2px solid #3ac162;
   width: 120px;
@@ -478,7 +481,7 @@ input[type=range]:focus::-ms-fill-upper {
   margin: 10px auto;
   transition: all 0.5s ease; }
 
-.athlete img:hover {
+.athlete img:hover, .guide img:hover {
   border: 3px solid black; }
 
 /* SINGLE ATHLETES */
@@ -623,6 +626,12 @@ div.graph-tooltip, div.detail {
   margin: 0px auto;
   padding: 0; }
 
+@media screen and (max-width: 768px) {
+  #map-holder {
+    display: none !important; }
+
+  .map-toggle {
+    display: none !important; } }
 div.cities-tooltip {
   position: absolute;
   padding: 10px;

@@ -15,12 +15,25 @@ body {
 a {
 	color: $green!important;
 	transition: all 0.5s ease;
+	text-decoration: none!important;
 }
 
 a:hover, a:selected, a:visited, a:focus {
 	color: black!important;
-	text-decoration: none;
+	text-decoration: none!important;
 }
+
+a p, h4 {
+	transition: all 0.5s ease;
+	text-decoration: none!important;
+}
+
+.single-group a:hover h4 {
+	text-decoration: none!important;
+	color: black;
+}
+
+
 
 
 .main-btn {
@@ -431,6 +444,7 @@ input[type=range]:focus::-ms-fill-upper {
 	display: table-cell;
 }
 
+
 .city-data:hover .title {
 	display: none;
 	opacity: 0;
@@ -569,13 +583,13 @@ input[type=range]:focus::-ms-fill-upper {
 
 // SINGLE GUIDES
 
-.athlete {
+.athlete, .guide {
   cursor: pointer;
   cursor: hand;
   display: table;
 }
 
-.athlete p {
+.guide p {
 	position: absolute;
 	bottom: 0;
 	width: 75%;
@@ -593,24 +607,18 @@ input[type=range]:focus::-ms-fill-upper {
 	pointer-events: none;
 }
 
-.athlete:hover p {
-	bottom: 50%;
-	margin-bottom: -5px;
-	opacity: 1;
-}
 
-.athlete:hover p {
+.guide:hover p {
 	bottom: 50%;
 	margin-bottom: -10px;
 	opacity: 1;
 }
 
-.athlete:hover img {
-	opacity: 0.2;
-	background-color: green;
+.guide:hover img {
+	opacity: 0.5;
 }
 
-.athlete img {
+.athlete img, .guide img {
 	border-radius: 100%;
 	border: 2px solid rgb(58, 193, 98);
   	width: 120px;
@@ -620,7 +628,7 @@ input[type=range]:focus::-ms-fill-upper {
 	transition: all 0.5s ease;
 }
 
-.athlete img:hover {
+.athlete img:hover, .guide img:hover {
 	border: 3px solid black;
 }
 
@@ -821,6 +829,18 @@ div.graph-tooltip, div.detail {
   display: block;
   margin: 0px auto;
   padding: 0; }
+
+
+
+ @media screen and (max-width: 768px) {
+  	#map-holder {
+  		display: none!important;
+  	}
+
+  	.map-toggle {
+  		display: none!important;
+  	}
+  }
 
 
 div.cities-tooltip {

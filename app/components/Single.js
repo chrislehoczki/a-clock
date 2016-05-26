@@ -49,7 +49,7 @@ var Single = React.createClass({
                     : null }
 
                     <div className="single-segments">
-                        <h3 className="sub-title"> Routes </h3>
+                        <h3 className="sub-title"> Popular Segments </h3>
                         <Segments ridingSegments={this.state.data.riding.segments} runningSegments={this.state.data.running.segments} />
                     </div>
 

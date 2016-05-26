@@ -40,7 +40,7 @@ var Main = React.createClass({
             <div> 
                 
                 <Filter updateCities={this.updateCities}/>
-                <button style={{zIndex: 999}} onClick={this.changeView} className="filter-btn pull-right">{this.state.btnMessage}</button>
+                <button onClick={this.changeView} className="map-toggle main-btn pull-right">{this.state.btnMessage}</button>
                 <div style={{clear:"both"}}> </div>
                 <Map show={this.state.mapStyle} cities={this.state.data} />
                 <Cities show={this.state.listStyle} cities={this.state.data} /> 

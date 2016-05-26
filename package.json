@@ -46,6 +46,7 @@
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.6",
     "request": "^2.72.0",
+    "serve-favicon": "^2.3.0",
     "watchify": "^3.7.0"
   },
   "devDependencies": {
