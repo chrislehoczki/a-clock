@@ -63,13 +63,12 @@ var SearchBox = React.createClass({
 
        return (
             <div className="search-box">
-            <input type="text" value={this.state.value} onChange={this.changeValue} onKeyUp={this.searchIt} onSelect={this.selectValue} list="cities"/>
-            <datalist id="cities">
+            <input type="text" value={this.state.value} onChange={this.changeValue} onKeyUp={this.searchIt} onSelect={this.selectValue}/>
+            <div className="search-dropdown">
             {this.state.matchingCities.map(function(city) {
                 return <Option key={city.info.city.slug} city={city}/>
             })}
-            </datalist>
-
+            </div>
             </div>
         );
   

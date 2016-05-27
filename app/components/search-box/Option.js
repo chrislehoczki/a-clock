@@ -3,11 +3,15 @@ var React = require('react');
 
 var Option = React.createClass({
     
+	goToCity: function() {
+		location.replace("/city/" + this.props.city.info.city.slug);
+	},
+
     render: function() {
         
 
        return (
-            <option value={this.props.city.info.city.name + ", " + this.props.city.info.country.name}></option>
+            <div onClick={this.goToCity}>{this.props.city.info.city.name + ", " + this.props.city.info.country.name}</div>
         );
   
   

@@ -538,6 +538,26 @@ input[type=range]:focus::-ms-fill-upper {
     text-align: center;
 }
 
+.search-dropdown {
+	position: absolute;
+	top: 81%;
+	left: 50%;
+	margin-left: -125px;
+	width: 250px;
+	background-color: black;
+	color: white;
+	opacity: 0.8;
+}
+
+.search-dropdown div {
+	margin-top: 1px;
+	text-align: center;
+	cursor: pointer;
+	cursor: hand;
+	border-bottom: 1px solid white;
+	padding: 3px;
+}
+
 option {
 	background-color: green!important;
 }

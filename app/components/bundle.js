@@ -3876,9 +3876,17 @@ var Option = React.createClass({
     displayName: "Option",
 
 
+    goToCity: function goToCity() {
+        location.replace("/city/" + this.props.city.info.city.slug);
+    },
+
     render: function render() {
 
-        return React.createElement("option", { value: this.props.city.info.city.name + ", " + this.props.city.info.country.name });
+        return React.createElement(
+            "div",
+            { onClick: this.goToCity },
+            this.props.city.info.city.name + ", " + this.props.city.info.country.name
+        );
     }
 });
 
@@ -3950,10 +3958,10 @@ var SearchBox = React.createClass({
         return React.createElement(
             "div",
             { className: "search-box" },
-            React.createElement("input", { type: "text", value: this.state.value, onChange: this.changeValue, onKeyUp: this.searchIt, onSelect: this.selectValue, list: "cities" }),
+            React.createElement("input", { type: "text", value: this.state.value, onChange: this.changeValue, onKeyUp: this.searchIt, onSelect: this.selectValue }),
             React.createElement(
-                "datalist",
-                { id: "cities" },
+                "div",
+                { className: "search-dropdown" },
                 this.state.matchingCities.map(function (city) {
                     return React.createElement(Option, { key: city.info.city.slug, city: city });
                 })
