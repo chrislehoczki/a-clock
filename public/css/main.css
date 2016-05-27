@@ -154,6 +154,12 @@ button:focus {
 .filter-section {
   margin: 5px 0; }
 
+@media screen and (max-width: 480px) {
+  .filter-hotel {
+    display: none; }
+
+  .filter-rain {
+    display: none; } }
 input[type=range] {
   -webkit-appearance: none;
   margin: 18px 0;

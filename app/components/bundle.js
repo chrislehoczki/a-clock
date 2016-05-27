@@ -1121,38 +1121,38 @@ var Filter = React.createClass({
                 { className: "row filter-holder" },
                 React.createElement(
                     "div",
-                    { className: "filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12" },
+                    { className: "filter-section filter-hotel col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Hotel, { minCost: this.state.minHotelCost, maxCost: this.state.maxHotelCost, updateHotel: this.updateHotel }),
                     React.createElement(Sort, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateSort: this.updateSort, sortBy: this.state.sortBy })
                 ),
                 React.createElement(
                     "div",
-                    { className: "filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12" },
+                    { className: "filter-section filter-temp col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Temp, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTemp: this.updateTemp, temp: this.state.temp })
                 ),
                 React.createElement(
                     "div",
-                    { className: "filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12" },
+                    { className: "filter-section filter-rain col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Rain, { updateRain: this.updateRain, maxRain: this.state.maxRain })
                 ),
                 React.createElement(
                     "div",
-                    { className: "filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12" },
+                    { className: "filter-section filter-terrain col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Terrain, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTerrain: this.updateTerrain, terrain: this.state.terrain })
                 ),
                 React.createElement(
                     "div",
-                    { className: "filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12" },
+                    { className: "filter-section filter-altitude col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Altitude, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateAlt: this.updateAlt, alt: this.state.alt })
                 ),
                 React.createElement(
                     "div",
-                    { className: "filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12" },
+                    { className: "filter-section filter-month col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Month, { selectMonth: this.selectMonth, month: this.state.month })
                 ),
                 React.createElement(
                     "div",
-                    { className: "filter-section col-lg-4 col-md-4 col-sm-6 col-xs-12" },
+                    { className: "filter-section filter-continent col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Continent, { selectContinent: this.selectContinent })
                 )
             ),

@@ -216,6 +216,19 @@ button:focus { outline:0 !important; }
 	margin: 5px 0;
 }
 
+@media screen and (max-width: 480px) {
+
+	.filter-hotel {
+		display: none;
+	}
+	.filter-rain {
+		display: none;
+	}
+
+}
+
+
+
 
 //SLIDERS
 
