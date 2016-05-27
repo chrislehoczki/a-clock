@@ -549,16 +549,35 @@ function DAO () {
 
 	this.getUsers = function(req, res) {
 
-		var username = req.params.user;
+		var email = req.params.user;
 		var message;
 
-		Users.find({}, { "local.username": 1, _id: 0 })
+		Users.find({"local.email": email}, { "local.email": 1, _id: 0 })
 			.exec(function (err, result) {
 					if (err) { throw err; }
+					if (result.length === 0) {
+						message = "Your email is available."
+						var obj = {}
+						obj.message = message
+						obj.alert = "success"
+						res.json(obj)
+					}
+					else {
+						message = "That email has already been registered."
+							var obj = {}
+							obj.message = message
+							obj.alert = "warning"
+					
+							res.json(obj)
+
+					}
+
+		
+					/*
 					var taken = false;
 					result.map(function(user) {
 						console.log(user)
-						if (user.local.username === username) {
+						if (user.local.email === email) {
 
 							message = "That email has already been registered."
 							var obj = {}
@@ -576,7 +595,7 @@ function DAO () {
 						obj.alert = "success"
 						res.json(obj)
 					}
-
+				*/
 				});
 
 	},

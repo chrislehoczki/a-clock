@@ -64,6 +64,11 @@ module.exports = function (passport) {
                     newUser.strava.city = profile._json.city;
                     newUser.strava.country = profile._json.country;
 
+                    /*
+                    //ADD IN OTHER FIELDS FOR LATER
+                    newUser.facebook = {};
+                    newUser.local = {};
+                    */
                                     // save the user
                     newUser.tips = [];
                     newUser.descriptions = [];
@@ -96,7 +101,7 @@ module.exports = function (passport) {
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, username, password, done) {
+    function(req, email, password, done) {
 
         // asynchronous
         // User.findOne wont fire unless data is sent back
@@ -104,7 +109,7 @@ module.exports = function (passport) {
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        User.findOne({ 'local.username' :  username }, function(err, user) {
+        User.findOne({ 'local.email' :  email }, function(err, user) {
             // if there are any errors, return the error
             if (err)
                 return done(err);
@@ -119,7 +124,7 @@ module.exports = function (passport) {
                 var newUser            = new User();
 
                 // set the user's local credentials
-                newUser.local.email    = username;
+                newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password);
                 newUser.local.name = req.body.name;
                 newUser.local.profileImg = "/public/images/profile.png"
@@ -128,6 +133,11 @@ module.exports = function (passport) {
                 newUser.descriptions = [];
                 newUser.guideCities = [];
 
+                /*
+                //ADD IN OTHER FIELDS FOR LATER
+                newUser.facebook = {};
+                newUser.strava = {};
+                */
                 newUser.save(function(err) {
                     if (err)
                         throw err;
@@ -147,11 +157,11 @@ passport.use('local-login', new LocalStrategy({
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
-    function(req, username, password, done) { // callback with email and password from our form
+    function(req, email, password, done) { // callback with email and password from our form
 
         // find a user whose email is the same as the forms email
         // we are checking to see if the user trying to login already exists
-        User.findOne({ 'local.username' :  username }, function(err, user) {
+        User.findOne({ 'local.email' :  email }, function(err, user) {
             // if there are any errors, return the error before anything else
             if (err)
                 return done(err);
@@ -218,7 +228,11 @@ passport.use('local-login', new LocalStrategy({
                     newUser.descriptions = [];
                     newUser.guideCities = [];
 
-
+                    /*
+                    //ADD OTHER FIELDS FOR LATER
+                    newUser.strava = {};
+                    newUser.local = {};
+                    */
                 
    
                     newUser.save(function(err) {

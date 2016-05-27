@@ -75,7 +75,6 @@ var SignupModal= React.createClass({
         else {
           component.setState({emailValid: true});
         }
-        
 
         var url = "/checkuser/" + user;
 

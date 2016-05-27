@@ -3737,7 +3737,9 @@ var Profile = React.createClass({
 
   getInitialState: function getInitialState() {
     return {
-      user: { guideCities: [], tips: [] }
+      user: {},
+      guideCities: false,
+      tips: false
     };
   },
 
@@ -3746,8 +3748,16 @@ var Profile = React.createClass({
     this.setState({ user: this.props.user });
 
     $.get("/api/user", function (data) {
+      //console.log(data)
+      component.setState({ user: data[0] }, function () {
+        if (data[0].guideCities.length > 0) {
+          component.setState({ guideCities: true });
+        }
 
-      component.setState({ user: data[0] });
+        if (data[0].tips.length > 0) {
+          component.setState({ tips: true });
+        }
+      });
     });
   },
 
@@ -3812,7 +3822,7 @@ var Profile = React.createClass({
             null,
             " My Cities "
           ),
-          this.state.user.guideCities.length > 0 ? this.state.user.guideCities.map(function (city) {
+          this.state.guideCities ? this.state.user.guideCities.map(function (city) {
             return React.createElement(GuideCity, { getUser: component.getUser, city: city });
           }) : React.createElement(
             "p",
@@ -3824,7 +3834,7 @@ var Profile = React.createClass({
             null,
             " My Tips "
           ),
-          this.state.user.tips.length > 0 ? this.state.user.tips.map(function (tip) {
+          this.state.tips ? this.state.user.tips.map(function (tip) {
             var date = new Date(tip.date);
             return React.createElement(
               "div",

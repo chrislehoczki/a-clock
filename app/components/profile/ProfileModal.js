@@ -8,7 +8,9 @@ var Profile= React.createClass({
 
     getInitialState: function() {
       return {
-        user: {guideCities: [], tips: []}
+        user: {},
+        guideCities: false,
+        tips: false
         }
 
     },
@@ -18,9 +20,20 @@ var Profile= React.createClass({
       this.setState({user: this.props.user})
 
         $.get("/api/user", function(data) {
+          //console.log(data)
+          component.setState({user: data[0]}, function() {
+              if (data[0].guideCities.length > 0) {
+              component.setState({guideCities: true})
+            }
 
-        component.setState({user: data[0]})
+            if (data[0].tips.length > 0) {
+              component.setState({tips: true})
+            }
+
+          })
         })
+
+
      
       
     },
@@ -42,8 +55,9 @@ var Profile= React.createClass({
 
       var user = this.state.user;
 
-    
-      if (user.strava) {
+
+
+        if (user.strava) {
         firstName = user.strava.firstName;
         secondName = user.strava.secondName;
         img = user.strava.profileImg;
@@ -57,6 +71,8 @@ var Profile= React.createClass({
         firstName = user.local.name;
         img = user.local.profileImg;
       }
+
+
 
       var style = {width: "100px", height: "100px"}
 
@@ -73,7 +89,7 @@ var Profile= React.createClass({
           <img src={img} style={style} />
 
           <h4> My Cities </h4>
-          {this.state.user.guideCities.length > 0 ? 
+          {this.state.guideCities ? 
             this.state.user.guideCities.map(function(city) {
             return <GuideCity getUser={component.getUser} city={city} />
           })
@@ -81,7 +97,7 @@ var Profile= React.createClass({
 
           
           <h4> My Tips </h4>
-          {this.state.user.tips.length > 0 ? 
+          {this.state.tips ? 
             this.state.user.tips.map(function(tip) {
               var date = new Date(tip.date)
             return <div> <p> {date.toDateString()} </p> <p> {tip.tip} </p> </div>

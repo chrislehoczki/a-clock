@@ -102,7 +102,7 @@ module.exports = function (app, passport) {
     
      // process the login form
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/city/san-francisco-ca-united-states#', // redirect to the secure profile section
+        successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/signinfailure'
     }));
 
@@ -290,7 +290,7 @@ module.exports = function (app, passport) {
 			query.query[tempQueryString] =  {$gt: +req.query.temp.min, $lt: +req.query.temp.max}
 		}
 
-		//TEMP
+		//RAIN
 		if (req.query.rain) {
 			var month = req.query.month;
 			var rainQueryString = "weather.data." + month + ".wetDays"
@@ -303,7 +303,7 @@ module.exports = function (app, passport) {
 			var terrainQuery = req.query.terrain;
 			var elevationSeparator = 500;
 
-			query.query["riding.elevation"] = {$lt : elevationSeparator};
+				query.query["riding.elevation"] = {$lt : elevationSeparator};
 			if (terrainQuery === "hilly") {
 				query.query["riding.elevation"] = {$gt : elevationSeparator};
 			}
@@ -595,7 +595,6 @@ module.exports = function (app, passport) {
     //WEATHER
     app.post("/api/weather", function(req, res) { 
     	var city = req.body;
-    	console.log(city)
 
     	var weather = new Weather(+city.info.location.latitude, +city.info.location.longitude, process.env.NCDC_TOKEN);
 
@@ -626,7 +625,6 @@ module.exports = function (app, passport) {
 
     app.post("/api/getsegs", function(req, res) {
 
-    	console.log(req.body)
     	var city = {}
     	
     	city.info = {};
@@ -641,7 +639,6 @@ module.exports = function (app, passport) {
 
     	city.datasets = {};
 
-    	console.log(city)
     	
     	var strava = new Strava(city.info.location.latitude, city.info.location.longitude)
     	
