@@ -25,6 +25,12 @@ var SearchBox = React.createClass({
     },
 
     searchIt: function() {
+        var component = this;
+        $("body").on("click", function() {
+            setTimeout(function() {component.setState({matchingCities: []}) },30)
+        })
+
+        this.setState({style: {height: "0px"}})
         var city = this.state.value;
         var cities = this.state.cities;
 
@@ -35,12 +41,12 @@ var SearchBox = React.createClass({
                 matchingCities.push(cities[i])
             }
 
-
         }
 
         matchingCities = matchingCities.splice(0, 5)
 
         this.setState({matchingCities: matchingCities})
+        this.setState({style: {height: "auto"}})
     },
 
     selectValue: function(e) {
@@ -60,13 +66,13 @@ var SearchBox = React.createClass({
     
     render: function() {
             
-
+        var component = this;
        return (
             <div className="search-box">
             <input type="text" value={this.state.value} onChange={this.changeValue} onKeyUp={this.searchIt} onSelect={this.selectValue}/>
             <div className="search-dropdown">
             {this.state.matchingCities.map(function(city) {
-                return <Option key={city.info.city.slug} city={city}/>
+                return <Option style={component.state.style} key={city.info.city.slug} city={city}/>
             })}
             </div>
             </div>

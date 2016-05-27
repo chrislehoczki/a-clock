@@ -11,7 +11,7 @@ var Option = React.createClass({
         
 
        return (
-            <div onClick={this.goToCity}>{this.props.city.info.city.name + ", " + this.props.city.info.country.name}</div>
+            <div style={this.props.style} onClick={this.goToCity}>{this.props.city.info.city.name + ", " + this.props.city.info.country.name}</div>
         );
   
   

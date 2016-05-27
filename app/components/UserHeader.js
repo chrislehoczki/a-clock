@@ -99,7 +99,7 @@ var Header = React.createClass({
           </div>
 
           {this.props.type === "front" ?  
-            <IntroText /> : 
+            <div className="header-intro-search"><IntroText /><SearchBox /></div> : 
             <div className="single-header-text-holder">
             <h3 className="single-header-text"> {this.props.data.info.city.name}, {this.props.data.info.country.name} </h3>
             <Overview data={this.props.data} />

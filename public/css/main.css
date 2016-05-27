@@ -429,7 +429,8 @@ input[type=range]:focus::-ms-fill-upper {
   width: 250px;
   background-color: black;
   color: white;
-  opacity: 0.8; }
+  opacity: 0.8;
+  z-index: 1000; }
 
 .search-dropdown div {
   margin-top: 1px;
@@ -437,7 +438,11 @@ input[type=range]:focus::-ms-fill-upper {
   cursor: pointer;
   cursor: hand;
   border-bottom: 1px solid white;
-  padding: 3px; }
+  padding: 3px;
+  transition: all 0.5s ease; }
+
+.search-dropdown div:hover {
+  color: #3ac162; }
 
 option {
   background-color: green !important; }

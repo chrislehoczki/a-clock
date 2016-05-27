@@ -2302,7 +2302,12 @@ var Header = React.createClass({
           )
         )
       ),
-      this.props.type === "front" ? React.createElement(IntroText, null) : React.createElement(
+      this.props.type === "front" ? React.createElement(
+        "div",
+        { className: "header-intro-search" },
+        React.createElement(IntroText, null),
+        React.createElement(SearchBox, null)
+      ) : React.createElement(
         "div",
         { className: "single-header-text-holder" },
         React.createElement(
@@ -3884,7 +3889,7 @@ var Option = React.createClass({
 
         return React.createElement(
             "div",
-            { onClick: this.goToCity },
+            { style: this.props.style, onClick: this.goToCity },
             this.props.city.info.city.name + ", " + this.props.city.info.country.name
         );
     }
@@ -3924,6 +3929,14 @@ var SearchBox = React.createClass({
     },
 
     searchIt: function searchIt() {
+        var component = this;
+        $("body").on("click", function () {
+            setTimeout(function () {
+                component.setState({ matchingCities: [] });
+            }, 30);
+        });
+
+        this.setState({ style: { height: "0px" } });
         var city = this.state.value;
         var cities = this.state.cities;
 
@@ -3938,6 +3951,7 @@ var SearchBox = React.createClass({
         matchingCities = matchingCities.splice(0, 5);
 
         this.setState({ matchingCities: matchingCities });
+        this.setState({ style: { height: "auto" } });
     },
 
     selectValue: function selectValue(e) {
@@ -3955,6 +3969,7 @@ var SearchBox = React.createClass({
 
     render: function render() {
 
+        var component = this;
         return React.createElement(
             "div",
             { className: "search-box" },
@@ -3963,7 +3978,7 @@ var SearchBox = React.createClass({
                 "div",
                 { className: "search-dropdown" },
                 this.state.matchingCities.map(function (city) {
-                    return React.createElement(Option, { key: city.info.city.slug, city: city });
+                    return React.createElement(Option, { style: component.state.style, key: city.info.city.slug, city: city });
                 })
             )
         );

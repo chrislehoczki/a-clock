@@ -547,6 +547,7 @@ input[type=range]:focus::-ms-fill-upper {
 	background-color: black;
 	color: white;
 	opacity: 0.8;
+	z-index: 1000;
 }
 
 .search-dropdown div {
@@ -556,6 +557,12 @@ input[type=range]:focus::-ms-fill-upper {
 	cursor: hand;
 	border-bottom: 1px solid white;
 	padding: 3px;
+	transition: all 0.5s ease;
+
+}
+
+.search-dropdown div:hover {
+	color: $green;
 }
 
 option {
