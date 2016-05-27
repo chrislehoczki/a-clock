@@ -1,7 +1,6 @@
 var React = require('react');
 var Cities = require("./Cities.js");
 var Filter = require("./Filter.js");
-
 var Map = require("./map/Map.js")
 
 var Main = React.createClass({

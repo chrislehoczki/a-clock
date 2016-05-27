@@ -57,7 +57,6 @@ module.exports = function (app, passport) {
 	app.get('/auth/facebook', function(req, res, next) {
 
 		req.session.redirect = req.query.redirect;
-    	console.log(req.session)
   		next();
 
 	},passport.authenticate('facebook', { scope: fbookScope }));
@@ -66,7 +65,6 @@ module.exports = function (app, passport) {
     app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {failureRedirect : '/signinfailure'}),
         	function(req, res) {
-	        console.log(req.session)
 	    // Successful authentication, redirect home.
 	    	res.redirect(req.session.redirect || "/");
         	});
@@ -80,7 +78,6 @@ module.exports = function (app, passport) {
     app.get('/auth/strava', function(req, res, next) {
 
     	req.session.redirect = req.query.redirect;
-    	console.log(req.session)
   		next();
 
     },  passport.authenticate('strava'/*, { scope: ['write'] }*/))
@@ -89,7 +86,6 @@ module.exports = function (app, passport) {
 	app.get('/auth/strava/callback', 
   	passport.authenticate('strava', { failureRedirect: '/signinfailure' }),
   		function(req, res) {
-  		console.log(req.session)
     // Successful authentication, redirect home.
     	res.redirect(req.session.redirect || "/");
     	
@@ -348,9 +344,6 @@ module.exports = function (app, passport) {
 
 		query.limit = +req.query.limit || 20;
 	
-
-		console.log(query)		
-
 		DAO.getAllCities(query).then(function(data) {
 			res.send(data);
 		}).catch(function(err) {
@@ -384,7 +377,7 @@ module.exports = function (app, passport) {
 	app.route("/api/guides")
 		.get(function(req, res) {
 			var slug = req.query.slug;
-			console.log(slug)
+			
 		})
 		.post(function(req, res) {
 
@@ -392,14 +385,14 @@ module.exports = function (app, passport) {
 				res.send("No user logged in.")
 			}
 			else {
-				console.log(req.body)
+				
 				var slug = req.body.slug;
 				var user = req.user;
 				var cityName = req.body.cityName;
 
 				DAO.addGuide(user, slug, cityName)
 
-				console.log(slug)
+				
 
 				res.send(req.body)
 			}
@@ -418,8 +411,6 @@ module.exports = function (app, passport) {
 	app.route("/api/contactguide")
 		.post(function(req, res) {
 
-			console.log(req.body)
-			//console.log(req.user)
 
 			DAO.getUserById(req.body.guideId).then(function(data) {
 				console.log("guide user info")

@@ -12,11 +12,11 @@ var navDropped = false;
 
 $(".navbar-toggle").click(function() {
 	if (navDropped) {
-		$(".intro-text, .running-riding, .single-header-text, .description-details, .img-attribution").css({opacity: 1})
+		$(".header-intro-search, .running-riding, .single-header-text, .description-details, .img-attribution").css({opacity: 1})
 		navDropped = false;
 	}
 	else {
-		$(".intro-text, .running-riding, .single-header-text, .description-details, .img-attribution").css({opacity: 0})
+		$(".header-intro-search, .running-riding, .single-header-text, .description-details, .img-attribution").css({opacity: 0})
 		navDropped = true;
 	}
 	

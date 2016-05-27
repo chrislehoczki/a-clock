@@ -600,7 +600,8 @@ option {
   margin: 0px auto;
   cursor: pointer;
   cursor: hand;
-  text-align: center; }
+  text-align: center;
+  transition: all 1s ease; }
 
 .arrow-up p {
   font-size: 80px;

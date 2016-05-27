@@ -1214,7 +1214,6 @@ var Header = React.createClass({
       query.slug = this.props.data.info.city.slug;
 
       $.get(url, query, function (data) {
-        console.log(data);
         component.setState({ img: data.img, attr: data.attr });
         var style = {
           backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + data.img + ")"
@@ -1646,7 +1645,6 @@ module.exports = LoginModal;
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 var Cities = require("./Cities.js");
 var Filter = require("./Filter.js");
-
 var Map = require("./map/Map.js");
 
 var Main = React.createClass({
@@ -4629,12 +4627,6 @@ var Overview = React.createClass({
                         "  ",
                         this.props.data.weather.data[currentMonth].wetDays
                     ) : null
-                ) : null,
-                this.props.data.info.wiki.data ? React.createElement(
-                    "i",
-                    { className: "fa fa-group" },
-                    "  ",
-                    this.props.data.info.wiki.data.population_total
                 ) : null,
                 React.createElement(
                     "i",

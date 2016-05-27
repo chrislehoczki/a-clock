@@ -39,7 +39,6 @@ var Header = React.createClass({
         query.slug = this.props.data.info.city.slug;
         
         $.get(url, query, function(data) {
-          console.log(data)
             component.setState({img: data.img, attr: data.attr});
             var style = {
                 backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + data.img + ")" 

@@ -62,11 +62,11 @@ var Overview = React.createClass({
 	       			: null 
        			}
        			
-       			{this.props.data.info.wiki.data ? <i className="fa fa-group">  {this.props.data.info.wiki.data.population_total}</i> : null }
-       			<i className="fa fa-coffee">  ${this.props.data.cost.coffee_in_cafe.USD}</i>
-       			<i className="fa fa-beer">  ${this.props.data.cost.beer_in_cafe.USD}</i>
-       			<i className="fa fa-rss">  {this.props.data.info.internet.speed.download}Mbps</i>
-       			<i className="fa fa-home">  ${this.props.data.cost.hotel.USD}</i>
+       		
+       			  <i className="fa fa-coffee">  ${this.props.data.cost.coffee_in_cafe.USD}</i>
+       			  <i className="fa fa-beer">  ${this.props.data.cost.beer_in_cafe.USD}</i>
+       			  <i className="fa fa-rss">  {this.props.data.info.internet.speed.download}Mbps</i>
+       			  <i className="fa fa-home">  ${this.props.data.cost.hotel.USD}</i>
 	            <i className="fa fa-plane">  ${this.state.flight.price}</i>
 	            </div>
 
