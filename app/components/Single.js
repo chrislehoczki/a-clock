@@ -80,7 +80,7 @@ var Single = React.createClass({
                     </div>
                     : null }
                     
-                    <TopArrow />
+                    {!this.props.addCity ? <TopArrow /> : null}
             </div>
         );
   

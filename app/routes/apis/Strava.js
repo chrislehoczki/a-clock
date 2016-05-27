@@ -46,12 +46,12 @@ function Strava (lat, lon) {
 
 			self.running = {
 					segments: data[0][0],
-					elevation: data[0][1]
+					elevation: +data[0][1]
 				}
 
 			self.riding = {
 				segments: data[1][0],
-				elevation: data[1][1]
+				elevation: +data[1][1]
 			}
 
 
@@ -85,6 +85,7 @@ function Strava (lat, lon) {
 	
 				body.segments.forEach(function(segment) {
 					totalEl += segment.elev_difference;
+					console.log(segment.elev_difference)
 					var segmentObj = {
 						id: segment.id,
 						name: segment.name,

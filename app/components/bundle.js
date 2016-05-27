@@ -2119,7 +2119,7 @@ var Single = React.createClass({
                 ),
                 React.createElement(Tips, { slug: this.state.data.info.city.slug })
             ) : null,
-            React.createElement(TopArrow, null)
+            !this.props.addCity ? React.createElement(TopArrow, null) : null
         );
     }
 });
@@ -2166,6 +2166,7 @@ var IntroText = require("./IntroText.js");
 var Overview = require("./single/Overview.js");
 var AddCityModal = require("./addcity/AddCityModal.js");
 var ProfileModal = require("./profile/ProfileModal.js");
+var SearchBox = require("./search-box/SearchBox.js");
 
 var Header = React.createClass({
   displayName: "Header",
@@ -2333,7 +2334,7 @@ var Header = React.createClass({
 module.exports = Header;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./profile/ProfileModal.js":33,"./single/Overview.js":46}],17:[function(require,module,exports){
+},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./profile/ProfileModal.js":33,"./search-box/SearchBox.js":35,"./single/Overview.js":46}],17:[function(require,module,exports){
 (function (global){
 "use strict";
 

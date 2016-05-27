@@ -6,6 +6,7 @@ var IntroText = require("./IntroText.js");
 var Overview = require("./single/Overview.js");
 var AddCityModal = require("./addcity/AddCityModal.js");
 var ProfileModal = require("./profile/ProfileModal.js")
+var SearchBox = require("./search-box/SearchBox.js")
 
 var Header = React.createClass({
 

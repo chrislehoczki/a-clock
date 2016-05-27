@@ -444,9 +444,6 @@ input[type=range]:focus::-ms-fill-upper {
 .search-dropdown div:hover {
   color: #3ac162; }
 
-option {
-  background-color: green !important; }
-
 @media screen and (max-width: 1200px) {
   .search-box input {
     top: 75%; } }
