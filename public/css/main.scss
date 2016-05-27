@@ -524,6 +524,22 @@ input[type=range]:focus::-ms-fill-upper {
 	vertical-align: middle;
 }
 
+.search-box input {
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	width: 250px;
+	margin-left: -125px;
+	background: transparent;
+    border: 2px solid $green;
+    color: white;
+    padding: 0 5px;
+    text-align: center;
+}
+
+option {
+	background-color: green!important;
+}
 
 
 .img-attribution {
@@ -720,6 +736,23 @@ input[type=range]:focus::-ms-fill-upper {
 
 .single-tips {
 	clear: both;
+	margin-top: 30px;
+}
+
+/* UP ARROW */
+
+.arrow-up {
+	width: 100px;
+	margin: 0px auto;
+	cursor: pointer;
+	cursor: hand;
+	text-align: center;
+}
+
+
+.arrow-up p {
+	font-size: 80px;
+	text-align: center;
 	margin-top: 30px;
 }
 

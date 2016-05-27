@@ -5,6 +5,7 @@ var SignupModal = require("./Signup.js");
 var AddCityModal = require("./addcity/AddCityModal.js");
 var IntroText = require("./IntroText.js");
 var Overview = require("./single/Overview.js");
+var SearchBox = require("./search-box/SearchBox.js")
 
 var Header = React.createClass({
 
@@ -119,7 +120,7 @@ var Header = React.createClass({
           </div>
 
           {this.props.type === "front" ?  
-            <IntroText /> : 
+            <div className="header-intro-search"><IntroText /><SearchBox /></div>: 
             <div className="single-header-text-holder">
             <h3 className="single-header-text"> {this.props.data.info.city.name}, {this.props.data.info.country.name} </h3>
             <Overview data={this.props.data} />

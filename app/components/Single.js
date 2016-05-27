@@ -11,7 +11,7 @@ var UserForm = require("./single/UserForm.js");
 var Description = require("./single/Description.js");
 var Weather = require("./single/Weather.js")
 var CityGuides = require("./single/CityGuides.js")
-
+var TopArrow = require("./TopArrow.js")
 
 var Single = React.createClass({
 
@@ -79,7 +79,8 @@ var Single = React.createClass({
                         <Tips slug={this.state.data.info.city.slug} />
                     </div>
                     : null }
-                
+                    
+                    <TopArrow />
             </div>
         );
   

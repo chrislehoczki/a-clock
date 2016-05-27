@@ -1168,7 +1168,7 @@ var Filter = React.createClass({
 module.exports = Filter;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Cities.js":4,"./filter/Altitude.js":21,"./filter/Continent.js":22,"./filter/Hotel.js":23,"./filter/Month.js":24,"./filter/Rain.js":25,"./filter/Sort.js":26,"./filter/Temp.js":27,"./filter/Terrain.js":28}],8:[function(require,module,exports){
+},{"./Cities.js":4,"./filter/Altitude.js":22,"./filter/Continent.js":23,"./filter/Hotel.js":24,"./filter/Month.js":25,"./filter/Rain.js":26,"./filter/Sort.js":27,"./filter/Temp.js":28,"./filter/Terrain.js":29}],8:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1179,6 +1179,7 @@ var SignupModal = require("./Signup.js");
 var AddCityModal = require("./addcity/AddCityModal.js");
 var IntroText = require("./IntroText.js");
 var Overview = require("./single/Overview.js");
+var SearchBox = require("./search-box/SearchBox.js");
 
 var Header = React.createClass({
   displayName: "Header",
@@ -1336,7 +1337,12 @@ var Header = React.createClass({
             )
           )
         ),
-        this.props.type === "front" ? React.createElement(IntroText, null) : React.createElement(
+        this.props.type === "front" ? React.createElement(
+          "div",
+          { className: "header-intro-search" },
+          React.createElement(IntroText, null),
+          React.createElement(SearchBox, null)
+        ) : React.createElement(
           "div",
           { className: "single-header-text-holder" },
           React.createElement(
@@ -1366,7 +1372,7 @@ var Header = React.createClass({
 module.exports = Header;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":16,"./single/Overview.js":45}],9:[function(require,module,exports){
+},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./search-box/SearchBox.js":35,"./single/Overview.js":46}],9:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1694,14 +1700,13 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Cities.js":4,"./Filter.js":7,"./map/Map.js":30}],12:[function(require,module,exports){
+},{"./Cities.js":4,"./Filter.js":7,"./map/Map.js":31}],12:[function(require,module,exports){
 (function (global){
 "use strict";
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var DataDisplay = require("./sidebar/DataDisplay.js");
-var SearchBox = require("./sidebar/SearchBox.js");
 var About = require("./sidebar/About.js");
 
 var SideBar = React.createClass({
@@ -1713,7 +1718,6 @@ var SideBar = React.createClass({
         return React.createElement(
             "div",
             null,
-            React.createElement(SearchBox, null),
             React.createElement(About, null),
             React.createElement(DataDisplay, null)
         );
@@ -1723,7 +1727,7 @@ var SideBar = React.createClass({
 module.exports = SideBar;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./sidebar/About.js":33,"./sidebar/DataDisplay.js":34,"./sidebar/SearchBox.js":36}],13:[function(require,module,exports){
+},{"./sidebar/About.js":36,"./sidebar/DataDisplay.js":37}],13:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2021,6 +2025,7 @@ var UserForm = require("./single/UserForm.js");
 var Description = require("./single/Description.js");
 var Weather = require("./single/Weather.js");
 var CityGuides = require("./single/CityGuides.js");
+var TopArrow = require("./TopArrow.js");
 
 var Single = React.createClass({
     displayName: "Single",
@@ -2115,7 +2120,8 @@ var Single = React.createClass({
                     " Tips "
                 ),
                 React.createElement(Tips, { slug: this.state.data.info.city.slug })
-            ) : null
+            ) : null,
+            React.createElement(TopArrow, null)
         );
     }
 });
@@ -2123,7 +2129,34 @@ var Single = React.createClass({
 module.exports = Single;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./CityImage.js":6,"./single/CityGuides.js":38,"./single/Description.js":40,"./single/Groups.js":43,"./single/Nutrition.js":44,"./single/Segments.js":48,"./single/Tips.js":50,"./single/UserForm.js":52,"./single/Users.js":53,"./single/Weather.js":54}],15:[function(require,module,exports){
+},{"./CityImage.js":6,"./TopArrow.js":15,"./single/CityGuides.js":39,"./single/Description.js":41,"./single/Groups.js":44,"./single/Nutrition.js":45,"./single/Segments.js":49,"./single/Tips.js":51,"./single/UserForm.js":53,"./single/Users.js":54,"./single/Weather.js":55}],15:[function(require,module,exports){
+(function (global){
+"use strict";
+
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var TopArrow = React.createClass({
+  displayName: "TopArrow",
+
+
+  goUp: function goUp() {
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  },
+
+  render: function render() {
+
+    return React.createElement(
+      "div",
+      { className: "arrow-up", onClick: this.goUp },
+      React.createElement("p", { className: "fa fa-arrow-up", "aria-hidden": "true" })
+    );
+  }
+});
+
+module.exports = TopArrow;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],16:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2297,7 +2330,7 @@ var Header = React.createClass({
 module.exports = Header;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":16,"./profile/ProfileModal.js":32,"./single/Overview.js":45}],16:[function(require,module,exports){
+},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./profile/ProfileModal.js":33,"./single/Overview.js":46}],17:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2488,7 +2521,7 @@ var AddCityModal = React.createClass({
 module.exports = AddCityModal;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../Single.js":14,"./Location.js":17}],17:[function(require,module,exports){
+},{"../Single.js":14,"./Location.js":18}],18:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2518,7 +2551,7 @@ var Location = React.createClass({
 module.exports = Location;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2687,7 +2720,7 @@ var CityGuidesInfo = React.createClass({
 module.exports = CityGuidesInfo;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -2733,7 +2766,7 @@ var Guide = React.createClass({
 module.exports = Guide;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2850,7 +2883,7 @@ var ContactGuide = React.createClass({
 module.exports = ContactGuide;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2951,7 +2984,7 @@ var Sort = React.createClass({
 module.exports = Sort;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3027,7 +3060,7 @@ var Continent = React.createClass({
 module.exports = Continent;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3116,7 +3149,7 @@ var Hotel = React.createClass({
 module.exports = Hotel;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3217,7 +3250,7 @@ var Month = React.createClass({
 module.exports = Month;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3268,7 +3301,7 @@ var Rain = React.createClass({
 module.exports = Rain;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3350,7 +3383,7 @@ var Sort = React.createClass({
 module.exports = Sort;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3451,7 +3484,7 @@ var Temp = React.createClass({
 module.exports = Temp;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3534,7 +3567,7 @@ var Terrain = React.createClass({
 module.exports = Terrain;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3574,7 +3607,7 @@ if (mainHolder) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Header.js":8,"./Main.js":11,"./Sidebar.js":12,"./Single.js":14,"./UserHeader.js":15}],30:[function(require,module,exports){
+},{"./Header.js":8,"./Main.js":11,"./Sidebar.js":12,"./Single.js":14,"./UserHeader.js":16}],31:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3628,7 +3661,7 @@ var MapDisplay = React.createClass({
 module.exports = MapDisplay;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../common/MapChart.js":2}],31:[function(require,module,exports){
+},{"../../common/MapChart.js":2}],32:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3684,7 +3717,7 @@ var GuideCity = React.createClass({
 module.exports = GuideCity;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3833,7 +3866,106 @@ var Profile = React.createClass({
 module.exports = Profile;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./GuideCity.js":31}],33:[function(require,module,exports){
+},{"./GuideCity.js":32}],34:[function(require,module,exports){
+(function (global){
+"use strict";
+
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var Option = React.createClass({
+    displayName: "Option",
+
+
+    render: function render() {
+
+        return React.createElement("option", { value: this.props.city.info.city.name + ", " + this.props.city.info.country.name });
+    }
+});
+
+module.exports = Option;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],35:[function(require,module,exports){
+(function (global){
+"use strict";
+
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var Option = require("./Option.js");
+var SearchBox = React.createClass({
+    displayName: "SearchBox",
+
+
+    getInitialState: function getInitialState() {
+        return {
+            value: "",
+            cities: [],
+            matchingCities: []
+        };
+    },
+
+    componentDidMount: function componentDidMount() {
+        var url = "/api/citynames";
+        $.get(url, function (data) {
+            this.setState({ cities: data });
+        }.bind(this));
+    },
+
+    changeValue: function changeValue(e) {
+        this.setState({ value: e.target.value });
+    },
+
+    searchIt: function searchIt() {
+        var city = this.state.value;
+        var cities = this.state.cities;
+
+        var matchingCities = [];
+
+        for (var i = 0; i < cities.length; i++) {
+            if (city.substr(0, city.length).toUpperCase() === cities[i].info.city.name.substr(0, city.length).toUpperCase()) {
+                matchingCities.push(cities[i]);
+            }
+        }
+
+        matchingCities = matchingCities.splice(0, 5);
+
+        this.setState({ matchingCities: matchingCities });
+    },
+
+    selectValue: function selectValue(e) {
+
+        var city = e.target.value;
+        var cityName = city.split(",")[0];
+        var cities = this.state.cities;
+
+        cities.forEach(function (city) {
+            if (city.info.city.name === cityName) {
+                location.replace("/city/" + city.info.city.slug);
+            }
+        });
+    },
+
+    render: function render() {
+
+        return React.createElement(
+            "div",
+            { className: "search-box" },
+            React.createElement("input", { type: "text", value: this.state.value, onChange: this.changeValue, onKeyUp: this.searchIt, onSelect: this.selectValue, list: "cities" }),
+            React.createElement(
+                "datalist",
+                { id: "cities" },
+                this.state.matchingCities.map(function (city) {
+                    return React.createElement(Option, { key: city.info.city.slug, city: city });
+                })
+            )
+        );
+    }
+});
+
+module.exports = SearchBox;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{"./Option.js":34}],36:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3870,7 +4002,7 @@ var SideBar = React.createClass({
 module.exports = SideBar;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],34:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3948,93 +4080,7 @@ var DataDisplay = React.createClass({
 module.exports = DataDisplay;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./TopCity.js":37}],35:[function(require,module,exports){
-(function (global){
-"use strict";
-
-var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
-
-var Option = React.createClass({
-    displayName: "Option",
-
-
-    render: function render() {
-
-        return React.createElement("option", { value: this.props.city.info.city.name + ", " + this.props.city.info.country.name });
-    }
-});
-
-module.exports = Option;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],36:[function(require,module,exports){
-(function (global){
-"use strict";
-
-var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
-
-var Option = require("./Option.js");
-var SearchBox = React.createClass({
-    displayName: "SearchBox",
-
-
-    getInitialState: function getInitialState() {
-        return {
-            value: "",
-            cities: []
-        };
-    },
-
-    componentDidMount: function componentDidMount() {
-        var url = "/api/citynames";
-        $.get(url, function (data) {
-            this.setState({ cities: data });
-        }.bind(this));
-    },
-
-    changeValue: function changeValue(e) {
-        this.setState({ value: e.target.value });
-    },
-
-    selectValue: function selectValue(e) {
-
-        var city = e.target.value;
-        var cityName = city.split(",")[0];
-        var cities = this.state.cities;
-
-        cities.forEach(function (city) {
-            if (city.info.city.name === cityName) {
-                location.replace("/city/" + city.info.city.slug);
-            }
-        });
-    },
-
-    render: function render() {
-
-        return React.createElement(
-            "div",
-            null,
-            React.createElement(
-                "h4",
-                null,
-                " Search Cities "
-            ),
-            React.createElement("input", { type: "text", value: this.state.value, onChange: this.changeValue, onSelect: this.selectValue, list: "languages" }),
-            React.createElement(
-                "datalist",
-                { id: "languages" },
-                this.state.cities.map(function (city) {
-                    return React.createElement(Option, { key: city.info.city.slug, city: city });
-                })
-            )
-        );
-    }
-});
-
-module.exports = SearchBox;
-
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Option.js":35}],37:[function(require,module,exports){
+},{"./TopCity.js":38}],38:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4065,7 +4111,7 @@ var TopCity = React.createClass({
 module.exports = TopCity;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],38:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4152,7 +4198,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../city-guides/CityGuideInfo.js":18,"../city-guides/Guide.js":19,"../city-guides/GuideContact.js":20}],39:[function(require,module,exports){
+},{"../city-guides/CityGuideInfo.js":19,"../city-guides/Guide.js":20,"../city-guides/GuideContact.js":21}],40:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4193,7 +4239,7 @@ var Controls = React.createClass({
 module.exports = Controls;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4238,7 +4284,7 @@ var Description = React.createClass({
 module.exports = Description;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./UserForm.js":52}],41:[function(require,module,exports){
+},{"./UserForm.js":53}],42:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4287,7 +4333,7 @@ var DescriptionString = React.createClass({
 module.exports = DescriptionString;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../common/description.js":3}],42:[function(require,module,exports){
+},{"../../common/description.js":3}],43:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4324,7 +4370,7 @@ var User = React.createClass({
 module.exports = User;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],43:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4398,7 +4444,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":39,"./Group.js":42}],44:[function(require,module,exports){
+},{"./Controls.js":40,"./Group.js":43}],45:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4465,7 +4511,7 @@ var Segment = React.createClass({
 module.exports = Segment;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Restaurant.js":46}],45:[function(require,module,exports){
+},{"./Restaurant.js":47}],46:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4606,7 +4652,7 @@ var Overview = React.createClass({
 module.exports = Overview;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],46:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4655,7 +4701,7 @@ var Restaurant = React.createClass({
 module.exports = Restaurant;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4707,7 +4753,7 @@ var Segment = React.createClass({
 module.exports = Segment;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4758,7 +4804,7 @@ var Segments = React.createClass({
 module.exports = Segments;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":39,"./Segment.js":47}],49:[function(require,module,exports){
+},{"./Controls.js":40,"./Segment.js":48}],50:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4816,7 +4862,7 @@ var Tips = React.createClass({
 module.exports = Tips;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],50:[function(require,module,exports){
+},{}],51:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4888,7 +4934,7 @@ var Tips = React.createClass({
 module.exports = Tips;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":39,"./Tip.js":49,"./UserForm.js":52}],51:[function(require,module,exports){
+},{"./Controls.js":40,"./Tip.js":50,"./UserForm.js":53}],52:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -4931,7 +4977,7 @@ var User = React.createClass({
 module.exports = User;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],52:[function(require,module,exports){
+},{}],53:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -5023,7 +5069,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -5085,7 +5131,7 @@ var Users = React.createClass({
 module.exports = Users;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":39,"./User.js":51}],54:[function(require,module,exports){
+},{"./Controls.js":40,"./User.js":52}],55:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -5363,4 +5409,4 @@ var Weather = React.createClass({
 module.exports = Weather;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./DescriptionString.js":41}]},{},[29]);
+},{"./DescriptionString.js":42}]},{},[30]);

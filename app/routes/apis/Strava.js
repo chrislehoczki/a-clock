@@ -111,31 +111,44 @@ function Strava (lat, lon) {
 						  },
 			  url:     'https://www.strava.com/api/v3/segments/' + id + '/leaderboard?per_page=100'
 			}, function(error, response, body){
-			 
+			 	
 				if (error) {
 					deferred.reject(err);
 				}
+			
+
 				else {
 					body = JSON.parse(body)
-					var count = body.entry_count;
-					var athletes = [];
+
+					if (!body.entries) {
+						deferred.reject("TOO MANY API CALLS")
+					}
+					else {
+
+						var count = body.entry_count;
+						var athletes = [];
 
 
 
-					if (body.entries.length > 0) {
-						for (var i = 0; i < 5; i++) {
+						if (body.entries.length > 0) {
+							for (var i = 0; i < 5; i++) {
+								
 							
-						
-							var athlete = body.entries[self.random(body.entries.length -1)];
-							var obj = {
-								id: athlete.athlete_id,
-						  		name: athlete.athlete_name,
-						  		pic: athlete.athlete_profile
-							}
-							
-							athletes.push(obj)
-							
-						}
+								var athlete = body.entries[self.random(body.entries.length -1)];
+								var obj = {
+									id: athlete.athlete_id,
+							  		name: athlete.athlete_name,
+							  		pic: athlete.athlete_profile
+								}
+								
+								athletes.push(obj)
+								
+							}	
+
+
+					}
+
+					
 					}
 
 					athletes = self.trimAthletes(athletes)

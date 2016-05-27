@@ -1,13 +1,14 @@
 var React = require('react');
 
-var Option = require("./searchbox/Option.js")
+var Option = require("./Option.js")
 var SearchBox = React.createClass({
 
 
     getInitialState: function() {
     return { 
         value: "",
-        cities: []
+        cities: [],
+        matchingCities: []
     };
     },
 
@@ -21,6 +22,25 @@ var SearchBox = React.createClass({
 
     changeValue: function(e) {
         this.setState({value: e.target.value})
+    },
+
+    searchIt: function() {
+        var city = this.state.value;
+        var cities = this.state.cities;
+
+        var matchingCities = [];
+
+        for (var i = 0; i < cities.length; i++) {
+            if (city.substr(0, city.length).toUpperCase() === cities[i].info.city.name.substr(0, city.length).toUpperCase()) {
+                matchingCities.push(cities[i])
+            }
+
+
+        }
+
+        matchingCities = matchingCities.splice(0, 5)
+
+        this.setState({matchingCities: matchingCities})
     },
 
     selectValue: function(e) {
@@ -42,11 +62,10 @@ var SearchBox = React.createClass({
             
 
        return (
-            <div>
-            <h3> Search Cities </h3>
-            <input type="text" value={this.state.value} onChange={this.changeValue} onSelect={this.selectValue} list="languages"/>
-            <datalist id="languages">
-            {this.state.cities.map(function(city) {
+            <div className="search-box">
+            <input type="text" value={this.state.value} onChange={this.changeValue} onKeyUp={this.searchIt} onSelect={this.selectValue} list="cities"/>
+            <datalist id="cities">
+            {this.state.matchingCities.map(function(city) {
                 return <Option key={city.info.city.slug} city={city}/>
             })}
             </datalist>
