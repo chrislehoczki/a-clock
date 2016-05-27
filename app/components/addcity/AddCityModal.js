@@ -45,7 +45,11 @@ var AddCityModal= React.createClass({
           component.setState({statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request."})
           return;
       }
+
       component.setState({data: data})
+
+      //REMOVE DATA RECEIVED AND CALL WEATHER WHEN IT IS FIXED
+      //component.setState({dataReceived: true, statusMsg: "", loader: false})
       component.getWeather();
     }).fail(function(response) {
       component.setState({statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request."})
@@ -62,10 +66,12 @@ var AddCityModal= React.createClass({
 
           console.log(data)
           if (data !== "error" ) {
-            component.setState({data: data})
-
+            component.setState({data: data, dataReceived: true, statusMsg: "", loader: false})
           }
-          component.setState({dataReceived: true, statusMsg: "", loader: false})
+          else {
+            component.setState({dataReceived: true, statusMsg: "We could not find weather data at this moment.", loader: false})
+          }
+          
 
           
           

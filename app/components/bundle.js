@@ -1210,8 +1210,10 @@ var Header = React.createClass({
       query.long = this.props.data.info.location.longitude;
       query.city = this.props.data.info.city.name;
       query.country = this.props.data.info.country.name;
+      query.slug = this.props.data.info.city.slug;
 
       $.get(url, query, function (data) {
+        console.log(data);
         component.setState({ img: data.img, attr: data.attr });
         var style = {
           backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + data.img + ")"
@@ -1260,99 +1262,103 @@ var Header = React.createClass({
 
     return React.createElement(
       "div",
-      { className: "header-full", style: headerStyle },
+      { className: "header-holder" },
       React.createElement(
         "div",
-        { className: "navigation-holder" },
+        { className: "header-full", style: headerStyle },
         React.createElement(
           "div",
-          { className: "navbar-header" },
+          { className: "navigation-holder" },
           React.createElement(
-            "button",
-            { type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#navbar", "aria-expanded": "false", "aria-controls": "navbar" },
+            "div",
+            { className: "navbar-header" },
             React.createElement(
-              "span",
-              { className: "sr-only" },
-              "Toggle navigation"
+              "button",
+              { type: "button", className: "navbar-toggle collapsed", "data-toggle": "collapse", "data-target": "#navbar", "aria-expanded": "false", "aria-controls": "navbar" },
+              React.createElement(
+                "span",
+                { className: "sr-only" },
+                "Toggle navigation"
+              ),
+              React.createElement("span", { className: "icon-bar" }),
+              React.createElement("span", { className: "icon-bar" }),
+              React.createElement("span", { className: "icon-bar" })
             ),
-            React.createElement("span", { className: "icon-bar" }),
-            React.createElement("span", { className: "icon-bar" }),
-            React.createElement("span", { className: "icon-bar" })
+            React.createElement(
+              "a",
+              { className: "navbar-brand", href: "/" },
+              "Nomad Athlete"
+            )
           ),
           React.createElement(
-            "a",
-            { className: "navbar-brand", href: "/" },
-            "Nomad Athlete"
-          )
-        ),
-        React.createElement(
-          "div",
-          { id: "navbar", className: "navbar-collapse collapse", "aria-expanded": "false" },
-          React.createElement("ul", { className: "nav navbar-nav" }),
-          React.createElement(
-            "ul",
-            { className: "nav navbar-nav navbar-right" },
+            "div",
+            { id: "navbar", className: "navbar-collapse collapse", "aria-expanded": "false" },
+            React.createElement("ul", { className: "nav navbar-nav" }),
             React.createElement(
-              "li",
-              null,
+              "ul",
+              { className: "nav navbar-nav navbar-right" },
               React.createElement(
-                "a",
-                { href: "/" },
-                "Home"
-              )
-            ),
-            React.createElement(
-              "li",
-              null,
+                "li",
+                null,
+                React.createElement(
+                  "a",
+                  { href: "/" },
+                  "Home"
+                )
+              ),
               React.createElement(
-                "a",
-                { href: "#", onClick: this.showAddCityModal },
-                "Explore Cities"
-              )
-            ),
-            React.createElement(
-              "li",
-              null,
+                "li",
+                null,
+                React.createElement(
+                  "a",
+                  { href: "#", onClick: this.showAddCityModal },
+                  "Explore Cities"
+                )
+              ),
               React.createElement(
-                "a",
-                { href: "#", onClick: this.showSignupModal },
-                "Sign Up"
-              )
-            ),
-            React.createElement(
-              "li",
-              null,
+                "li",
+                null,
+                React.createElement(
+                  "a",
+                  { href: "#", onClick: this.showSignupModal },
+                  "Sign Up"
+                )
+              ),
               React.createElement(
-                "a",
-                { href: "#", onClick: this.showLoginModal },
-                "Login"
+                "li",
+                null,
+                React.createElement(
+                  "a",
+                  { href: "#", onClick: this.showLoginModal },
+                  "Login"
+                )
               )
             )
           )
-        )
-      ),
-      this.props.type === "front" ? React.createElement(IntroText, null) : React.createElement(
-        "div",
-        { className: "single-header-text-holder" },
-        React.createElement(
-          "h3",
-          { className: "single-header-text" },
-          " ",
-          this.props.data.info.city.name,
-          ", ",
-          this.props.data.info.country.name,
-          " "
         ),
-        React.createElement(Overview, { data: this.props.data }),
-        React.createElement(
-          "a",
-          { target: "_blank", className: "img-attribution", href: this.state.attr },
-          "Image Author"
-        )
-      ),
-      React.createElement(LoginModal, { changeModal: this.changeModal, showMessage: this.state.showLoginModal, hideMessage: this.hideLoginModal }),
-      React.createElement(SignupModal, { showMessage: this.state.showSignupModal, hideMessage: this.hideSignupModal }),
-      React.createElement(AddCityModal, { showMessage: this.state.showAddCityModal, hideMessage: this.hideAddCityModal })
+        this.props.type === "front" ? React.createElement(IntroText, null) : React.createElement(
+          "div",
+          { className: "single-header-text-holder" },
+          React.createElement(
+            "h3",
+            { className: "single-header-text" },
+            " ",
+            this.props.data.info.city.name,
+            ", ",
+            this.props.data.info.country.name,
+            " "
+          ),
+          React.createElement(Overview, { data: this.props.data }),
+          React.createElement(
+            "a",
+            { target: "_blank", className: "img-attribution", href: this.state.attr },
+            "Image Author"
+          )
+        ),
+        React.createElement(LoginModal, { changeModal: this.changeModal, showMessage: this.state.showLoginModal, hideMessage: this.hideLoginModal }),
+        React.createElement(SignupModal, { showMessage: this.state.showSignupModal, hideMessage: this.hideSignupModal }),
+        React.createElement(AddCityModal, { showMessage: this.state.showAddCityModal, hideMessage: this.hideAddCityModal })
+      )
     );
   }
 });
@@ -2305,173 +2311,178 @@ var Location = require("./Location.js");
 var Single = require("../Single.js");
 
 var AddCityModal = React.createClass({
-    displayName: "AddCityModal",
+  displayName: "AddCityModal",
 
 
-    getInitialState: function getInitialState() {
-        return {
-            city: "",
-            locations: [],
-            dataReceived: false
-        };
-    },
+  getInitialState: function getInitialState() {
+    return {
+      city: "",
+      locations: [],
+      dataReceived: false
+    };
+  },
 
-    changeCity: function changeCity(e) {
-        this.setState({ city: e.target.value });
-    },
+  changeCity: function changeCity(e) {
+    this.setState({ city: e.target.value });
+  },
 
-    geocode: function geocode() {
-        //REMOVE ALL DATA FROM PREVIOUS
-        this.setState({ dataReceived: false, data: {} });
+  geocode: function geocode() {
+    //REMOVE ALL DATA FROM PREVIOUS
+    this.setState({ dataReceived: false, data: {} });
 
-        var component = this;
-        var city = this.state.city;
+    var component = this;
+    var city = this.state.city;
 
-        $.get("/api/geocode?city=" + city, function (data) {
-            console.log(data);
-            component.setState({ locations: data });
-        });
-    },
+    $.get("/api/geocode?city=" + city, function (data) {
+      console.log(data);
+      component.setState({ locations: data });
+    });
+  },
 
-    getSegments: function getSegments(city) {
-        var component = this;
-        var url = "/api/getsegs";
-        var data = city;
-        $.post(url, data, function (data) {
+  getSegments: function getSegments(city) {
+    var component = this;
+    var url = "/api/getsegs";
+    var data = city;
+    $.post(url, data, function (data) {
 
-            if (data === "error") {
-                component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
-                return;
-            }
-            component.setState({ data: data });
-            component.getWeather();
-        }).fail(function (response) {
-            component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
-        });
+      if (data === "error") {
+        component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
+        return;
+      }
 
-        this.setState({ statusMsg: "Loading city data now...", loader: true });
-    },
+      component.setState({ data: data });
 
-    getWeather: function getWeather() {
-        var component = this;
-        var url = "/api/weather";
-        var data = this.state.data;
-        $.post(url, data, function (data) {
+      //REMOVE DATA RECEIVED AND CALL WEATHER WHEN IT IS FIXED
+      //component.setState({dataReceived: true, statusMsg: "", loader: false})
+      component.getWeather();
+    }).fail(function (response) {
+      component.setState({ statusMsg: "We seemed to have encountered an error. Try a different city or email us with your city request." });
+    });
 
-            console.log(data);
-            if (data !== "error") {
-                component.setState({ data: data });
-            }
-            component.setState({ dataReceived: true, statusMsg: "", loader: false });
-        });
-    },
+    this.setState({ statusMsg: "Loading city data now...", loader: true });
+  },
 
-    declareCity: function declareCity(cityChoice) {
-        this.setState({ chosenCity: cityChoice }, console.log(this.state));
+  getWeather: function getWeather() {
+    var component = this;
+    var url = "/api/weather";
+    var data = this.state.data;
+    $.post(url, data, function (data) {
 
-        var cities = this.state.locations;
-        var chosenCity = [];
-        cities.forEach(function (city) {
-            if (city === cityChoice) {
-                console.log(city);
-                chosenCity.push(city);
-            }
-        });
+      console.log(data);
+      if (data !== "error") {
+        component.setState({ data: data, dataReceived: true, statusMsg: "", loader: false });
+      } else {
+        component.setState({ dataReceived: true, statusMsg: "We could not find weather data at this moment.", loader: false });
+      }
+    });
+  },
 
-        console.log(chosenCity);
-        this.setState({ locations: chosenCity }, this.getSegments(cityChoice));
-    },
+  declareCity: function declareCity(cityChoice) {
+    this.setState({ chosenCity: cityChoice }, console.log(this.state));
 
-    destroy: function destroy() {
+    var cities = this.state.locations;
+    var chosenCity = [];
+    cities.forEach(function (city) {
+      if (city === cityChoice) {
+        console.log(city);
+        chosenCity.push(city);
+      }
+    });
 
-        this.props.hideMessage();
-        $(".add-city-single").fadeOut("slow");
-    },
+    console.log(chosenCity);
+    this.setState({ locations: chosenCity }, this.getSegments(cityChoice));
+  },
 
-    checkEnter: function checkEnter(e) {
-        console.log(e.keyCode);
+  destroy: function destroy() {
 
-        if (e.keyCode === 13) {
-            this.geocode();
-        }
-    },
+    this.props.hideMessage();
+    $(".add-city-single").fadeOut("slow");
+  },
 
-    render: function render() {
+  checkEnter: function checkEnter(e) {
+    console.log(e.keyCode);
 
-        var component = this;
-
-        return React.createElement(
-            "div",
-            null,
-            React.createElement(
-                Modal,
-                { dialogClassName: "addCityModal", show: this.props.showMessage, backdrop: true, keyboard: true, onHide: this.destroy },
-                React.createElement(
-                    Modal.Header,
-                    { closeButton: true },
-                    React.createElement(
-                        "h1",
-                        null,
-                        " City Explorer "
-                    )
-                ),
-                React.createElement(
-                    Modal.Body,
-                    null,
-                    React.createElement(
-                        "p",
-                        null,
-                        " If we do not have a city, you can explore the world here. "
-                    ),
-                    React.createElement(
-                        "p",
-                        null,
-                        " We want to add in cities that people will want to represent and share, "
-                    ),
-                    React.createElement(
-                        "p",
-                        null,
-                        " so if you want to become a cityguide for this city, shoot us an email! "
-                    ),
-                    React.createElement("input", { type: "text", onChange: this.changeCity, value: this.state.city, onKeyDown: this.checkEnter }),
-                    React.createElement(
-                        "button",
-                        { className: "btn filter-btn", onClick: this.geocode },
-                        "Find City"
-                    ),
-                    React.createElement(
-                        "div",
-                        { className: "location-buttons row" },
-                        this.state.locations.map(function (city) {
-                            return React.createElement(Location, { declareCity: component.declareCity, key: city.id, city: city });
-                        })
-                    ),
-                    this.state.statusMsg ? React.createElement(
-                        "p",
-                        null,
-                        " ",
-                        this.state.statusMsg,
-                        " "
-                    ) : null,
-                    this.state.loader ? React.createElement("img", { src: "/public/images/loader.gif" }) : null,
-                    React.createElement(
-                        "div",
-                        { className: "add-city-single" },
-                        this.state.dataReceived ? React.createElement(Single, { data: this.state.data, weatherContainer: "modal-chart", addCity: true }) : null
-                    )
-                ),
-                React.createElement(
-                    Modal.Footer,
-                    null,
-                    React.createElement(
-                        Button,
-                        { onClick: this.destroy },
-                        "Close"
-                    )
-                )
-            )
-        );
+    if (e.keyCode === 13) {
+      this.geocode();
     }
+  },
+
+  render: function render() {
+
+    var component = this;
+
+    return React.createElement(
+      "div",
+      null,
+      React.createElement(
+        Modal,
+        { dialogClassName: "addCityModal", show: this.props.showMessage, backdrop: true, keyboard: true, onHide: this.destroy },
+        React.createElement(
+          Modal.Header,
+          { closeButton: true },
+          React.createElement(
+            "h1",
+            null,
+            " City Explorer "
+          )
+        ),
+        React.createElement(
+          Modal.Body,
+          null,
+          React.createElement(
+            "p",
+            null,
+            " If we do not have a city, you can explore the world here. "
+          ),
+          React.createElement(
+            "p",
+            null,
+            " We want to add in cities that people will want to represent and share, "
+          ),
+          React.createElement(
+            "p",
+            null,
+            " so if you want to become a cityguide for this city, shoot us an email! "
+          ),
+          React.createElement("input", { type: "text", onChange: this.changeCity, value: this.state.city, onKeyDown: this.checkEnter }),
+          React.createElement(
+            "button",
+            { className: "btn filter-btn", onClick: this.geocode },
+            "Find City"
+          ),
+          React.createElement(
+            "div",
+            { className: "location-buttons row" },
+            this.state.locations.map(function (city) {
+              return React.createElement(Location, { declareCity: component.declareCity, key: city.id, city: city });
+            })
+          ),
+          this.state.statusMsg ? React.createElement(
+            "p",
+            null,
+            " ",
+            this.state.statusMsg,
+            " "
+          ) : null,
+          this.state.loader ? React.createElement("img", { src: "/public/images/loader.gif" }) : null,
+          React.createElement(
+            "div",
+            { className: "add-city-single" },
+            this.state.dataReceived ? React.createElement(Single, { data: this.state.data, weatherContainer: "modal-chart", addCity: true }) : null
+          )
+        ),
+        React.createElement(
+          Modal.Footer,
+          null,
+          React.createElement(
+            Button,
+            { onClick: this.destroy },
+            "Close"
+          )
+        )
+      )
+    );
+  }
 });
 
 module.exports = AddCityModal;
@@ -4624,7 +4635,7 @@ var Restaurant = React.createClass({
 
     return React.createElement(
       "div",
-      { className: "restaurant col-lg-2 col-md-3 col-sm-4 col-xs-6" },
+      { className: "restaurant col-lg-2 col-sm-3 col-ms-4 col-xs-6" },
       React.createElement(
         "a",
         { target: "_blank", href: link },
@@ -4676,7 +4687,7 @@ var Segment = React.createClass({
 
     return React.createElement(
       "div",
-      { className: "segment col-lg-2 col-md-3 col-sm-4 col-xs-6" },
+      { className: "segment col-lg-2 col-sm-3 col-ms-4 col-xs-6" },
       React.createElement(
         "a",
         { href: href, target: "_blank" },
@@ -4906,7 +4917,7 @@ var User = React.createClass({
         } else {
             return React.createElement(
                 'div',
-                { className: 'athlete col-lg-2 col-md-3 col-sm-3 col-xs-6' },
+                { className: 'athlete col-lg-2 col-sm-3 col-ms-4 col-xs-6' },
                 React.createElement(
                     'a',
                     { href: href, target: '_blank' },

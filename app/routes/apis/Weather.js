@@ -217,33 +217,46 @@ function Weather (lat, long, token) {
 					
 
 					var dataObj = self.returnYears(body)
-					var years = dataObj.years;
-					var station = dataObj.station;
+
+					if (!dataObj) {
+						console.log("KEY IS OUT!")
+						deferred.reject("API KEY IS OUT OF LIMITS")
+					}
+					else {
+						var years = dataObj.years;
+						var station = dataObj.station;
 
 
-					self.station = station.id;
-					self.elevation = station.elevation;
-					self.years = years;
+						self.station = station.id;
+						self.elevation = station.elevation;
+						self.years = years;
 
+						
+
+						deferred.resolve([station, years]) 
+					}
 					
-
-					deferred.resolve([station, years]) 
 
 				}
 
 			});
 
 			return deferred.promise;
-
 		},
 
 	this.returnYears = function(data) {
 
 		var stations = data.results;
 
+		if (!stations) {
+			return false;
+		}
+
 		stations = stations.sort(function(a, b) {
 			return  new Date(b.maxdate) - new Date(a.maxdate);
 		})
+
+
 		
 		var station = stations[0];
 

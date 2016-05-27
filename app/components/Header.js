@@ -35,8 +35,10 @@ var Header = React.createClass({
         query.long = this.props.data.info.location.longitude;
         query.city = this.props.data.info.city.name;
         query.country = this.props.data.info.country.name;
+        query.slug = this.props.data.info.city.slug;
         
         $.get(url, query, function(data) {
+          console.log(data)
             component.setState({img: data.img, attr: data.attr});
             var style = {
                 backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(" + data.img + ")" 
@@ -90,7 +92,7 @@ var Header = React.createClass({
        
       
        return (
-
+        <div className="header-holder">
         <div className="header-full" style={headerStyle}>
         <div className="navigation-holder">
           <div className="navbar-header">
@@ -130,6 +132,7 @@ var Header = React.createClass({
           <LoginModal changeModal={this.changeModal} showMessage={this.state.showLoginModal} hideMessage={this.hideLoginModal}/>
           <SignupModal showMessage={this.state.showSignupModal} hideMessage={this.hideSignupModal}/>
           <AddCityModal showMessage={this.state.showAddCityModal} hideMessage={this.hideAddCityModal} />
+        </div>
         </div>
 
            

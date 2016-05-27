@@ -2,7 +2,7 @@
 
 var path = process.cwd();
 var Q = require("q")
-
+var fs = require("fs")
 var passport = require('passport');
 
 var DAO = require("../controllers/DAO.js")
@@ -181,6 +181,9 @@ module.exports = function (app, passport) {
 
 	app.route('/city/:slug')
 		.get(/*isLoggedIn,*/ function (req, res) {
+
+			
+
 
 			//CREATE MARKUP
 			//RENDER PAGE WITH MARKUP AND PROP
@@ -533,13 +536,34 @@ module.exports = function (app, passport) {
 
 	//FLICKR
 	app.get("/api/flickr", function(req, res) { 
+
+
+		//CHECK IF I HAVE LOCAL PHOTO
+		var file = process.cwd() + '/public/images/cities/' + req.query.slug + ".jpg"
+		fs.stat(file, function(err, stat) {
+		    if(err == null) {
+		        res.send({img: "/public/images/cities/" + req.query.slug + ".jpg", attr: "/"});
+
+		    } else if(err.code == 'ENOENT') {
+		      
+			      flickr(req.query.lat, req.query.long, req.query.city, req.query.country).then(function(img) {
+						res.send(img);
+					}).catch(function(error) {
+						console.log(error);
+						res.send(error);
+					})
+
+
+
+
+		    } else {
+		        console.log('Some other error: ', err.code);
+		    }
+		});
+
+		  
 		
-		flickr(req.query.lat, req.query.long, req.query.city, req.query.country).then(function(img) {
-			res.send(img);
-		}).catch(function(error) {
-			console.log(error);
-			res.send(error);
-		})
+		
 		
 	});
 

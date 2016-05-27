@@ -27,7 +27,7 @@ var Segment = React.createClass({
     
       
          return (
-            <div className="segment col-lg-2 col-md-3 col-sm-4 col-xs-6" >
+            <div className="segment col-lg-2 col-sm-3 col-ms-4 col-xs-6" >
               <a href={href} target="_blank">
                 <img src={src} alt={this.props.data.name} />
                 <p> {name} </p>

@@ -22,7 +22,7 @@ var User = React.createClass({
         }
 
         else {
-         return <div className="athlete col-lg-2 col-md-3 col-sm-3 col-xs-6" >
+         return <div className="athlete col-lg-2 col-sm-3 col-ms-4 col-xs-6" >
                     <a href={href} target="_blank">
                         <img id={this.props.athlete.id} onError={this.checkError} className="athlete-img" src={this.props.athlete.pic} alt={this.props.athlete.name} data-toggle="tooltip" data-placement="top" title={this.props.athlete.name} />
                     </a>

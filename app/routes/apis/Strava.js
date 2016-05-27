@@ -8,11 +8,11 @@ function Strava (lat, lon) {
 
 	this.lat = lat,
 	this.lon = lon,
-	this.token = process.env.STRAVA_ACCESS_TOKEN,
+	this.token = "00a1c0f94967c1bc466773c42fbdfd9844c7597a",
 
 	this.singleCity = function() {
 		var self = this;
-		console.log("being called")
+
 		return self.populateSegments().then(function(data) { 
 		return self.populateAll() });
 		
@@ -33,7 +33,7 @@ function Strava (lat, lon) {
 	},
 
 	this.populateSegments = function() {
-		console.log("populate segments")
+
 		var deferred = Q.defer()
 		var self = this;
 
@@ -64,7 +64,6 @@ function Strava (lat, lon) {
 
 
 	this.getSegments = function(activityType) {
-		console.log("get segments")
 		var self = this;
 		var deferred = Q.defer();
 
@@ -102,7 +101,7 @@ function Strava (lat, lon) {
 	},
 
 	this.getSingle = function(id) {
-		console.log("get single")
+		
 		var self = this;
 
 		var deferred = Q.defer();
@@ -120,22 +119,26 @@ function Strava (lat, lon) {
 					body = JSON.parse(body)
 					var count = body.entry_count;
 					var athletes = [];
-					for (var i = 0; i < 5; i++) {
-					
-						
-						var athlete = body.entries[self.random(body.entries.length)];
-						var obj = {
 
-							id: athlete.athlete_id,
-					  		name: athlete.athlete_name,
-					  		pic: athlete.athlete_profile
-						}
-						athletes.push(obj)
+
+
+					if (body.entries.length > 0) {
+						for (var i = 0; i < 5; i++) {
+							
 						
+							var athlete = body.entries[self.random(body.entries.length -1)];
+							var obj = {
+								id: athlete.athlete_id,
+						  		name: athlete.athlete_name,
+						  		pic: athlete.athlete_profile
+							}
+							
+							athletes.push(obj)
+							
+						}
 					}
 
 					athletes = self.trimAthletes(athletes)
-
 					
 					deferred.resolve({count: count, athletes: athletes});
 				}
@@ -146,7 +149,7 @@ function Strava (lat, lon) {
 	},
 
 	this.getFive = function(activityType) {
-		console.log("get 5")
+
 		var deferred = Q.defer();
 		var self = this;
 
@@ -169,7 +172,6 @@ function Strava (lat, lon) {
 	},
 
 	this.populateAll = function() {
-		console.log("populate all")
 		var self = this;
 		var deferred = Q.defer();
 

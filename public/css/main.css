@@ -46,6 +46,7 @@ a p, h4 {
 .main {
   float: right;
   width: 70%;
+  margin: 2.5%;
   padding: 20px; }
 
 @media screen and (max-width: 1000px) {
@@ -53,7 +54,12 @@ a p, h4 {
     display: none; }
 
   .main {
-    width: 100%; } }
+    width: 100%;
+    margin: 0; } }
+.header-holder {
+  width: 100%;
+  background: black; }
+
 .header-full {
   background: no-repeat center center fixed;
   -webkit-background-size: cover;
@@ -401,6 +407,12 @@ input[type=range]:focus::-ms-fill-upper {
   left: 15px;
   bottom: 10px; }
 
+@media screen and (max-width: 600px) {
+  .single-header-text {
+    font-size: 30px !important; }
+
+  .img-attribution {
+    top: 20px; } }
 /* SINGLE OVERVIEW */
 .description-overview i {
   font-size: 17px;
@@ -421,7 +433,7 @@ input[type=range]:focus::-ms-fill-upper {
   height: auto; }
 
 .running-riding div {
-  width: 75px;
+  width: 50px;
   margin: 0 20px; }
 
 .running-riding p {
@@ -600,6 +612,11 @@ div.graph-tooltip, div.detail {
   width: 90%;
   text-align: center; }
 
+@media screen and (max-width: 500px) {
+  .addCityModal {
+    width: 100%;
+    margin: 0;
+    padding: 0; } }
 .auto-width {
   min-width: 100%;
   width: auto !important; }
