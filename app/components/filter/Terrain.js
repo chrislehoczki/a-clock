@@ -11,18 +11,18 @@ var Terrain = React.createClass({
       },
 
     setTerrain: function(e) {
-      e.preventDefault();
+
 
 
       var component = this;
-      $(".filter-terrain a").removeClass("filter-btn-selected")
+      $(".filter-terrain button").removeClass("filter-btn-selected")
 
       if (this.state.selected === e.target.value) {
           this.props.updateFilter({terrain: null})
           return;
       }
 
-      e.target.classList.add("filter-btn-selected");
+      $(e.target).addClass("filter-btn-selected");
       this.setState({selected: e.target.value})
       //SEND TO PARENT HERE
       this.props.updateFilter({terrain: e.target.value})
@@ -39,8 +39,8 @@ var Terrain = React.createClass({
        return (
           <div>
             <p> Terrain </p>
-            <a href="#" className="btn filter-btn btn-two" value="hilly" onClick={this.setTerrain}> Hilly </a>
-            <a href="#" className="btn filter-btn btn-two" value="flat" onClick={this.setTerrain}> Flat </a>
+            <button className="btn filter-btn btn-two" value="hilly" onClick={this.setTerrain}> Hilly </button>
+            <button className="btn filter-btn btn-two" value="flat" onClick={this.setTerrain}> Flat </button>
           </div>
         );
   

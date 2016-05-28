@@ -12,7 +12,7 @@ var Sort = React.createClass({
     },
 
     setAlt: function(e) {
-      e.preventDefault();
+
       var component = this;
 
       $(".filter-altitude button").removeClass("filter-btn-selected")
@@ -22,7 +22,7 @@ var Sort = React.createClass({
           return;
       }
 
-      e.target.classList.add("filter-btn-selected");
+      $(e.target).addClass("filter-btn-selected");
       this.setState({selected: e.target.value})
       //SEND TO PARENT HERE
 
@@ -49,9 +49,9 @@ var Sort = React.createClass({
         <div>
          <p> Altitude </p>
           
-            <a href="#" className="btn filter-btn btn-three" value="low" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"0 - 500m"}>Low</a>
-            <a href="#" className="btn filter-btn btn-three" value="medium" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"500 - 1000m"}>Med</a>
-            <a href="#" className="btn filter-btn btn-three" value="high" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"1000m+"}>High</a>
+            <button className="btn filter-btn btn-three" value="low" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"0 - 500m"}>Low</button>
+            <button className="btn filter-btn btn-three" value="medium" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"500 - 1000m"}>Med</button>
+            <button className="btn filter-btn btn-three" value="high" onClick={this.setAlt} data-toggle="tooltip" data-placement="top" title={"1000m+"}>High</button>
             
           
         </div>

@@ -2907,7 +2907,7 @@ var Sort = React.createClass({
       },
 
       setAlt: function setAlt(e) {
-            e.preventDefault();
+
             var component = this;
 
             $(".filter-altitude button").removeClass("filter-btn-selected");
@@ -2917,7 +2917,7 @@ var Sort = React.createClass({
                   return;
             }
 
-            e.target.classList.add("filter-btn-selected");
+            $(e.target).addClass("filter-btn-selected");
             this.setState({ selected: e.target.value });
             //SEND TO PARENT HERE
 
@@ -2945,18 +2945,18 @@ var Sort = React.createClass({
                         " Altitude "
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "low", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "0 - 500m" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "low", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "0 - 500m" },
                         "Low"
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "medium", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "500 - 1000m" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "medium", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "500 - 1000m" },
                         "Med"
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "high", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "1000m+" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "high", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "1000m+" },
                         "High"
                   )
             );
@@ -3364,13 +3364,9 @@ var Temp = React.createClass({
 
       setTemperature: function setTemperature(e) {
 
-            e.preventDefault();
-
-            console.log(e.target);
-
             var component = this;
 
-            $(".filter-temp a").removeClass("filter-btn-selected");
+            $(".filter-temp button").removeClass("filter-btn-selected");
 
             console.log(e.target.value);
             console.log(this.state.selected);
@@ -3379,7 +3375,7 @@ var Temp = React.createClass({
                   return;
             }
 
-            e.target.classList.add("filter-btn-selected");
+            $(e.target).addClass("filter-btn-selected");
             this.setState({ selected: e.target.value });
 
             var temp = e.target.value;
@@ -3407,18 +3403,18 @@ var Temp = React.createClass({
                         " Temperature "
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
                         " Hot "
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
                         " Warm "
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
                         " Cold "
                   )
             );
@@ -3446,17 +3442,16 @@ var Terrain = React.createClass({
     },
 
     setTerrain: function setTerrain(e) {
-        e.preventDefault();
 
         var component = this;
-        $(".filter-terrain a").removeClass("filter-btn-selected");
+        $(".filter-terrain button").removeClass("filter-btn-selected");
 
         if (this.state.selected === e.target.value) {
             this.props.updateFilter({ terrain: null });
             return;
         }
 
-        e.target.classList.add("filter-btn-selected");
+        $(e.target).addClass("filter-btn-selected");
         this.setState({ selected: e.target.value });
         //SEND TO PARENT HERE
         this.props.updateFilter({ terrain: e.target.value });
@@ -3473,13 +3468,13 @@ var Terrain = React.createClass({
                 " Terrain "
             ),
             React.createElement(
-                "a",
-                { href: "#", className: "btn filter-btn btn-two", value: "hilly", onClick: this.setTerrain },
+                "button",
+                { className: "btn filter-btn btn-two", value: "hilly", onClick: this.setTerrain },
                 " Hilly "
             ),
             React.createElement(
-                "a",
-                { href: "#", className: "btn filter-btn btn-two", value: "flat", onClick: this.setTerrain },
+                "button",
+                { className: "btn filter-btn btn-two", value: "flat", onClick: this.setTerrain },
                 " Flat "
             )
         );
