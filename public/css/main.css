@@ -279,7 +279,9 @@ input[type=range]:focus::-ms-fill-upper {
 
 .no-touch button:hover,
 button.hover {
-  /* your css hover stuff here */ }
+  background: black !important;
+  color: white !important;
+  border: 1px solid white; }
 
 .filter-btn-selected {
   background: #3ac162 !important;
