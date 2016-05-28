@@ -7,10 +7,7 @@ $('.athlete img').tooltip()
 $('.segment img').tooltip()
 $(".dropdown-toggle").dropdown();
 
-
-
-
-
+        
 var navDropped = false;
 
 $(".navbar-toggle").click(function() {

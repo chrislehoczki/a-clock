@@ -1095,7 +1095,9 @@ var Filter = React.createClass({
     componentDidMount: function componentDidMount() {
         var component = this;
 
-        //$('button').tooltip()
+        if (!('ontouchstart' in window)) {
+            $('button').tooltip();
+        }
 
         //INFINITE SCROLL
 
