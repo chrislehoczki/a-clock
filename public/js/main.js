@@ -7,10 +7,8 @@ $('.athlete img').tooltip()
 $('.segment img').tooltip()
 $(".dropdown-toggle").dropdown();
 
-         if(('ontouchstart' in window))
-                {
-                  $('button[rel=tooltip]').tooltip('destroy')
-                }
+
+
 
 
 var navDropped = false;
