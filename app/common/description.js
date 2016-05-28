@@ -100,8 +100,8 @@ module.exports = function cityData (city) {
             weatherStrings.general = "";
             
             weatherStrings.general += bestMonths ? bestStatement : "";
-            weatherStrings.general += wetMonths ? rainStatement : "";
-            weatherStrings.general += hotMonths ? tempStatement: "";
+            //weatherStrings.general += wetMonths ? rainStatement : "";
+            //weatherStrings.general += hotMonths ? tempStatement: "";
             
             weatherStrings.current = current;
 
