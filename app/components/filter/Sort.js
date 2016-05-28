@@ -13,7 +13,7 @@ var Sort = React.createClass({
 
 
     setSort: function(e) {
-      e.preventDefault()
+
       var component = this;
 
       var component = this;
@@ -38,8 +38,8 @@ var Sort = React.createClass({
        return (
         <div>
           <p> Sort By </p>
-          <a href="#" className="btn filter-btn btn-two" value="running" onClick={this.setSort}> Runners </a>
-          <a href="#" className="btn filter-btn btn-two" value="riding" onClick={this.setSort}> Riders </a>
+          <button className="btn filter-btn btn-two" value="running" onClick={this.setSort}> Runners </button>
+          <button className="btn filter-btn btn-two" value="riding" onClick={this.setSort}> Riders </button>
         </div>
         );
   
