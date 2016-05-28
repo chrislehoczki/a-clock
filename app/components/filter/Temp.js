@@ -15,8 +15,8 @@ var Temp = React.createClass({
 
 
     setTemperature: function(e) {
-      e.preventDefault();
-      console.log(e.target)
+
+
       var component = this;
 
       $(".filter-temp button").removeClass("filter-btn-selected")
@@ -45,6 +45,8 @@ var Temp = React.createClass({
       //SEND TO PARENT HERE
       this.props.updateFilter({temp: tempQuery})
 
+
+
     },
 
     render: function() { 
@@ -54,9 +56,9 @@ var Temp = React.createClass({
        return (
           <div>
             <p> Temperature </p>
-            <a href="#" className="btn filter-btn btn-three" value="hot" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"26+ deg C"}> Hot </a>
-            <a href="#" className="btn filter-btn btn-three" value="warm" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"15 to 26 deg C"}> Warm </a>
-            <a href="#" className="btn filter-btn btn-three" value="cool" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"-5 to 15 deg C"}> Cold </a>
+            
+            <button className="btn filter-btn btn-three" value="warm" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"15 to 26 deg C"}> Warm </button>
+            <button className="btn filter-btn btn-three" value="cool" onClick={this.setTemperature} data-toggle="tooltip" data-placement="top" title={"-5 to 15 deg C"}> Cold </button>
           </div>
         );
   

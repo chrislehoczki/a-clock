@@ -3363,8 +3363,7 @@ var Temp = React.createClass({
       },
 
       setTemperature: function setTemperature(e) {
-            e.preventDefault();
-            console.log(e.target);
+
             var component = this;
 
             $(".filter-temp button").removeClass("filter-btn-selected");
@@ -3404,18 +3403,13 @@ var Temp = React.createClass({
                         " Temperature "
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
-                        " Hot "
-                  ),
-                  React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
                         " Warm "
                   ),
                   React.createElement(
-                        "a",
-                        { href: "#", className: "btn filter-btn btn-three", value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
+                        "button",
+                        { className: "btn filter-btn btn-three", value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
                         " Cold "
                   )
             );
