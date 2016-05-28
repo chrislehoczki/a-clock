@@ -50,6 +50,8 @@ setTimeout(function() {
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
            //CREATE SVG MARGINS
+    d3.select(svgClass).remove();
+    d3.select(".graph-tooltip").remove();
     makeChart()
 
 
@@ -59,9 +61,6 @@ setTimeout(function() {
 window.addEventListener('resize', function(event){
     var containerHeight = $(containerId).height();
     var containerWidth = $(containerId).width();
-    console.log(svgIdentifier)
-    console.log(svgClass)
-    console.log(containerId)
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
     

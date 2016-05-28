@@ -4639,37 +4639,37 @@ var Overview = React.createClass({
                         this.props.data.weather.data[currentMonth].wetDays
                     ) : null
                 ) : null,
-                React.createElement(
+                this.props.data.cost ? React.createElement(
                     "i",
                     { className: "fa fa-coffee" },
                     "  $",
                     this.props.data.cost.coffee_in_cafe.USD
-                ),
-                React.createElement(
+                ) : null,
+                this.props.data.cost ? React.createElement(
                     "i",
                     { className: "fa fa-beer" },
                     "  $",
                     this.props.data.cost.beer_in_cafe.USD
-                ),
-                React.createElement(
+                ) : null,
+                this.props.data.cost ? React.createElement(
                     "i",
                     { className: "fa fa-rss" },
                     "  ",
                     this.props.data.info.internet.speed.download,
                     "Mbps"
-                ),
-                React.createElement(
+                ) : null,
+                this.props.data.cost ? React.createElement(
                     "i",
                     { className: "fa fa-home" },
                     "  $",
                     this.props.data.cost.hotel.USD
-                ),
-                React.createElement(
+                ) : null,
+                this.state.flight ? React.createElement(
                     "i",
                     { className: "fa fa-plane" },
                     "  $",
                     this.state.flight.price
-                )
+                ) : null
             )
         );
     }
@@ -5209,15 +5209,14 @@ var Weather = React.createClass({
 
             width = containerWidth - margin.left - margin.right, height = containerHeight - margin.top - margin.bottom;
             //CREATE SVG MARGINS
+            d3.select(svgClass).remove();
+            d3.select(".graph-tooltip").remove();
             makeChart();
         }, 2000);
 
         window.addEventListener('resize', function (event) {
             var containerHeight = $(containerId).height();
             var containerWidth = $(containerId).width();
-            console.log(svgIdentifier);
-            console.log(svgClass);
-            console.log(containerId);
             width = containerWidth - margin.left - margin.right, height = containerHeight - margin.top - margin.bottom;
 
             d3.select(svgClass).remove();
