@@ -886,18 +886,32 @@ div.graph-tooltip, div.detail {
 	text-align: center;
 }
 
+
+
+.auto-width {
+	min-width: 100%;
+	width: auto!important;
+}
+
 @media screen and (max-width: 500px) {
 	.addCityModal {
 		width: 100%;
 		margin:0;
 		padding: 0;
 	}
+
+	.auto-width {
+	max-width: 100%;
+	overflow: hidden;
+	}
+
+	.addCityModal img {
+		max-width: 100%;
+	}
+	
+
 }
 
-.auto-width {
-	min-width: 100%;
-	width: auto!important;
-}
 
  .modal-container {
    position: relative;

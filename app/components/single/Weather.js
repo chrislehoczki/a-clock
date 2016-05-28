@@ -18,8 +18,11 @@ var Weather = React.createClass({
         return;
     }
 
-
+var container = this.state.container;
 var containerId = "#" + this.state.container;
+
+var svgIdentifier = this.state.container + "-svg"
+var svgClass = "." + svgIdentifier;
 
 
 var d3_time_months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
@@ -30,20 +33,9 @@ var data = this.props.weather.data;
 var rain = "#00897B";
 var temp = "#E57373"
 
+var component = this;
 
 
-window.addEventListener('resize', function(event){
-    var containerHeight = $(containerId).height();
-    var containerWidth = $(containerId).width();
-
-    width = containerWidth - margin.left - margin.right,
-    height = containerHeight - margin.top - margin.bottom;
-   
-    d3.select("svg").remove();
-    d3.select(".graph-tooltip").remove();
-    makeChart();
-
-});
 
 var height, width, margin, svg;
   
@@ -58,25 +50,35 @@ setTimeout(function() {
     width = containerWidth - margin.left - margin.right,
     height = containerHeight - margin.top - margin.bottom;
            //CREATE SVG MARGINS
-
-
     makeChart()
 
 
 }, 2000)
 
 
-//DEFINE SVG
+window.addEventListener('resize', function(event){
+    var containerHeight = $(containerId).height();
+    var containerWidth = $(containerId).width();
+    console.log(svgIdentifier)
+    console.log(svgClass)
+    console.log(containerId)
+    width = containerWidth - margin.left - margin.right,
+    height = containerHeight - margin.top - margin.bottom;
+    
+    d3.select(svgClass).remove();
+    d3.select(".graph-tooltip").remove();
+    makeChart();
 
-
+});
 
 
  
 function makeChart() {
 
 //CREATE SVG
-svg = d3.select(containerId).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")").classed("weather-svg", true)
+svg = d3.select(containerId).append("svg").attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom).classed(svgIdentifier, true).append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
 
 //DEFINE MIN AND MAX VALUES
   
