@@ -39,6 +39,7 @@ var Sort = React.createClass({
       //SEND TO PARENT HERE
       this.props.updateFilter({alt: altQuery})
 
+      
 
 
 
