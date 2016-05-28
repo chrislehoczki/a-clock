@@ -272,6 +272,15 @@ input[type=range]:focus::-ms-fill-upper {
   background: white;
   width: auto; }
 
+.filter-btn:hover {
+  background: #3ac162 !important;
+  color: white !important;
+  border: 1px solid white; }
+
+.no-touch button:hover,
+button.hover {
+  /* your css hover stuff here */ }
+
 .filter-btn-selected {
   background: #3ac162 !important;
   color: white !important;

@@ -127,9 +127,7 @@ var Filter = React.createClass({
             });
         });
 
-    
 
-    
        
 
     },
