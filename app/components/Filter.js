@@ -39,8 +39,6 @@ var Filter = React.createClass({
                 maxHotelCost: 150,
                 limit: 20,
                 maxRain: 30
-
-
         };
     },
 
@@ -50,6 +48,7 @@ var Filter = React.createClass({
     },
 
     updateSort: function(data) {
+        console.log(data)
         this.setState(data);
     },
 
@@ -67,6 +66,8 @@ var Filter = React.createClass({
             alt: this.state.alt,
             limit: this.state.limit
             }
+
+        console.log(query)
 
         var url = "/api/cities"
 
@@ -139,13 +140,13 @@ var Filter = React.createClass({
             <div>
                 <div className="row filter-holder">
 
-                <div className="filter-section filter-hotel col-lg-4 col-sm-4 col-ms-6 col-xs-12">
+                <div className="filter-section filter-hotel filter-sort col-lg-4 col-sm-4 col-ms-6 col-xs-12">
                     <Hotel minCost={this.state.minHotelCost} maxCost={this.state.maxHotelCost} updateHotel={this.updateHotel}/>
-                    <Sort defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateSort={this.updateSort} sortBy={this.state.sortBy} />
+                    <Sort defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateFilter={this.updateSort} sortBy={this.state.sortBy} />
                 </div>
 
                 <div className="filter-section filter-temp col-lg-4 col-sm-4 col-ms-6 col-xs-12">
-                    <Temp defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateTemp={this.updateTemp} temp={this.state.temp}/>
+                    <Temp defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateFilter={this.updateTemp} temp={this.state.temp}/>
                 </div>
 
                 <div className="filter-section filter-rain col-lg-4 col-sm-4 col-ms-6 col-xs-12">
@@ -153,11 +154,11 @@ var Filter = React.createClass({
                 </div>
 
                 <div className="filter-section filter-terrain col-lg-4 col-sm-4 col-ms-6 col-xs-12">
-                    <Terrain defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateTerrain={this.updateTerrain} terrain={this.state.terrain}/>
+                    <Terrain defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateFilter={this.updateTerrain} terrain={this.state.terrain}/>
                 </div>
 
                 <div className="filter-section filter-altitude col-lg-4 col-sm-4 col-ms-6 col-xs-12">
-                    <Altitude defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateAlt={this.updateAlt} alt={this.state.alt}/>
+                    <Altitude defaultStyle={this.state.defaultStyle} selectedStyle={this.state.selectedStyle} updateFilter={this.updateAlt} alt={this.state.alt}/>
                 </div>
 
                 <div className="filter-section filter-month col-lg-4 col-sm-4 col-ms-6 col-xs-12">

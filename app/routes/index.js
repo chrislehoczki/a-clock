@@ -270,6 +270,7 @@ module.exports = function (app, passport) {
    
 	app.get("/api/cities", function(req, res) {
 
+		console.log(req.query)
 		//DECLARE QUERY
 		var query = {};
 
@@ -343,6 +344,8 @@ module.exports = function (app, passport) {
 		//LIMIT 
 
 		query.limit = +req.query.limit || 20;
+
+		console.log(query)
 	
 		DAO.getAllCities(query).then(function(data) {
 			res.send(data);

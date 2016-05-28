@@ -277,6 +277,11 @@ input[type=range]:focus::-ms-fill-upper {
   color: white !important;
   border: 1px solid white; }
 
+.filter-btn-selected {
+  background: #3ac162 !important;
+  color: white !important;
+  border: 1px solid white; }
+
 .btn-filter-send {
   display: block;
   clear: both;

@@ -8,7 +8,7 @@ module.exports = function (lat, long, city, country) {
 
 		var key = process.env.FLICKR_KEY;
 		var secret = process.env.FLICKR_SECRET;
-		var tags = city;
+		var tags = city + " tourism";
 		var perPage = 10;
 		var license= "license=1,2,3,4,5,6,7"
 		var url = "https://api.flickr.com/services/rest/?method=flickr.photos.search&tags=" 

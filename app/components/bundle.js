@@ -1028,7 +1028,6 @@ var Filter = React.createClass({
             maxHotelCost: 150,
             limit: 20,
             maxRain: 30
-
         };
     },
 
@@ -1037,6 +1036,7 @@ var Filter = React.createClass({
     },
 
     updateSort: function updateSort(data) {
+        console.log(data);
         this.setState(data);
     },
 
@@ -1054,6 +1054,8 @@ var Filter = React.createClass({
             alt: this.state.alt,
             limit: this.state.limit
         };
+
+        console.log(query);
 
         var url = "/api/cities";
 
@@ -1121,14 +1123,14 @@ var Filter = React.createClass({
                 { className: "row filter-holder" },
                 React.createElement(
                     "div",
-                    { className: "filter-section filter-hotel col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
+                    { className: "filter-section filter-hotel filter-sort col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
                     React.createElement(Hotel, { minCost: this.state.minHotelCost, maxCost: this.state.maxHotelCost, updateHotel: this.updateHotel }),
-                    React.createElement(Sort, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateSort: this.updateSort, sortBy: this.state.sortBy })
+                    React.createElement(Sort, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateFilter: this.updateSort, sortBy: this.state.sortBy })
                 ),
                 React.createElement(
                     "div",
                     { className: "filter-section filter-temp col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
-                    React.createElement(Temp, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTemp: this.updateTemp, temp: this.state.temp })
+                    React.createElement(Temp, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateFilter: this.updateTemp, temp: this.state.temp })
                 ),
                 React.createElement(
                     "div",
@@ -1138,12 +1140,12 @@ var Filter = React.createClass({
                 React.createElement(
                     "div",
                     { className: "filter-section filter-terrain col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
-                    React.createElement(Terrain, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateTerrain: this.updateTerrain, terrain: this.state.terrain })
+                    React.createElement(Terrain, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateFilter: this.updateTerrain, terrain: this.state.terrain })
                 ),
                 React.createElement(
                     "div",
                     { className: "filter-section filter-altitude col-lg-4 col-sm-4 col-ms-6 col-xs-12" },
-                    React.createElement(Altitude, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateAlt: this.updateAlt, alt: this.state.alt })
+                    React.createElement(Altitude, { defaultStyle: this.state.defaultStyle, selectedStyle: this.state.selectedStyle, updateFilter: this.updateAlt, alt: this.state.alt })
                 ),
                 React.createElement(
                     "div",
@@ -2898,10 +2900,9 @@ var Sort = React.createClass({
 
 
       getInitialState: function getInitialState() {
+
             return {
-                  altControl: { low: this.props.defaultStyle, medium: this.props.defaultStyle, high: this.props.defaultStyle },
-                  defaultStyle: this.props.defaultStyle,
-                  selectedStyle: this.props.selectedStyle
+                  selected: null
             };
       },
 
@@ -2909,23 +2910,18 @@ var Sort = React.createClass({
 
             var component = this;
 
-            var altControlStyles = this.state.altControl;
+            $(".filter-altitude button").removeClass("filter-btn-selected");
 
-            for (var property in altControlStyles) {
-                  if (altControlStyles.hasOwnProperty(property)) {
-                        altControlStyles[property] = this.state.defaultStyle;
-                  }
+            if (this.state.selected === e.target.value) {
+                  this.props.updateFilter({ alt: null });
+                  return;
             }
 
-            altControlStyles[e.target.value] = this.state.selectedStyle;
-
-            this.setState({ altControl: altControlStyles });
+            $(e.target).addClass("filter-btn-selected");
+            this.setState({ selected: e.target.value });
+            //SEND TO PARENT HERE
 
             var alt = e.target.value;
-
-            function convertMtoFt(value) {
-                  return value * 3.28;
-            }
 
             var lookup = {
                   low: { min: -10, max: 500 },
@@ -2936,25 +2932,7 @@ var Sort = React.createClass({
             var altQuery = lookup[alt];
 
             //SEND TO PARENT HERE
-            this.props.updateAlt({ alt: altQuery });
-
-            //IF SELECTED
-            if (this.props.alt) {
-                  if (this.props.alt.min === altQuery.min) {
-                        defaultStyles();
-                        //NEED TO SEND TO PARENT HERE
-                        this.props.updateAlt({ alt: null });
-                  }
-            }
-
-            function defaultStyles() {
-                  var altControlStyles = component.state.altControl;
-                  for (var property in altControlStyles) {
-                        if (altControlStyles.hasOwnProperty(property)) {
-                              altControlStyles[property] = component.state.defaultStyle;
-                        }
-                  }
-            }
+            this.props.updateFilter({ alt: altQuery });
       },
 
       render: function render() {
@@ -2968,17 +2946,17 @@ var Sort = React.createClass({
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-three", style: this.state.altControl.low, value: "low", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "0 - 500m" },
+                        { className: "btn filter-btn btn-three", value: "low", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "0 - 500m" },
                         "Low"
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-three", style: this.state.altControl.medium, value: "medium", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "500 - 1000m" },
+                        { className: "btn filter-btn btn-three", value: "medium", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "500 - 1000m" },
                         "Med"
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-three", style: this.state.altControl.high, value: "high", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "1000m+" },
+                        { className: "btn filter-btn btn-three", value: "high", onClick: this.setAlt, "data-toggle": "tooltip", "data-placement": "top", title: "1000m+" },
                         "High"
                   )
             );
@@ -3317,9 +3295,7 @@ var Sort = React.createClass({
 
       getInitialState: function getInitialState() {
             return {
-                  sortControl: { running: this.props.defaultStyle, riding: this.props.defaultStyle },
-                  defaultStyle: this.props.defaultStyle,
-                  selectedStyle: this.props.selectedStyle
+                  selected: null
             };
       },
 
@@ -3327,38 +3303,21 @@ var Sort = React.createClass({
 
             var component = this;
 
-            var sortControlStyles = this.state.sortControl;
+            var component = this;
+            $(".filter-sort button").removeClass("filter-btn-selected");
 
-            for (var property in sortControlStyles) {
-                  if (sortControlStyles.hasOwnProperty(property)) {
-                        sortControlStyles[property] = this.state.defaultStyle;
-                  }
+            console.log(e.target.value);
+            console.log(this.state.selected);
+            if (this.state.selected === e.target.value) {
+                  this.props.updateFilter({ sortBy: null });
+                  return;
             }
 
-            sortControlStyles[e.target.value] = this.state.selectedStyle;
-
-            this.setState({ sortControl: sortControlStyles });
+            $(e.target).addClass("filter-btn-selected");
+            this.setState({ selected: e.target.value });
 
             //SEND TO PARENT HERE
-            this.props.updateSort({ sortBy: e.target.value });
-
-            //IF SELECTED
-            if (this.props.sortBy) {
-                  if (this.props.sortBy === e.target.value) {
-                        defaultStyles();
-                        //NEED TO SEND TO PARENT HERE
-                        this.props.updateSort({ sortBy: null });
-                  }
-            }
-
-            function defaultStyles() {
-                  var sortControlStyles = component.state.sortControl;
-                  for (var property in sortControlStyles) {
-                        if (sortControlStyles.hasOwnProperty(property)) {
-                              sortControlStyles[property] = component.state.defaultStyle;
-                        }
-                  }
-            }
+            this.props.updateFilter({ sortBy: e.target.value });
       },
 
       render: function render() {
@@ -3372,12 +3331,12 @@ var Sort = React.createClass({
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-two", style: this.state.sortControl.running, value: "running", onClick: this.setSort },
+                        { className: "btn filter-btn btn-two", value: "running", onClick: this.setSort },
                         " Runners "
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-two", style: this.state.sortControl.riding, value: "riding", onClick: this.setSort },
+                        { className: "btn filter-btn btn-two", value: "riding", onClick: this.setSort },
                         " Riders "
                   )
             );
@@ -3399,30 +3358,25 @@ var Temp = React.createClass({
 
       getInitialState: function getInitialState() {
             return {
-                  tempControl: { hot: this.props.defaultStyle, warm: this.props.defaultStyle, cool: this.props.defaultStyle },
-                  defaultStyle: this.props.defaultStyle,
-                  selectedStyle: this.props.selectedStyle
+                  selected: null
             };
       },
 
       setTemperature: function setTemperature(e) {
 
             var component = this;
-            var hotStyle = this.state.tempControl.hot;
-            var warmStyle = this.state.tempControl.warm;
-            var coldStyle = this.state.tempControl.cold;
 
-            var tempControlStyles = this.state.tempControl;
+            $(".filter-temp button").removeClass("filter-btn-selected");
 
-            for (var property in tempControlStyles) {
-                  if (tempControlStyles.hasOwnProperty(property)) {
-                        tempControlStyles[property] = this.state.defaultStyle;
-                  }
+            console.log(e.target.value);
+            console.log(this.state.selected);
+            if (this.state.selected === e.target.value) {
+                  this.props.updateFilter({ temp: null });
+                  return;
             }
 
-            tempControlStyles[e.target.value] = this.state.selectedStyle;
-
-            this.setState({ tempControl: tempControlStyles });
+            $(e.target).addClass("filter-btn-selected");
+            this.setState({ selected: e.target.value });
 
             var temp = e.target.value;
 
@@ -3435,25 +3389,7 @@ var Temp = React.createClass({
             var tempQuery = lookup[temp];
 
             //SEND TO PARENT HERE
-            this.props.updateTemp({ temp: tempQuery });
-
-            //IF SELECTED
-            if (this.props.temp) {
-                  if (this.props.temp.min === tempQuery.min) {
-                        defaultStyles();
-                        //NEED TO SEND TO PARENT HERE
-                        this.props.updateTemp({ temp: null });
-                  }
-            }
-
-            function defaultStyles() {
-                  var tempControlStyles = component.state.tempControl;
-                  for (var property in tempControlStyles) {
-                        if (tempControlStyles.hasOwnProperty(property)) {
-                              tempControlStyles[property] = component.state.defaultStyle;
-                        }
-                  }
-            }
+            this.props.updateFilter({ temp: tempQuery });
       },
 
       render: function render() {
@@ -3468,17 +3404,17 @@ var Temp = React.createClass({
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-three", style: this.state.tempControl.hot, value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
+                        { className: "btn filter-btn btn-three", value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
                         " Hot "
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-three", style: this.state.tempControl.warm, value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
+                        { className: "btn filter-btn btn-three", value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
                         " Warm "
                   ),
                   React.createElement(
                         "button",
-                        { className: "btn filter-btn btn-three", style: this.state.tempControl.cool, value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
+                        { className: "btn filter-btn btn-three", value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
                         " Cold "
                   )
             );
@@ -3495,77 +3431,54 @@ module.exports = Temp;
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var Terrain = React.createClass({
-      displayName: "Terrain",
+    displayName: "Terrain",
 
 
-      getInitialState: function getInitialState() {
-            return {
-                  terrainControl: { hilly: this.props.defaultStyle, flat: this.props.defaultStyle },
-                  defaultStyle: this.props.defaultStyle,
-                  selectedStyle: this.props.selectedStyle
-            };
-      },
+    getInitialState: function getInitialState() {
 
-      setTerrain: function setTerrain(e) {
+        return {
+            selected: null
+        };
+    },
 
-            var component = this;
+    setTerrain: function setTerrain(e) {
 
-            var terrainControlStyles = this.state.terrainControl;
+        var component = this;
+        $(".filter-terrain button").removeClass("filter-btn-selected");
 
-            for (var property in terrainControlStyles) {
-                  if (terrainControlStyles.hasOwnProperty(property)) {
-                        terrainControlStyles[property] = this.state.defaultStyle;
-                  }
-            }
+        if (this.state.selected === e.target.value) {
+            this.props.updateFilter({ terrain: null });
+            return;
+        }
 
-            terrainControlStyles[e.target.value] = this.state.selectedStyle;
+        $(e.target).addClass("filter-btn-selected");
+        this.setState({ selected: e.target.value });
+        //SEND TO PARENT HERE
+        this.props.updateFilter({ terrain: e.target.value });
+    },
 
-            this.setState({ terrainControl: terrainControlStyles });
+    render: function render() {
 
-            //SEND TO PARENT HERE
-            this.props.updateTerrain({ terrain: e.target.value });
-
-            //IF SELECTED
-            if (this.props.terrain) {
-                  if (this.props.terrain === e.target.value) {
-                        defaultStyles();
-                        //NEED TO SEND TO PARENT HERE
-                        this.props.updateTerrain({ terrain: null });
-                  }
-            }
-
-            function defaultStyles() {
-                  var terrainControlStyles = component.state.terrainControl;
-                  for (var property in terrainControlStyles) {
-                        if (terrainControlStyles.hasOwnProperty(property)) {
-                              terrainControlStyles[property] = component.state.defaultStyle;
-                        }
-                  }
-            }
-      },
-
-      render: function render() {
-
-            return React.createElement(
-                  "div",
-                  null,
-                  React.createElement(
-                        "p",
-                        null,
-                        " Terrain "
-                  ),
-                  React.createElement(
-                        "button",
-                        { className: "btn filter-btn btn-two", style: this.state.terrainControl.hilly, value: "hilly", onClick: this.setTerrain },
-                        " Hilly "
-                  ),
-                  React.createElement(
-                        "button",
-                        { className: "btn filter-btn btn-two", style: this.state.terrainControl.flat, value: "flat", onClick: this.setTerrain },
-                        " Flat "
-                  )
-            );
-      }
+        return React.createElement(
+            "div",
+            null,
+            React.createElement(
+                "p",
+                null,
+                " Terrain "
+            ),
+            React.createElement(
+                "button",
+                { className: "btn filter-btn btn-two", value: "hilly", onClick: this.setTerrain },
+                " Hilly "
+            ),
+            React.createElement(
+                "button",
+                { className: "btn filter-btn btn-two", value: "flat", onClick: this.setTerrain },
+                " Flat "
+            )
+        );
+    }
 });
 
 module.exports = Terrain;

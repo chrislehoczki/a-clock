@@ -6,9 +6,7 @@ var Sort = React.createClass({
 
     getInitialState: function() {
       return {
-        sortControl: {running: this.props.defaultStyle, riding: this.props.defaultStyle},
-        defaultStyle: this.props.defaultStyle,
-        selectedStyle: this.props.selectedStyle
+        selected: null
       }
         
     },
@@ -18,40 +16,21 @@ var Sort = React.createClass({
 
       var component = this;
 
-      var sortControlStyles = this.state.sortControl;
+      var component = this;
+      $(".filter-sort button").removeClass("filter-btn-selected")
 
-      for (var property in sortControlStyles) {
-        if (sortControlStyles.hasOwnProperty(property)) {
-            sortControlStyles[property] = this.state.defaultStyle
-        }
+      console.log(e.target.value)
+      console.log(this.state.selected)
+      if (this.state.selected === e.target.value) {
+          this.props.updateFilter({sortBy: null})
+          return;
       }
 
-      sortControlStyles[e.target.value] = this.state.selectedStyle;
-
-      this.setState({sortControl: sortControlStyles});
+      $(e.target).addClass("filter-btn-selected");
+      this.setState({selected: e.target.value})
 
       //SEND TO PARENT HERE
-      this.props.updateSort({sortBy: e.target.value})
-
-      //IF SELECTED
-      if (this.props.sortBy) {
-        if (this.props.sortBy === e.target.value) {
-          defaultStyles();
-          //NEED TO SEND TO PARENT HERE
-          this.props.updateSort({sortBy: null})
-        }
-
-      }
-
-
-      function defaultStyles() {
-        var sortControlStyles = component.state.sortControl;
-        for (var property in sortControlStyles) {
-        if (sortControlStyles.hasOwnProperty(property)) {
-            sortControlStyles[property] = component.state.defaultStyle
-        }
-      }
-      }
+      this.props.updateFilter({sortBy: e.target.value})
 
     },
 
@@ -59,8 +38,8 @@ var Sort = React.createClass({
        return (
         <div>
           <p> Sort By </p>
-          <button className="btn filter-btn btn-two" style={this.state.sortControl.running} value="running" onClick={this.setSort}> Runners </button>
-          <button className="btn filter-btn btn-two" style={this.state.sortControl.riding} value="riding" onClick={this.setSort}> Riders </button>
+          <button className="btn filter-btn btn-two" value="running" onClick={this.setSort}> Runners </button>
+          <button className="btn filter-btn btn-two" value="riding" onClick={this.setSort}> Riders </button>
         </div>
         );
   

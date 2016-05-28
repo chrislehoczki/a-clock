@@ -357,6 +357,12 @@ input[type=range]:focus::-ms-fill-upper {
 	border: 1px solid white;
 }
 
+.filter-btn-selected {
+	background: $green!important;
+	color: white!important;
+	border: 1px solid white;
+}
+
 .btn-filter-send {
 	display: block;
 	clear: both;
