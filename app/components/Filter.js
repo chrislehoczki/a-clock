@@ -128,6 +128,8 @@ var Filter = React.createClass({
         });
 
     
+
+    
        
 
     },
@@ -168,12 +170,6 @@ var Filter = React.createClass({
                 <div className="filter-section filter-continent col-lg-4 col-sm-4 col-ms-6 col-xs-12">
                     <Continent selectContinent={this.selectContinent}/>
                 </div>
-
-                
-
-                
-
-              
                 
                 </div>
 
