@@ -3300,7 +3300,7 @@ var Sort = React.createClass({
       },
 
       setSort: function setSort(e) {
-
+            e.preventDefault();
             var component = this;
 
             var component = this;
@@ -3330,13 +3330,13 @@ var Sort = React.createClass({
                         " Sort By "
                   ),
                   React.createElement(
-                        "button",
-                        { className: "btn filter-btn btn-two", value: "running", onClick: this.setSort },
+                        "a",
+                        { href: "#", className: "btn filter-btn btn-two", value: "running", onClick: this.setSort },
                         " Runners "
                   ),
                   React.createElement(
-                        "button",
-                        { className: "btn filter-btn btn-two", value: "riding", onClick: this.setSort },
+                        "a",
+                        { href: "#", className: "btn filter-btn btn-two", value: "riding", onClick: this.setSort },
                         " Riders "
                   )
             );
@@ -3363,7 +3363,8 @@ var Temp = React.createClass({
       },
 
       setTemperature: function setTemperature(e) {
-
+            e.preventDefault();
+            console.log(e.target);
             var component = this;
 
             $(".filter-temp button").removeClass("filter-btn-selected");
@@ -3403,18 +3404,18 @@ var Temp = React.createClass({
                         " Temperature "
                   ),
                   React.createElement(
-                        "button",
-                        { className: "btn filter-btn btn-three", value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
+                        "a",
+                        { href: "#", className: "btn filter-btn btn-three", value: "hot", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "26+ deg C" },
                         " Hot "
                   ),
                   React.createElement(
-                        "button",
-                        { className: "btn filter-btn btn-three", value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
+                        "a",
+                        { href: "#", className: "btn filter-btn btn-three", value: "warm", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "15 to 26 deg C" },
                         " Warm "
                   ),
                   React.createElement(
-                        "button",
-                        { className: "btn filter-btn btn-three", value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
+                        "a",
+                        { href: "#", className: "btn filter-btn btn-three", value: "cool", onClick: this.setTemperature, "data-toggle": "tooltip", "data-placement": "top", title: "-5 to 15 deg C" },
                         " Cold "
                   )
             );
