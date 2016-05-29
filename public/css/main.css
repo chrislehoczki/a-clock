@@ -526,6 +526,9 @@ input[type=range]:focus::-ms-fill-upper {
   line-height: 20px;
   pointer-events: none; }
 
+.guide h5 {
+  text-align: center; }
+
 .guide:hover p {
   bottom: 50%;
   margin-bottom: -10px;

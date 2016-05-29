@@ -2734,12 +2734,12 @@ module.exports = CityGuidesInfo;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],20:[function(require,module,exports){
 (function (global){
-'use strict';
+"use strict";
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
 
 var Guide = React.createClass({
-    displayName: 'Guide',
+    displayName: "Guide",
 
 
     getInitialState: function getInitialState() {
@@ -2747,6 +2747,9 @@ var Guide = React.createClass({
     },
 
     componentDidMount: function componentDidMount() {
+
+        $("img").tooltip();
+        console.log(this.props);
         $("#" + this.props.data.user.id).on('load', function () {}).on('error', function () {
             $(this).attr("src", "/public/images/profile.png");
         });
@@ -2759,16 +2762,16 @@ var Guide = React.createClass({
     render: function render() {
 
         return React.createElement(
-            'div',
-            { className: 'guide col-lg-2 col-md-3 col-sm-3 col-xs-6', onClick: this.showGuide },
+            "div",
+            { className: "guide col-lg-2 col-md-3 col-sm-3 col-xs-6", onClick: this.showGuide },
             React.createElement(
-                'div',
+                "div",
                 null,
-                React.createElement('img', { id: this.props.data.user.id, className: 'athlete-img', src: this.props.data.user.img, alt: this.props.data.user.firstName + " " + this.props.data.user.secondName, 'data-toggle': 'tooltip', 'data-placement': 'top', title: this.props.data.user.firstName + " " + this.props.data.user.secondName }),
+                React.createElement("img", { id: this.props.data.user.id, className: "athlete-img", src: this.props.data.user.img, alt: this.props.data.user.firstName + " " + this.props.data.user.secondName, "data-toggle": "tooltip", "data-placement": "top", title: this.props.data.user.firstName + " " + this.props.data.user.secondName ? this.props.data.user.secondName : "" }),
                 React.createElement(
-                    'p',
+                    "p",
                     null,
-                    ' Contact '
+                    " Contact "
                 )
             )
         );
