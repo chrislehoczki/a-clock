@@ -89,18 +89,18 @@ var Profile= React.createClass({
           <img src={img} style={style} />
 
           <h4> My Cities </h4>
-          {this.state.guideCities ? 
+          {this.state.user.guideCities ? 
             this.state.user.guideCities.map(function(i, city) {
-            return <GuideCity key={i} getUser={component.getUser} city={city} />
+            return <GuideCity key={i + city.cityName} getUser={component.getUser} city={city} />
           })
             : <p> You haven't made yourself a guide to any cities yet </p>}
 
           
           <h4> My Tips </h4>
-          {this.state.tips ? 
+          {this.state.user.tips ? 
             this.state.user.tips.map(function(i, tip) {
               var date = new Date(tip.date)
-            return <div key={i}> <p> {date.toDateString()} </p> <p> {tip.tip} </p> </div>
+            return <div key={i + tip.date}> <p> {date.toDateString()} </p> <p> {tip.tip} </p> </div>
           })
             : <p> You haven't added any tips yet </p> }
 

@@ -3746,8 +3746,8 @@ var Profile = React.createClass({
             null,
             " My Cities "
           ),
-          this.state.guideCities ? this.state.user.guideCities.map(function (i, city) {
-            return React.createElement(GuideCity, { key: i, getUser: component.getUser, city: city });
+          this.state.user.guideCities ? this.state.user.guideCities.map(function (i, city) {
+            return React.createElement(GuideCity, { key: i + city.cityName, getUser: component.getUser, city: city });
           }) : React.createElement(
             "p",
             null,
@@ -3758,11 +3758,11 @@ var Profile = React.createClass({
             null,
             " My Tips "
           ),
-          this.state.tips ? this.state.user.tips.map(function (i, tip) {
+          this.state.user.tips ? this.state.user.tips.map(function (i, tip) {
             var date = new Date(tip.date);
             return React.createElement(
               "div",
-              { key: i },
+              { key: i + tip.date },
               " ",
               React.createElement(
                 "p",
