@@ -134,6 +134,9 @@ module.exports = function (app, passport) {
 	app.route('/')
 		.get(/*isLoggedIn,*/ function (req, res) {
 
+			console.log(req.user)
+			console.log(req.session)
+
 			//CREATE MARKUP
 			//RENDER PAGE WITH MARKUP AND PROP
            

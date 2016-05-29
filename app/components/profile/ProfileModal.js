@@ -102,7 +102,7 @@ var Profile= React.createClass({
           
           <h4> My Tips </h4>
           {this.state.user.tips ? 
-            this.state.user.tips.map(function(city, i) {
+            this.state.user.tips.map(function(tip, i) {
               var date = new Date(tip.date)
             return <div key={i + tip.date}> <p> {date.toDateString()} </p> <p> {tip.tip} </p> </div>
           })

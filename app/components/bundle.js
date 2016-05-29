@@ -3760,7 +3760,7 @@ var Profile = React.createClass({
             null,
             " My Tips "
           ),
-          this.state.user.tips ? this.state.user.tips.map(function (city, i) {
+          this.state.user.tips ? this.state.user.tips.map(function (tip, i) {
             var date = new Date(tip.date);
             return React.createElement(
               "div",
