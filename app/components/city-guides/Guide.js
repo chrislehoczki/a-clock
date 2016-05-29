@@ -21,12 +21,13 @@ var Guide = React.createClass({
 
     },
    
-    render: function() {  
+    render: function() { 
 
+            var secondName = this.props.data.user.secondName || "";
 
          return <div className="guide col-lg-2 col-md-3 col-sm-3 col-xs-6" onClick={this.showGuide} >
                         <div>
-                        <img id={this.props.data.user.id} className="athlete-img" src={this.props.data.user.img} alt={this.props.data.user.firstName + " " + this.props.data.user.secondName} data-toggle="tooltip" data-placement="top" title={this.props.data.user.firstName + " " + this.props.data.user.secondName ? this.props.data.user.secondName : ""} />
+                        <img id={this.props.data.user.id} className="athlete-img" src={this.props.data.user.img} alt={this.props.data.user.firstName + " " + secondName} data-toggle="tooltip" data-placement="top" title={this.props.data.user.firstName + " " + secondName} />
                         <p> Contact </p>
                         </div>
                 </div>;

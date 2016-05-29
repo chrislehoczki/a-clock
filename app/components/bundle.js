@@ -2761,13 +2761,15 @@ var Guide = React.createClass({
 
     render: function render() {
 
+        var secondName = this.props.data.user.secondName || "";
+
         return React.createElement(
             "div",
             { className: "guide col-lg-2 col-md-3 col-sm-3 col-xs-6", onClick: this.showGuide },
             React.createElement(
                 "div",
                 null,
-                React.createElement("img", { id: this.props.data.user.id, className: "athlete-img", src: this.props.data.user.img, alt: this.props.data.user.firstName + " " + this.props.data.user.secondName, "data-toggle": "tooltip", "data-placement": "top", title: this.props.data.user.firstName + " " + this.props.data.user.secondName ? this.props.data.user.secondName : "" }),
+                React.createElement("img", { id: this.props.data.user.id, className: "athlete-img", src: this.props.data.user.img, alt: this.props.data.user.firstName + " " + secondName, "data-toggle": "tooltip", "data-placement": "top", title: this.props.data.user.firstName + " " + secondName }),
                 React.createElement(
                     "p",
                     null,
@@ -3744,8 +3746,8 @@ var Profile = React.createClass({
             null,
             " My Cities "
           ),
-          this.state.guideCities ? this.state.user.guideCities.map(function (city) {
-            return React.createElement(GuideCity, { getUser: component.getUser, city: city });
+          this.state.guideCities ? this.state.user.guideCities.map(function (i, city) {
+            return React.createElement(GuideCity, { key: i, getUser: component.getUser, city: city });
           }) : React.createElement(
             "p",
             null,
@@ -3756,11 +3758,11 @@ var Profile = React.createClass({
             null,
             " My Tips "
           ),
-          this.state.tips ? this.state.user.tips.map(function (tip) {
+          this.state.tips ? this.state.user.tips.map(function (i, tip) {
             var date = new Date(tip.date);
             return React.createElement(
               "div",
-              null,
+              { key: i },
               " ",
               React.createElement(
                 "p",
