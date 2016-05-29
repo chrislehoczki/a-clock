@@ -5,11 +5,11 @@ var app = express();
 //FAVICON
 var favicon = require('serve-favicon');
 app.use(favicon(__dirname + '/public/images/favicon.ico'));
-
+var session = require('express-session');
 
 var mongoose = require('mongoose');
 var passport = require('passport');
-var session = require('express-session');
+
 var routes = require('./app/routes/index.js');
 
 
@@ -46,12 +46,26 @@ app.use('/components', express.static(process.cwd() + '/app/components'));
 
 
 //SESSION INFO
-
+/*
 app.use(session({
 	secret: 'nomadAthlete',
 	resave: false,
 	saveUninitialized: true
 }));
+*/
+
+
+
+var MongoStore = require('connect-mongo')(session);
+app.use(session({
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: true,
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
+}));
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -14,11 +14,15 @@ function CityMap(el, data, width, height, radius, hoverRadius) {
 
         var self = this;
 
-        var parent = document.querySelector(".holder");
-        var children = parent.querySelectorAll("circle");
+        var mapExists = document.querySelector(".holder");
 
-        for (var i = 0; i < children.length; i++) {
-            parent.removeChild(children[i]);
+        if (mapExists) {
+            var parent = document.querySelector(".holder");
+            var children = parent.querySelectorAll("circle");
+
+            for (var i = 0; i < children.length; i++) {
+                parent.removeChild(children[i]);
+            }
         }
     }, this.tooltip = d3.select(el).append("div").attr("class", "cities-tooltip").style("opacity", 0), this.projection = d3.geo.mercator().center([0, 0]) //LON (left t0 right) + LAT (up and down)
     .scale(135) //DEFAULT Is 150
@@ -5086,7 +5090,8 @@ var Weather = React.createClass({
     getInitialState: function getInitialState() {
         return {
             title: "Weather Data for " + this.props.city,
-            container: this.props.container
+            container: this.props.container,
+            style: { height: "400px" }
         };
     },
 
@@ -5346,7 +5351,7 @@ var Weather = React.createClass({
             "div",
             null,
             React.createElement(DescriptionString, { city: this.props.data }),
-            React.createElement("div", { id: this.state.container })
+            React.createElement("div", { style: this.state.style, id: this.state.container })
         );
     }
 });

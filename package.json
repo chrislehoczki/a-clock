@@ -24,6 +24,7 @@
     "browserify": "^13.0.0",
     "browserify-shim": "^3.8.12",
     "connect-flash": "^0.1.1",
+    "connect-mongo": "^1.2.0",
     "cookie-parser": "^1.4.1",
     "dotenv": "^2.0.0",
     "ejs": "^2.4.1",

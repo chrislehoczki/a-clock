@@ -11,12 +11,19 @@ function CityMap (el, data, width, height, radius, hoverRadius) {
 
       var self = this;
 
-      var parent = document.querySelector(".holder");
-      var children = parent.querySelectorAll("circle")
+      var mapExists = document.querySelector(".holder")
 
-      for (var i = 0; i < children.length; i++) {
-        parent.removeChild(children[i])
+      if (mapExists) {
+        var parent = document.querySelector(".holder");
+        var children = parent.querySelectorAll("circle")
+
+        for (var i = 0; i < children.length; i++) {
+          parent.removeChild(children[i])
+        }
+
+
       }
+      
       
       
     },

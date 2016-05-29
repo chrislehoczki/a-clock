@@ -6,7 +6,8 @@ var Weather = React.createClass({
     getInitialState: function() {
         return {
             title: "Weather Data for " + this.props.city,
-            container: this.props.container
+            container: this.props.container,
+            style: {height: "400px"}
         }
     },
 
@@ -370,7 +371,7 @@ function checkData(data, value) {
          return (
             <div>
             <DescriptionString city={this.props.data}/>
-            <div id={this.state.container}></div>
+            <div style={this.state.style} id={this.state.container}></div>
             </div>
           );
       
