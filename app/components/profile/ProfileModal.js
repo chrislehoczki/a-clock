@@ -22,12 +22,16 @@ var Profile= React.createClass({
         $.get("/api/user", function(data) {
           //console.log(data)
           component.setState({user: data[0]}, function() {
+
+            console.log(this.state.user)
               if (data[0].guideCities.length > 0) {
               component.setState({guideCities: true})
+          
             }
 
             if (data[0].tips.length > 0) {
               component.setState({tips: true})
+           
             }
 
           })
@@ -90,15 +94,15 @@ var Profile= React.createClass({
 
           <h4> My Cities </h4>
           {this.state.user.guideCities ? 
-            this.state.user.guideCities.map(function(i, city) {
-            return <GuideCity key={i + city.cityName} getUser={component.getUser} city={city} />
+            this.state.user.guideCities.map(function(city, i) {
+            return <GuideCity key={i} getUser={component.getUser} city={city} />
           })
             : <p> You haven't made yourself a guide to any cities yet </p>}
 
           
           <h4> My Tips </h4>
           {this.state.user.tips ? 
-            this.state.user.tips.map(function(i, tip) {
+            this.state.user.tips.map(function(city, i) {
               var date = new Date(tip.date)
             return <div key={i + tip.date}> <p> {date.toDateString()} </p> <p> {tip.tip} </p> </div>
           })

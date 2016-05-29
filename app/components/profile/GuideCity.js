@@ -33,7 +33,7 @@ var GuideCity= React.createClass({
 
 
     render: function() {
-
+      
        return (
       <div>
         <p> {this.props.city.cityName} </p>
