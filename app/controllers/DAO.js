@@ -156,7 +156,7 @@ function DAO () {
 			var query = {_id: user._id};
 
 			Users
-			.findOneAndUpdate(query, { $push: {tips: tipObj} }, {"new": true})
+			.findOneAndUpdate(query, { $addToSet: {tips: tipObj} }, {"new": true})
 			.exec(function (err, result) {
 				if (err) { 
 						deferred.reject(err)
@@ -209,7 +209,90 @@ function DAO () {
 		
 	},
 
-	this.addGuide = function(user, slug, cityName) {
+
+	this.deleteTip = function(user, slug, tip) {
+
+		var deferred = Q.defer();
+
+		var functions = [];
+
+		functions.push(updateUser())
+		functions.push(updateCity())
+
+		Q.all(functions).then(function(data) {
+			deferred.resolve(data)
+		}).catch(function(error) {
+			deferred.reject(data)
+			console.log(error)
+		});
+
+		return deferred.promise;
+
+
+		function updateUser() {
+			var deferred = Q.defer();
+
+			var query = {_id: user._id};
+			console.log(query)
+
+
+
+			Users
+			.findOneAndUpdate(query, { $pull: {"tips": {tip: tip.tip}} }, {"new": true})
+			.exec(function (err, result) {
+				if (err) { 
+						deferred.reject(err)
+					}
+					else {
+						console.log(result)
+						deferred.resolve(result)
+				}
+
+			});
+
+			return deferred.promise;
+
+		}
+
+		function updateCity() {
+
+			var deferred = Q.defer();
+
+			var query = {"info.city.slug" : slug}
+			console.log(tip)
+			console.log(tip.activity)
+
+
+		
+
+
+			var prop = tip.activity + ".tips" //or ""Year"
+			var pull = {};
+			pull[prop] = {tip: tip.tip};
+			
+	
+			Cities
+			.findOneAndUpdate(query, { $pull: pull}, {"new": true})
+			.exec(function (err, result) {
+				if (err) { 
+						console.log(err)
+						deferred.reject(err)
+					}
+					else {
+						console.log(result)
+						deferred.resolve(result)
+				}
+			});
+
+			return deferred.promise;
+
+		}
+		
+
+
+	},
+
+	this.addGuide = function(user, slug, cityName, bio) {
 		console.log(user)
 		console.log(slug)
 		var date = new Date();
@@ -263,7 +346,7 @@ function DAO () {
 
 			//CREATE SIMPLE USER OBJ WITHOUT DETAILS FOR SECURITY
 			var userObj = {
-			user: createBasicUser(user)
+			user: createBasicUser(user, bio)
 			}
 
 			
@@ -298,6 +381,7 @@ function DAO () {
 			
 		}).catch(function(error) {
 			console.log(error)
+			
 		});
 
 
@@ -688,22 +772,23 @@ function DAO () {
  		return {"facebook.id": user.facebook.id}
  	}
 
+
  }
 
 
- function createBasicUser(user) {
+ function createBasicUser(user, bio) {
 				console.log(user)
 			 	if (user.strava.id) {
 			 		console.log("things its strava")
-			 		return {id: user._id, firstName: user.strava.firstName, secondName: user.strava.secondName, img: user.strava.profileImg}
+			 		return {id: user._id, firstName: user.strava.firstName, secondName: user.strava.secondName, img: user.strava.profileImg, bio: bio}
 			 	}
 			 	else if (user.facebook.id) {
 			 		console.log("thinks its facebook")
-			 		return {id: user._id, firstName: user.facebook.firstName, secondName: user.facebook.secondName, img: user.facebook.profileImg}
+			 		return {id: user._id, firstName: user.facebook.firstName, secondName: user.facebook.secondName, img: user.facebook.profileImg, bio: bio}
 			 	}
 			 	else if (user.local) {
 			 		console.log("thinks its local")
-			 		return {id: user._id, firstName: user.local.name, secondName: null, img: "/public/images/profile.png"}
+			 		return {id: user._id, firstName: user.local.name, secondName: null, img: "/public/images/profile.png", bio: bio}
 			 	}	
 
 			}

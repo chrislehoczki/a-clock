@@ -8,7 +8,8 @@ var Main = React.createClass({
             message: "",
             activityChosen: false,
             userMsg: "",
-            msgClass: "alert alert-success"
+            msgClass: "alert alert-success",
+            signedIn: false
         }
 
 
@@ -31,11 +32,18 @@ var Main = React.createClass({
             this.setState({userMsg: "You must be logged in to submit a tip"})
             return;
           }
+          else {
+            this.setState({signedIn: true})
+          }
         
 
         $.post(url, body, function(data) {
                 component.setState({msgClass: "alert alert-success", userMsg: "Great, we received it!"})
                 component.props.update();
+                $(".single-form .alert").fadeIn("slow")
+                setTimeout(function() { 
+                    $(".single-form .alert").fadeOut("slow")
+                }, 3000);
         });
         
        
@@ -53,9 +61,17 @@ var Main = React.createClass({
     },
 
     componentDidMount: function() {
-
             this.setState({message: "Add a " + this.props.activity + " tip"})
 
+          var user = JSON.parse(document.getElementById("user").innerHTML);
+
+          if (user === "none") {
+            this.setState({userMsg: "You must be logged in to submit a tip", signedIn: false})
+            return;
+          }
+          else {
+            this.setState({signedIn: true})
+          }
     },
    
     render: function() {    
@@ -70,9 +86,13 @@ var Main = React.createClass({
 
             <button onClick={this.postData} className="btn main-btn" type="submit">{"Submit " + this.props.activity + " tip"}</button>
 
+            {!this.state.signedIn ? <button onClick={this.showLoginModal} className="btn main-btn">Login Now</button>: null}
+
             {this.state.userMsg !== "" ?
-            <div><p className={this.state.msgClass}>{this.state.userMsg}</p><button onClick={this.showLoginModal} className="btn main-btn">Login Now</button></div>
+            <div><p className={this.state.msgClass}>{this.state.userMsg}</p></div>
             : null}
+
+            
             
             </div>
         );

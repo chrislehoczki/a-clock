@@ -9,8 +9,8 @@ var Tips = React.createClass({
     getInitialState: function() {
 
         return {
-            ridingTips: [],
-            runningTips: [],
+            ridingTips: this.props.ridingTips,
+            runningTips: this.props.runningTips,
             type: "running"
         };
 
@@ -18,7 +18,7 @@ var Tips = React.createClass({
 
     componentDidMount: function() {
         
-        this.getTips();
+        //this.getTips();
     },
 
     getTips: function() {

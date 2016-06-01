@@ -549,6 +549,9 @@ input[type=range]:focus::-ms-fill-upper {
 .athlete img:hover, .guide img:hover {
   border: 3px solid black; }
 
+.smallprint p {
+  font-size: 10px; }
+
 /* SINGLE ATHLETES */
 /* SINGLE SEGMENTS */
 .segment {
@@ -698,6 +701,10 @@ div.graph-tooltip, div.detail {
 
 .profileModal {
   text-align: center; }
+
+/* ADD GUIDE MODAL */
+.add-guide-modal textarea {
+  margin: 20px 0; }
 
 /* FRONTPAGE MAP */
 .map-path {

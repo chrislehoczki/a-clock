@@ -1295,7 +1295,7 @@ var Header = React.createClass({
             React.createElement(
               "a",
               { className: "navbar-brand", href: "/" },
-              "Nomad Athlete"
+              "NomadWorkout"
             )
           ),
           React.createElement(
@@ -1379,7 +1379,7 @@ var Header = React.createClass({
 module.exports = Header;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./search-box/SearchBox.js":35,"./single/Overview.js":46}],9:[function(require,module,exports){
+},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./search-box/SearchBox.js":36,"./single/Overview.js":47}],9:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -1462,7 +1462,7 @@ var IntroText = React.createClass({
       React.createElement(
         "h1",
         null,
-        " NomadAthlete "
+        " NomadWorkout "
       ),
       React.createElement(
         "h3",
@@ -1733,7 +1733,7 @@ var SideBar = React.createClass({
 module.exports = SideBar;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./sidebar/About.js":36,"./sidebar/DataDisplay.js":37}],13:[function(require,module,exports){
+},{"./sidebar/About.js":37,"./sidebar/DataDisplay.js":38}],13:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2125,7 +2125,7 @@ var Single = React.createClass({
                     { className: "sub-title" },
                     " Tips "
                 ),
-                React.createElement(Tips, { slug: this.state.data.info.city.slug })
+                React.createElement(Tips, { slug: this.state.data.info.city.slug, runningTips: this.state.data.running.tips, ridingTips: this.state.data.riding.tips })
             ) : null,
             !this.props.addCity ? React.createElement(TopArrow, null) : null
         );
@@ -2135,7 +2135,7 @@ var Single = React.createClass({
 module.exports = Single;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./CityImage.js":6,"./TopArrow.js":15,"./single/CityGuides.js":39,"./single/Description.js":41,"./single/Groups.js":44,"./single/Nutrition.js":45,"./single/Segments.js":49,"./single/Tips.js":51,"./single/UserForm.js":53,"./single/Users.js":54,"./single/Weather.js":55}],15:[function(require,module,exports){
+},{"./CityImage.js":6,"./TopArrow.js":15,"./single/CityGuides.js":40,"./single/Description.js":42,"./single/Groups.js":45,"./single/Nutrition.js":46,"./single/Segments.js":50,"./single/Tips.js":52,"./single/UserForm.js":54,"./single/Users.js":55,"./single/Weather.js":56}],15:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2260,7 +2260,7 @@ var Header = React.createClass({
           React.createElement(
             "a",
             { className: "navbar-brand", href: "/" },
-            "Nomad Athlete"
+            "NomadWorkout"
           )
         ),
         React.createElement(
@@ -2342,7 +2342,7 @@ var Header = React.createClass({
 module.exports = Header;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./profile/ProfileModal.js":33,"./search-box/SearchBox.js":35,"./single/Overview.js":46}],17:[function(require,module,exports){
+},{"./IntroText.js":9,"./Login.js":10,"./Signup.js":13,"./addcity/AddCityModal.js":17,"./profile/ProfileModal.js":33,"./search-box/SearchBox.js":36,"./single/Overview.js":47}],17:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -2576,18 +2576,27 @@ var CityGuidesInfo = React.createClass({
 
 
   getInitialState: function getInitialState() {
-    return {};
+    return {
+      bio: ""
+    };
   },
 
   addCityGuide: function addCityGuide() {
     var component = this;
+
+    if (!this.state.bio) {
+      this.setState({ message: "You must include a brief description of yourself to become a city guide." });
+      return;
+    }
+
     var user = JSON.parse(document.getElementById("user").innerHTML);
 
     if (user !== "none") {
       console.log("has a user");
       var data = {
         slug: this.props.data.info.city.slug,
-        cityName: this.props.data.info.city.name + ", " + this.props.data.info.country.name
+        cityName: this.props.data.info.city.name + ", " + this.props.data.info.country.name,
+        bio: this.state.bio
       };
 
       $.post("/api/guides", data, function (data) {
@@ -2609,6 +2618,10 @@ var CityGuidesInfo = React.createClass({
   showLoginModal: function showLoginModal() {
     var showLoginEvent = new CustomEvent('showLogin');
     window.dispatchEvent(showLoginEvent);
+  },
+
+  setBio: function setBio(e) {
+    this.setState({ bio: e.target.value });
   },
 
   render: function render() {
@@ -2636,28 +2649,19 @@ var CityGuidesInfo = React.createClass({
           React.createElement(
             "p",
             null,
-            " We want everyone in the world to be able to travel freely and be able to link with other people that work out around the world. "
+            " Our city guides are nice people that want to share the best that their cities have to offer with others. "
           ),
           React.createElement(
             "p",
             null,
-            " Our city guides are nice people that want to share the best that their cities have to offer with others "
+            " You will get messages from people interested in visiting your city, all you have to do is respond and give advice. "
           ),
           React.createElement(
             "p",
             null,
-            " Our city guides respond to messages from people that might be travelling to their city, and support them with their activities. "
+            " Sound like a good idea? We think so. Add a short description of yourself and start helping athletes around the world. "
           ),
-          React.createElement(
-            "p",
-            null,
-            " This means that you should be able to respond to emails within a few days, and give advice to people on routes, nutrition, and groups they can join. "
-          ),
-          React.createElement(
-            "p",
-            null,
-            " Sound like a good idea? We think so. "
-          ),
+          React.createElement("textarea", { onChange: this.setBio, value: this.state.bio }),
           React.createElement(
             "button",
             { className: "btn main-btn btn-block", onClick: this.addCityGuide },
@@ -2697,7 +2701,7 @@ var CityGuidesInfo = React.createClass({
           ) : null,
           this.state.success ? null : React.createElement(
             "div",
-            null,
+            { className: "smallprint" },
             React.createElement(
               "p",
               null,
@@ -2706,7 +2710,7 @@ var CityGuidesInfo = React.createClass({
             React.createElement(
               "p",
               null,
-              " We will never share your email address with others and will not share any of your personal details. People will email you with a return email address, all you have to do is email them back. "
+              " We will never share your email address with others and will not share any of your personal details. People will send you a message via this site, and then you can choose to email them back. "
             ),
             React.createElement(
               "p",
@@ -3594,17 +3598,10 @@ module.exports = MapDisplay;
 'use strict';
 
 var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
-var ReactBootstrap = (typeof window !== "undefined" ? window['ReactBootstrap'] : typeof global !== "undefined" ? global['ReactBootstrap'] : null);
 
 var GuideCity = React.createClass({
     displayName: 'GuideCity',
 
-
-    getInitialState: function getInitialState() {
-        return {};
-    },
-
-    componentDidMount: function componentDidMount() {},
 
     removeCity: function removeCity() {
 
@@ -3654,6 +3651,7 @@ var ReactBootstrap = (typeof window !== "undefined" ? window['ReactBootstrap'] :
 
 var Modal = ReactBootstrap.Modal;
 var GuideCity = require("./GuideCity.js");
+var ProfileTip = require("./ProfileTip.js");
 
 var Profile = React.createClass({
   displayName: "Profile",
@@ -3761,28 +3759,9 @@ var Profile = React.createClass({
             " My Tips "
           ),
           this.state.user.tips ? this.state.user.tips.map(function (tip, i) {
+
             var date = new Date(tip.date);
-            return React.createElement(
-              "div",
-              { key: i + tip.date },
-              " ",
-              React.createElement(
-                "p",
-                null,
-                " ",
-                date.toDateString(),
-                " "
-              ),
-              " ",
-              React.createElement(
-                "p",
-                null,
-                " ",
-                tip.tip,
-                " "
-              ),
-              " "
-            );
+            return React.createElement(ProfileTip, { key: i + tip.date, tip: tip, date: date, getUser: component.getUser });
           }) : React.createElement(
             "p",
             null,
@@ -3806,7 +3785,72 @@ var Profile = React.createClass({
 module.exports = Profile;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./GuideCity.js":32}],34:[function(require,module,exports){
+},{"./GuideCity.js":32,"./ProfileTip.js":34}],34:[function(require,module,exports){
+(function (global){
+'use strict';
+
+var React = (typeof window !== "undefined" ? window['React'] : typeof global !== "undefined" ? global['React'] : null);
+
+var ProfileTip = React.createClass({
+    displayName: 'ProfileTip',
+
+
+    getInitialState: function getInitialState() {
+        return {};
+    },
+
+    componentDidMount: function componentDidMount() {},
+
+    removeTip: function removeTip() {
+
+        var data = { slug: this.props.tip.slug, tip: this.props.tip };
+        var component = this;
+
+        $.ajax({
+            url: '/api/tips',
+            data: data,
+            type: 'DELETE',
+            success: function success(result) {
+                console.log(data);
+                component.props.getUser();
+            }
+        });
+    },
+
+    render: function render() {
+        console.log(this.props.tip);
+
+        return React.createElement(
+            'div',
+            null,
+            React.createElement(
+                'p',
+                null,
+                ' ',
+                this.props.date.toDateString() + " Type: " + this.props.tip.activity,
+                ' '
+            ),
+            ' ',
+            React.createElement(
+                'p',
+                null,
+                ' ',
+                this.props.tip.tip,
+                ' '
+            ),
+            React.createElement(
+                'button',
+                { onClick: this.removeTip, className: 'btn main-bth' },
+                'Remove'
+            )
+        );
+    }
+});
+
+module.exports = ProfileTip;
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],35:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3833,7 +3877,7 @@ var Option = React.createClass({
 module.exports = Option;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -3908,7 +3952,7 @@ var SearchBox = React.createClass({
         return React.createElement(
             "div",
             { className: "search-box" },
-            React.createElement("input", { type: "text", value: this.state.value, onChange: this.changeValue, onKeyUp: this.searchIt, onSelect: this.selectValue }),
+            React.createElement("input", { type: "text", placeholder: "Search", value: this.state.value, onChange: this.changeValue, onKeyUp: this.searchIt, onSelect: this.selectValue }),
             React.createElement(
                 "div",
                 { className: "search-dropdown" },
@@ -3923,7 +3967,7 @@ var SearchBox = React.createClass({
 module.exports = SearchBox;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Option.js":34}],36:[function(require,module,exports){
+},{"./Option.js":35}],37:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -3960,7 +4004,7 @@ var SideBar = React.createClass({
 module.exports = SideBar;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4038,7 +4082,7 @@ var DataDisplay = React.createClass({
 module.exports = DataDisplay;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./TopCity.js":38}],38:[function(require,module,exports){
+},{"./TopCity.js":39}],39:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4069,7 +4113,7 @@ var TopCity = React.createClass({
 module.exports = TopCity;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],39:[function(require,module,exports){
+},{}],40:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4156,7 +4200,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../city-guides/CityGuideInfo.js":19,"../city-guides/Guide.js":20,"../city-guides/GuideContact.js":21}],40:[function(require,module,exports){
+},{"../city-guides/CityGuideInfo.js":19,"../city-guides/Guide.js":20,"../city-guides/GuideContact.js":21}],41:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4197,7 +4241,7 @@ var Controls = React.createClass({
 module.exports = Controls;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4242,7 +4286,7 @@ var Description = React.createClass({
 module.exports = Description;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./UserForm.js":53}],42:[function(require,module,exports){
+},{"./UserForm.js":54}],43:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4291,7 +4335,7 @@ var DescriptionString = React.createClass({
 module.exports = DescriptionString;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"../../common/description.js":3}],43:[function(require,module,exports){
+},{"../../common/description.js":3}],44:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4328,7 +4372,7 @@ var User = React.createClass({
 module.exports = User;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4402,7 +4446,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":40,"./Group.js":43}],45:[function(require,module,exports){
+},{"./Controls.js":41,"./Group.js":44}],46:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4469,7 +4513,7 @@ var Segment = React.createClass({
 module.exports = Segment;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Restaurant.js":47}],46:[function(require,module,exports){
+},{"./Restaurant.js":48}],47:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4604,7 +4648,7 @@ var Overview = React.createClass({
 module.exports = Overview;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],47:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4653,7 +4697,7 @@ var Restaurant = React.createClass({
 module.exports = Restaurant;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],48:[function(require,module,exports){
+},{}],49:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4705,7 +4749,7 @@ var Segment = React.createClass({
 module.exports = Segment;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4756,7 +4800,7 @@ var Segments = React.createClass({
 module.exports = Segments;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":40,"./Segment.js":48}],50:[function(require,module,exports){
+},{"./Controls.js":41,"./Segment.js":49}],51:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4814,7 +4858,7 @@ var Tips = React.createClass({
 module.exports = Tips;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],51:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4831,15 +4875,15 @@ var Tips = React.createClass({
     getInitialState: function getInitialState() {
 
         return {
-            ridingTips: [],
-            runningTips: [],
+            ridingTips: this.props.ridingTips,
+            runningTips: this.props.runningTips,
             type: "running"
         };
     },
 
     componentDidMount: function componentDidMount() {
 
-        this.getTips();
+        //this.getTips();
     },
 
     getTips: function getTips() {
@@ -4886,7 +4930,7 @@ var Tips = React.createClass({
 module.exports = Tips;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":40,"./Tip.js":50,"./UserForm.js":53}],52:[function(require,module,exports){
+},{"./Controls.js":41,"./Tip.js":51,"./UserForm.js":54}],53:[function(require,module,exports){
 (function (global){
 'use strict';
 
@@ -4929,7 +4973,7 @@ var User = React.createClass({
 module.exports = User;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -4945,7 +4989,8 @@ var Main = React.createClass({
             message: "",
             activityChosen: false,
             userMsg: "",
-            msgClass: "alert alert-success"
+            msgClass: "alert alert-success",
+            signedIn: false
         };
     },
 
@@ -4962,11 +5007,17 @@ var Main = React.createClass({
         if (user === "none") {
             this.setState({ userMsg: "You must be logged in to submit a tip" });
             return;
+        } else {
+            this.setState({ signedIn: true });
         }
 
         $.post(url, body, function (data) {
             component.setState({ msgClass: "alert alert-success", userMsg: "Great, we received it!" });
             component.props.update();
+            $(".single-form .alert").fadeIn("slow");
+            setTimeout(function () {
+                $(".single-form .alert").fadeOut("slow");
+            }, 3000);
         });
     },
 
@@ -4980,8 +5031,16 @@ var Main = React.createClass({
     },
 
     componentDidMount: function componentDidMount() {
-
         this.setState({ message: "Add a " + this.props.activity + " tip" });
+
+        var user = JSON.parse(document.getElementById("user").innerHTML);
+
+        if (user === "none") {
+            this.setState({ userMsg: "You must be logged in to submit a tip", signedIn: false });
+            return;
+        } else {
+            this.setState({ signedIn: true });
+        }
     },
 
     render: function render() {
@@ -5000,6 +5059,11 @@ var Main = React.createClass({
                 { onClick: this.postData, className: "btn main-btn", type: "submit" },
                 "Submit " + this.props.activity + " tip"
             ),
+            !this.state.signedIn ? React.createElement(
+                "button",
+                { onClick: this.showLoginModal, className: "btn main-btn" },
+                "Login Now"
+            ) : null,
             this.state.userMsg !== "" ? React.createElement(
                 "div",
                 null,
@@ -5007,11 +5071,6 @@ var Main = React.createClass({
                     "p",
                     { className: this.state.msgClass },
                     this.state.userMsg
-                ),
-                React.createElement(
-                    "button",
-                    { onClick: this.showLoginModal, className: "btn main-btn" },
-                    "Login Now"
                 )
             ) : null
         );
@@ -5021,7 +5080,7 @@ var Main = React.createClass({
 module.exports = Main;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -5083,7 +5142,7 @@ var Users = React.createClass({
 module.exports = Users;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./Controls.js":40,"./User.js":52}],55:[function(require,module,exports){
+},{"./Controls.js":41,"./User.js":53}],56:[function(require,module,exports){
 (function (global){
 "use strict";
 
@@ -5366,4 +5425,4 @@ var Weather = React.createClass({
 module.exports = Weather;
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./DescriptionString.js":42}]},{},[30]);
+},{"./DescriptionString.js":43}]},{},[30]);

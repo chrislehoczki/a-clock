@@ -54,15 +54,16 @@ app.use(session({
 }));
 */
 
-
+//SESSIONS - ONE DAY 
 
 var MongoStore = require('connect-mongo')(session);
 app.use(session({
 	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: mongoose.connection })
+    store: new MongoStore({ mongooseConnection: mongoose.connection, ttl: 1 * 24 * 60 * 60 })
 }));
+
 
 
 

@@ -83,7 +83,7 @@ var Header = React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="navbar-brand" href="/">Nomad Athlete</a>
+            <a className="navbar-brand" href="/">NomadWorkout</a>
           </div>
 
           <div id="navbar" className="navbar-collapse collapse" aria-expanded="false">

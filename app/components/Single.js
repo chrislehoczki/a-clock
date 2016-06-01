@@ -76,7 +76,7 @@ var Single = React.createClass({
                     {!this.props.addCity ? 
                     <div className="single-tips">
                         <h3 className="sub-title"> Tips </h3>
-                        <Tips slug={this.state.data.info.city.slug} />
+                        <Tips slug={this.state.data.info.city.slug} runningTips={this.state.data.running.tips} ridingTips={this.state.data.riding.tips} />
                     </div>
                     : null }
                     

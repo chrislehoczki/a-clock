@@ -79,7 +79,7 @@ var IntroText = React.createClass({
     render: function() {    
        return (
           <div className="intro-text">
-          <h1> NomadAthlete </h1>
+          <h1> NomadWorkout </h1>
           <h3>{this.state.text}</h3>
           </div>
         );

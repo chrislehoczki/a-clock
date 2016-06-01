@@ -3,6 +3,7 @@ var ReactBootstrap = require("react-bootstrap")
 
 var Modal = ReactBootstrap.Modal;
 var GuideCity = require("./GuideCity.js")
+var ProfileTip = require("./ProfileTip.js")
 
 var Profile= React.createClass({
 
@@ -103,8 +104,9 @@ var Profile= React.createClass({
           <h4> My Tips </h4>
           {this.state.user.tips ? 
             this.state.user.tips.map(function(tip, i) {
+
               var date = new Date(tip.date)
-            return <div key={i + tip.date}> <p> {date.toDateString()} </p> <p> {tip.tip} </p> </div>
+            return <ProfileTip key={i + tip.date} tip={tip} date={date} getUser={component.getUser}/>
           })
             : <p> You haven't added any tips yet </p> }
 

@@ -1,19 +1,7 @@
 var React = require('react');
-var ReactBootstrap = require("react-bootstrap")
 
 
 var GuideCity= React.createClass({
-
-    getInitialState: function() {
-      return {
-
-        }
-
-    },
-
-    componentDidMount: function() {
-
-    },
 
     removeCity: function() {
 

@@ -16,7 +16,9 @@ var locate = require("./apis/ipLocate.js");
 var skyscan = require("./apis/skyscanner.js");
 var geo = require("./apis/geo.js");
 var Strava = require("./apis/Strava.js");
-var Weather = require("./apis/Weather.js")
+var Weather = require("./apis/Weather.js");
+
+
 var NodeMailer = require("./apis/NodeMailer.js")
 
 //REACT
@@ -132,7 +134,7 @@ module.exports = function (app, passport) {
     //ROUTES AND API
 
 	app.route('/')
-		.get(/*isLoggedIn,*/ function (req, res) {
+		.get(function (req, res) {
 
 			console.log(req.user)
 			console.log(req.session)
@@ -179,7 +181,7 @@ module.exports = function (app, passport) {
 
 
 	app.route('/city/:slug')
-		.get(/*isLoggedIn,*/ function (req, res) {
+		.get(function (req, res) {
 
 			
 
@@ -395,8 +397,9 @@ module.exports = function (app, passport) {
 				var slug = req.body.slug;
 				var user = req.user;
 				var cityName = req.body.cityName;
+				var bio = req.body.bio;
 
-				DAO.addGuide(user, slug, cityName)
+				DAO.addGuide(user, slug, cityName, bio)
 
 				
 
@@ -454,21 +457,16 @@ module.exports = function (app, passport) {
 	//TIPS
 	app.route("/api/tips")
 		.get(function(req, res) {
-
-	
-
-				var slug = req.query.slug;
-				
-
-				DAO.getTips(slug).then(function(data) {
-
-					res.send(data)
-				}).catch(function(error) {
-					console.log(error)
-				});
-	
-
+			var slug = req.query.slug;
 			
+
+			DAO.getTips(slug).then(function(data) {
+
+				res.send(data)
+			}).catch(function(error) {
+				res.send([])
+				console.log(error)
+			});		
 		})
 		.post(function(req, res) {
 			var slug = req.body.slug;
@@ -478,7 +476,17 @@ module.exports = function (app, passport) {
 			DAO.addTip(user, activity, slug, tip)
 
 			res.send("post tips working")
-		});
+		})
+		.delete(function(req, res) {
+
+			DAO.deleteTip(req.user, req.body.slug, req.body.tip).then(function(data) {
+				res.send(data)
+			}).catch(function(err) {
+				console.log(err);
+				res.send(err)
+			})
+			
+		})
 
 	app.route("/api/description")
 		.get(function(req, res) {

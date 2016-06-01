@@ -33,7 +33,8 @@ var User = new Schema({
 
    tips: Array,
    descriptions: Array,
-   guideCities: []
+   guideCities: [],
+   bio: String
 
 });
 
