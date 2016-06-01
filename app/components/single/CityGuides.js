@@ -28,7 +28,7 @@ var Main = React.createClass({
     showGuideContact: function(guide)  {
       var component = this;
       var user = JSON.parse(document.getElementById("user").innerHTML);
-
+      console.log(guide)
       if (user === "none") {
         this.setState({msg: "You must be logged in to message a city guide."})
         return;

@@ -52,12 +52,19 @@ var ContactGuide= React.createClass({
 
       var component = this;
 
+
+
        return (
  		  <div>
-        <Modal show={this.props.showMessage} backdrop={true}  keyboard={true} onHide={this.props.hideMessage} >
+        <Modal className="contact-guide-modal" show={this.props.showMessage} backdrop={true}  keyboard={true} onHide={this.props.hideMessage} >
 
           <Modal.Header closeButton><h3 className="sub-title">Contact Guide</h3></Modal.Header>
           <Modal.Body>
+          <h4 style={{marginTop: "20px"}} className="text-center"> Guide Profile </h4>
+          {this.props.guide ? <img style={{width: "100px", height:"100px", margin: "0px auto", display: "block"}} src={this.props.guide.user.img}/> : null}
+          <h5 className="text-center"> {this.props.guide ? this.props.guide.user.bio : null} </h5>
+
+          <h4 style={{marginTop: "20px"}} className="text-center"> Contact </h4>
           <p>Your Name</p>
           <input onChange={this.addName} value={this.state.name} className="form-control" type="text"></input>
           <p> Subject </p>

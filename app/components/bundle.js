@@ -2845,7 +2845,7 @@ var ContactGuide = React.createClass({
       null,
       React.createElement(
         Modal,
-        { show: this.props.showMessage, backdrop: true, keyboard: true, onHide: this.props.hideMessage },
+        { className: "contact-guide-modal", show: this.props.showMessage, backdrop: true, keyboard: true, onHide: this.props.hideMessage },
         React.createElement(
           Modal.Header,
           { closeButton: true },
@@ -2858,6 +2858,24 @@ var ContactGuide = React.createClass({
         React.createElement(
           Modal.Body,
           null,
+          React.createElement(
+            "h4",
+            { style: { marginTop: "20px" }, className: "text-center" },
+            " Guide Profile "
+          ),
+          this.props.guide ? React.createElement("img", { style: { width: "100px", height: "100px", margin: "0px auto", display: "block" }, src: this.props.guide.user.img }) : null,
+          React.createElement(
+            "h5",
+            { className: "text-center" },
+            " ",
+            this.props.guide ? this.props.guide.user.bio : null,
+            " "
+          ),
+          React.createElement(
+            "h4",
+            { style: { marginTop: "20px" }, className: "text-center" },
+            " Contact "
+          ),
           React.createElement(
             "p",
             null,
@@ -4147,7 +4165,7 @@ var Main = React.createClass({
     showGuideContact: function showGuideContact(guide) {
         var component = this;
         var user = JSON.parse(document.getElementById("user").innerHTML);
-
+        console.log(guide);
         if (user === "none") {
             this.setState({ msg: "You must be logged in to message a city guide." });
             return;

@@ -31,8 +31,8 @@ var ReactBootstrap = require("react-bootstrap")
 var Users = require('../models/users.js');
 
 //CITIES SCHEMA
-
 var Cities = require('../models/cities.js');
+
 //DATA ACCESS OBJECT
 var DAO = new DAO();
 
@@ -343,9 +343,6 @@ module.exports = function (app, passport) {
 			query.sort = { "running.runnerCount" : "desc"}
 		}
 		
-
-		
-
 		//LIMIT 
 
 		query.limit = +req.query.limit || 20;
