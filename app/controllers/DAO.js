@@ -342,17 +342,18 @@ function DAO () {
 
 			var deferred = Q.defer();
 
-			var query = {"info.city.slug" : slug}
+			var query = {"info.city.slug" : slug, "guides.user.id": {$ne: user._id}}
 
 			//CREATE SIMPLE USER OBJ WITHOUT DETAILS FOR SECURITY
 			var userObj = {
 			user: createBasicUser(user, bio)
 			}
 
-			
+
+   
 
 			Cities
-			.findOneAndUpdate(query, { $addToSet: {guides: userObj}}, {"new": true})
+			.findOneAndUpdate(query, { $push: {guides: userObj}}, {"new": true})
 			.exec(function (err, result) {
 				if (err) { 
 						console.log(err)

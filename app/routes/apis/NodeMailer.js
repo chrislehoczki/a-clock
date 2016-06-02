@@ -8,7 +8,7 @@ var mg = require('nodemailer-mailgun-transport');
 var auth = {
   auth: {
     api_key: 'key-bb527debfb24fbe6a90b26e57b7df428',
-    domain: 'sandboxacb8d0aff7f64660bd217190874cf7c7.mailgun.org'
+    domain: 'nomadworkout.com'
   }
 }
 
